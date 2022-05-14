@@ -8,8 +8,8 @@ export const Button = styled.button<{newColor: boolean}>`
   ${({newColor}) => newColor ? 'font-size :2rem; background:red' : 'font-size :1rem;background:black; color:#fff'}
 `
 
-export const Cube = styled.div<{size: number}>`
-  background: blue;
+export const Cube = styled.div<{size: number; bgColor: string}>`
+  background: ${({bgColor}) => `${bgColor}`};
   height: ${({size}) =>  `${size}px`};
   width: ${({size}) =>  `${size}px`};
 `
