@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as S from "./App.styles";
 import "./App.css";
-import styled from "styled-components";
+import Button from "./sharedComponents/Button";
 
 function App() {
   const [newColor, setNewColor] = useState(false);
@@ -22,51 +22,52 @@ function App() {
     setBgColor(bg);
   };
 
-  interface Buttonchik {
-    color: string;
-    bg: string;
-    onClick: any ;
-    children?: React.ReactNode;
-    width: string;
-  }
-  const Button: React.FC<Buttonchik> = ({ 
-    color,
-    bg,
-    children,
-    onClick,
-    width
-  }) => { 
-  return (
-    <button 
-    onClick={onClick}
-      style={{
-         backgroundColor: bg,
-         color: color,
-         width
-      }}
-    >
-    {children}
-    </button>
-  );
-}
-
   return (
     <>
       <S.Button newColor={newColor} onClick={() => setNewColor(!newColor)}>
         click to change color
       </S.Button>
       <S.MainTitle newColor={newColor}>Shalom Ebaboo</S.MainTitle>
-      <Button 
+      <Button
+        onClick={() => changeSizeHandler("big")}
+        children="Change size * 2"
+        width="100px"
+      />
+      <Button
+        onClick={() => changeSizeHandler("small")}
+        children="Small / 2"
+        width="100px"
+      />
+      <Button
         bg="pink"
         color="black"
-        onClick={() => changeBgCOlorHandler('pink')}
-        width = "200px"
-        children = "Chnage color"/>
-      <button onClick={() => changeBgCOlorHandler("red")}>Red</button>{" "}
-      <button onClick={() => changeBgCOlorHandler("blue")}>Blue</button>
-      <button onClick={() => changeBgCOlorHandler("green")}>Green</button>
-      <button onClick={() => changeSizeHandler("big")}>Change size</button>{" "}
-      <button onClick={() => changeSizeHandler("small")}>Small</button>
+        onClick={() => changeBgCOlorHandler("pink")}
+        width="200px"
+        children="Chnage color"
+      />
+      <Button
+        onClick={() => changeBgCOlorHandler("red")}
+        bg="red"
+        color="black"
+        width="200px"
+        children="red"
+      />
+    
+      <Button
+        onClick={() => changeBgCOlorHandler("blue")}
+        bg="Blue"
+        color="white"
+        width="200px"
+        children="Blue"
+      />
+      <Button
+        onClick={() => changeBgCOlorHandler("green")}
+        bg="green"
+        color="white"
+        width="200px"
+        children="green"
+      />
+
       <S.Cube size={size} bgColor={bgColor} />
     </>
   );

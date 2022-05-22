@@ -1,7 +1,5 @@
 import styled  from "styled-components";
 
-type ButtonNew = {background: string, fontSize: number };
-
 export const MainTitle = styled.div< {newColor: boolean}>`
    color: ${({newColor}) =>  newColor ? ' red' : 'green'};
 `
