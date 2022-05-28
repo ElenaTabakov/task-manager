@@ -1,44 +1,64 @@
-import ListItem from "./ListItem";
+import ListItem from "./ListItem/ListItem";
+import * as S from "./List.styles";
 
-const Tasks_DB  = [
-    {
-        id: 'm1',
-        name: 'Daily Status',
-        description: 'Finest fish and veggies  german specialty! American, raw, meaty. Healthy...and green...',
-        date: '13.06.2022',
-    },
-    {
-        id: 'm2',
-        name: 'call',
-        description: 'A german specialty!',
-        date: '13.06.2022',
-    },
-    {
-        id: 'm3',
-        name: 'BB',
-        description: 'American, raw, meaty',
-        date: '13.06.2022',
-    },
-    {
-        id: 'm4',
-        name: 'Green Bowl',
-        description: 'Healthy...and green...',
-        date: '13.06.2022',
-    },
+
+export interface Task {
+    id: string;
+    title: string;
+    description: string;
+    date: string;
+   
+    // className?: string;
+   
+  }
+
+
+const tasks : Task[]  = [
+  {
+    id: "m1",
+    title: "Daily Status Too",
+    description:
+      "Finest fish and veggies  german specialty! American, raw, meaty. Healthy...and green...Finest fish and veggies  german specialty!Finest fish and veggies  german specialty!",
+    date: "13.06.2022",
+  },
+  {
+    id: "m2",
+    title: "call",
+    description: "A german specialty!",
+    date: "13.06.2022",
+  },
+  {
+    id: "m3",
+    title: "BB",
+    description: "American, raw, meaty",
+    date: "13.06.2022",
+  },
+  {
+    id: "m4",
+    title: "Green Bowl",
+    description: "Healthy...and green...",
+    date: "13.06.2022",
+  },
 ];
 
 const CurrentTasks = () => {
-    const tasksList = Tasks_DB.map(task => <ListItem key={task.id} name={task.name} description={task.description} date={task.date} id={task.id}/>);
-    return (
-        <section >
-            
-                <ul>
-                    {tasksList}
-                </ul>
-            
-        </section>
-    );
+  const tasksList = tasks.map(({id, title, description, date}) => {
+      return (
+          <ListItem
+              key={id}
+              title={title}
+              description={description}
+              date={date}
+              id={id}
+            //   className={className} 
+            />
+      );
+  });
+  return (
+    <S.ListWrapper>
+      <S.ListUl>{tasksList}</S.ListUl>
+    </S.ListWrapper>
+  );
 };
 
 export default CurrentTasks;
-
