@@ -16,16 +16,16 @@ const ListItem = ({
   task: { id, title, description, date },
   className,
 }: ListItemProps) => {
-  return (
-    <S.ListItem id={id} className={className}>
-      <Circle circleContent={title} />
-      <S.ListItemContent>
-        <S.ListName>{title}</S.ListName>
-        <S.ListDescription>{description}</S.ListDescription>
-        <S.ListDate>{date}</S.ListDate>
-      </S.ListItemContent>
-    </S.ListItem>
-  );
-};
+    return (
+      <S.ListItem id={id} className={className}>
+        <Circle circleContent={title} />
+        <S.ListItemContent>
+          <S.ListName>{title}</S.ListName>
+          <S.ListDescription>{description}</S.ListDescription>
+          <S.ListDate>{date}</S.ListDate>
+        </S.ListItemContent>
+      </S.ListItem>
+    );
+  };
 
 export default ListItem;

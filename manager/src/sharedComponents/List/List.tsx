@@ -7,9 +7,7 @@ export interface Task {
     title: string;
     description: string;
     date: string;
-   
-    // className?: string;
-   
+    className?: string; 
   }
 
 
@@ -42,15 +40,15 @@ const tasks : Task[]  = [
 ];
 
 const CurrentTasks = () => {
-  const tasksList = tasks.map(({id, title, description, date}) => {
+  const tasksList = tasks.map((task:{id, title, description, date}) => {
       return (
-          <ListItem
-              key={id}
-              title={title}
-              description={description}
-              date={date}
-              id={id}
-            //   className={className} 
+          <ListItem 
+              key={task.id}
+              title={task.title}
+              description={task.description}
+              date={task.date}
+              id={task.id}             
+              
             />
       );
   });
