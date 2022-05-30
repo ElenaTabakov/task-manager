@@ -1,7 +1,7 @@
 import { Task } from "../../../App";
 import Button from "../../Button/Button";
-import Circle from "./CircleTitle/CircleTitle";
-import * as S from "./ListItem.styles";
+import Circle from "../../CircleTitle/CircleTitle";
+import * as S from "./TaskItem.styles";
 
 interface ListItemProps {
   task: Task;
@@ -31,7 +31,7 @@ const ListItem = ({
       <S.ListItemContent>
         <S.ListName>{title}</S.ListName>
         <S.ListDescription>{description}</S.ListDescription>
-        <S.ListDate>{date}</S.ListDate>
+        <S.ListDate>{date.toLocaleString()}</S.ListDate>
       </S.ListItemContent>
       <Button size="small" onClick={handleDeleteTask} title={title}>
         x

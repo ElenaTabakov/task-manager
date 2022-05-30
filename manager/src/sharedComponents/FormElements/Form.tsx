@@ -45,7 +45,7 @@ const Form = ({setTasksList}: FormProps) => {
   const handleAddItem = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setTasksList(prevState => {
-          return [...prevState, {id: (prevState.length + 1).toString() , title: inputValue.title , description: inputValue.description , date: 'prosto text'}]
+          return [...prevState, {id: (prevState.length + 1).toString() , title: inputValue.title , description: inputValue.description , date: new Date()}]
         })
   };
       

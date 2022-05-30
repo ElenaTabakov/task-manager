@@ -1,5 +1,5 @@
-import ListItem from "./ListItem/ListItem";
-import * as S from "./List.styles";
+import ListItem from './TaskItem/TaskItem'
+import * as S from "./Tasks.styles";
 import { Task } from "../../App";
 
 interface CurrentTasksProps {

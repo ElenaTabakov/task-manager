@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import * as Sc from "./sharedComponents/FormElements/Input/Input.styles";
 import "./App.css";
-import CurrentTasks from "./sharedComponents/List/List";
+import CurrentTasks from "./sharedComponents/List/Tasks";
 import Form from "./sharedComponents/FormElements/Form";
 
 export interface Task {
@@ -9,7 +9,7 @@ export interface Task {
   id: string;
   title: string;
   description: string;
-  date: string;
+  date: Date;
 }
 
 const tasks: Task[] = [
@@ -18,25 +18,25 @@ const tasks: Task[] = [
     title: "Daily Status Too",
     description:
       "Finest fish and veggies  german specialty! American, raw, meaty. Healthy...and green...Finest fish and veggies  german specialty!Finest fish and veggies  german specialty!",
-    date: "13.06.2022",
+    date: new Date("2019-01-16"),
   },
   {
     id: "m2",
     title: "call",
     description: "A german specialty!",
-    date: "13.06.2022",
+    date:new Date("2019-01-16"),
   },
   {
     id: "m3",
     title: "BB",
     description: "American, raw, meaty",
-    date: "13.06.2022",
+    date: new Date("2019-01-16"),
   },
   {
     id: "m4",
     title: "Green Bowl",
     description: "Healthy...and green...",
-    date: "13.06.2022",
+    date: new Date("2019-01-16"),
   },
 ];
 
