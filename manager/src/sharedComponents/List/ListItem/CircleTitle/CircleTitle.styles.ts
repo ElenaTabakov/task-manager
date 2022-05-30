@@ -8,6 +8,8 @@ export const CircleTitle = styled.div`
     width:50px;
     height:50px;
     display:flex;
+    flex:0 0 50px;
+    margin-right:15px;
     justify-content:center;
     align-items: center;
 `

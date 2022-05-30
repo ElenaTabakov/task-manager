@@ -9,7 +9,7 @@ interface CircleTitleProps {
 const tW = (text: string) => {  
 
     const textLength = text.split(' ');
-    console.log(textLength);
+    // console.log(textLength);
     if (textLength.length === 1 ){
         return textLength[0][0];
     }

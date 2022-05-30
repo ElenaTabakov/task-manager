@@ -11,7 +11,9 @@ export const Input = styled.input<{ error: boolean }>`
   margin-bottom: ${({ error }) => (error ? "0px" : "15px")};
   border-radius: 10px;
   border-width: 1px;
-  padding: 10px 15px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
 
   &:active,
   &:focus {

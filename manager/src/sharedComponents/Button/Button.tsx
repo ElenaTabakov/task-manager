@@ -1,3 +1,4 @@
+import { Task } from "../../App";
 import * as S from "./Button.styles";
 
 interface ButtonProps extends  React.ButtonHTMLAttributes<HTMLButtonElement>{
@@ -5,6 +6,7 @@ interface ButtonProps extends  React.ButtonHTMLAttributes<HTMLButtonElement>{
   children: React.ReactNode;
   className?: string;
   disabled?: boolean;
+
 }
 
 const Button = ({ size, children, className, disabled, ...props }: ButtonProps) => {
@@ -21,3 +23,5 @@ const Button = ({ size, children, className, disabled, ...props }: ButtonProps) 
 };
 
 export default Button;
+
+

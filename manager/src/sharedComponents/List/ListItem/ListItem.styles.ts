@@ -17,6 +17,7 @@ export const ListItemContent = styled.div`
 export const ListName = styled.h2`
   font-size: 1.5rem;
   font-weight: bold;
+  margin-top:0;
 `
 export const ListDescription = styled.div`
   display: -webkit-box;
