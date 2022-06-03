@@ -7,6 +7,7 @@ export const ListItem = styled.li`
   border: 1px solid #ccc;
   border-radius: 10px;
   margin-bottom: 15px;
+  flex-wrap:wrap;
 `
 export const ListItemContent = styled.div`
   display: flex;

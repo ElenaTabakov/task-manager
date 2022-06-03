@@ -1,9 +1,8 @@
-import { ChangeEvent, MouseEventHandler, useState } from "react";
+import { ChangeEvent,  useState } from "react";
 import * as S from "./Form.styled";
 import Input from "./Input/Input";
 import Button from "../Button/Button";
 import { Task } from "../../App";
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 interface FormProps {
   // props: object;
@@ -17,36 +16,23 @@ const Form = ({ setTasksList }: FormProps) => {
     description: "",
   });
   const [inputValue, setInputValue] = useState({ title: "", description: "" });
-  const [disableButton, setDisableButton] = useState<boolean>(true);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const inputName = e.target.name;
 
-    // setErrorMessage((prevState) => {
-    //   return {...prevState, [inputName]: ''};
-    // });
+    setInputValue((prevState) => {
+      return { ...prevState, [inputName]: value };
+    });
+    setErrorMessage((prevState) => {
+      return { ...prevState, [inputName]: "" };
+    });
 
-    if (value.length === 0) {
+    if (!value) {
       setErrorMessage((prevState) => {
         return { ...prevState, [inputName]: "Enter your " + inputName };
       });
-      setInputValue((prevState) => {
-        return { ...prevState, [inputName]: "" };
-      });
-      setDisableButton(true);
-    } else{
-      setErrorMessage((prevState) => {
-        return { ...prevState, [inputName]: '' };
-      });
-      setInputValue((prevState) => {
-        return { ...prevState, [inputName]: value};
-      });
     }
-    if(inputValue.title.length > 0 && inputValue.description.length > 0){
-      setDisableButton(false);
-    }
-  
   };
 
   const handleAddItem = (e: React.FormEvent<HTMLFormElement>) => {
@@ -82,7 +68,9 @@ const Form = ({ setTasksList }: FormProps) => {
         error={errorMessage.description}
         value={inputValue.description}
       />
-      <Button disabled={disableButton}>Add Task</Button>
+      <Button disabled={!inputValue.title || !inputValue.description}>
+        Add Task
+      </Button>
     </S.Form>
   );
 };

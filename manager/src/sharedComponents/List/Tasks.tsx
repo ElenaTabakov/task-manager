@@ -25,7 +25,7 @@ const CurrentTasks = ({ tasksList,  setTasksList}: CurrentTasksProps) => {
     <S.ListWrapper>
       <S.ListUl>
         {tasksList.map((task) => {
-          return <TaskItem key={task.id} task={task}  onDelete={handleDeleteTask} />;
+          return <TaskItem key={task.id} task={task}  onDelete={handleDeleteTask}  setTasksList={setTasksList} tasksList={tasksList}/>;
         })}
       </S.ListUl>
     </S.ListWrapper>
