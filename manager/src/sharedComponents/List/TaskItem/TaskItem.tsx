@@ -27,6 +27,10 @@ const [visibleEdirForm,setVisibleEditForm] = useState<boolean>(false);
     <S.ListItem id={id} className={className}>
       <Circle circleContent={title} />
       <S.ListItemContent>
+        {/* {visibleEdirForm {
+          return {<Input value={title} name="new-title"/>  <Input value={description} name="new-description"/>}
+
+        } } */}
         <S.ListName>{title}</S.ListName>
         <S.ListDescription>{description}</S.ListDescription>
         <S.ListDate>{date.toLocaleString()}</S.ListDate>
@@ -34,8 +38,8 @@ const [visibleEdirForm,setVisibleEditForm] = useState<boolean>(false);
       <Button size="small" onClick={() => onDelete(id)} >
         x
       </Button>
-      <Button size='small' onClick={() => setVisibleEditForm(!visibleEdirForm)}>Edit Task</Button>
-      {visibleEdirForm && <EditTaskForm id={id} setTasksList={setTasksList} tasksList={tasksList}/>}
+      <Button size='small' onClick={() => setVisibleEditForm(!visibleEdirForm)}> {(visibleEdirForm) ? 'Close Edit Form' : 'Edit Task'} </Button>
+      {visibleEdirForm && <EditTaskForm id={id} setTasksList={setTasksList} tasksList={tasksList} title={title} description={description}/>}
     </S.ListItem>
   );
 };

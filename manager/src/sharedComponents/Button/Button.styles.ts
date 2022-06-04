@@ -17,7 +17,16 @@ const large = css`
   background: #87195c;
   font-size: 2rem;
 `;
-export const Button = styled.button<{ size: ButtonSize }>`
+export type ButtonMargin = "right" | "left";
+
+const right = css`
+  margin-right: 20px;
+`;
+const left = css`
+  margin-left: 20px;
+`;
+
+export const Button = styled.button<{ size: ButtonSize, margin: ButtonMargin }>`
   ${({ size }) => {
     if (size === "large") {
       return large;
@@ -29,6 +38,14 @@ export const Button = styled.button<{ size: ButtonSize }>`
       return small;
     }
     return small;
+  }}
+  ${({ margin }) => {
+    if (margin === "left") {
+      return left;
+    }
+    if (margin === "right") {
+      return right;
+    }
   }}
   border:none;
   cursor: pointer;

@@ -8,10 +8,12 @@ interface EditTaskFormProps {
   id: string;
   setTasksList: React.Dispatch<React.SetStateAction<Task[]>>;
   tasksList: Task[];
+  title: string;
+  description: string;
 }
 
-const EditTaskForm = ({ id, setTasksList, tasksList }: EditTaskFormProps) => {
-  const [inputValue, setInputValue] = useState({title: "" , description: ""});
+const EditTaskForm = ({ id, setTasksList, tasksList, title, description }: EditTaskFormProps) => {
+  const [inputValue, setInputValue] = useState({title: title, description: description});
 
   const changeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -26,7 +28,7 @@ const EditTaskForm = ({ id, setTasksList, tasksList }: EditTaskFormProps) => {
     // console.log(id)
 
     const newTasksList = tasksList.map((task) => {
-      if (task.id === id) {
+      if (task.id === id) {    
         return { ...task, title: inputValue.title , description: inputValue.description};
       }
 
@@ -41,13 +43,13 @@ const EditTaskForm = ({ id, setTasksList, tasksList }: EditTaskFormProps) => {
       <S.Form onSubmit={editTaskHandler}>
         <Input
           name="title"
-          placeholder="New Title"
+          placeholder={title}
           value={inputValue.title}
           onChange={changeValueHandler}
         />
         <Input
           name="description"
-          placeholder="New Description"
+          placeholder={description}
           value={inputValue.description}
           onChange={changeValueHandler}
         />
