@@ -13,7 +13,7 @@ interface EditTaskFormProps {
 }
 
 const EditTaskForm = ({ id, setTasksList, tasksList, title, description }: EditTaskFormProps) => {
-  const [inputValue, setInputValue] = useState({title: title, description: description});
+  const [inputValue, setInputValue] = useState({title, description});
 
   const changeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
