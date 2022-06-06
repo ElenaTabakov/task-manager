@@ -40,8 +40,8 @@ const CurrentTasks = ({ tasksList, setTasksList }: CurrentTasksProps) => {
         </S.ListUl>
       </S.ListWrapper>
      <ModalWindow title="Boo"  visible={isShow} onClose={() => setIsShow(false)}>
-        <Form setTasksList={setTasksList} />
-      </ModalWindow>
+        <Form setTasksList={setTasksList} setIsShow={setIsShow}/>
+     </ModalWindow>
     </>
   );
 };

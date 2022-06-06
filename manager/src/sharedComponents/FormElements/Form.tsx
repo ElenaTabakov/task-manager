@@ -8,10 +8,10 @@ interface FormProps {
   // props: object;
   // addNewTask:object;
   setTasksList: React.Dispatch<React.SetStateAction<Task[]>>;
-  // closeModal:boolean;
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Form = ({ setTasksList }: FormProps) => {
+const Form = ({ setTasksList, setIsShow}: FormProps) => {
   const [errorMessage, setErrorMessage] = useState({
     title: "",
     description: "",
@@ -49,11 +49,11 @@ const Form = ({ setTasksList }: FormProps) => {
         },
       ];
     });
-
+    setIsShow(false);
   };
 
   return (
-    <S.Form onSubmit={handleAddItem}>
+    <S.Form onSubmit={handleAddItem} >
       <Input
         type="text"
         name="title"
