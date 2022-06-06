@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Task } from "../../../App";
+import { Task } from "../../Screens/TaskManager/TaskManager";
 import Button from "../../Button/Button";
 import Circle from "../../CircleTitle/CircleTitle";
 import EditTaskForm from "../../FormElements/EditTaskForm";

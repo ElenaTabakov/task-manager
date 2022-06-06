@@ -2,7 +2,7 @@ import { ChangeEvent,  useState } from "react";
 import * as S from "./Form.styled";
 import Input from "./Input/Input";
 import Button from "../Button/Button";
-import { Task } from "../../App";
+import { Task } from "../Screens/TaskManager/TaskManager";
 
 interface FormProps {
   // props: object;

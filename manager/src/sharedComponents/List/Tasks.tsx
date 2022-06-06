@@ -1,6 +1,6 @@
 import TaskItem from './TaskItem/TaskItem'
 import * as S from "./Tasks.styles";
-import { Task } from "../../App";
+import { Task } from "../Screens/TaskManager/TaskManager";
 
 interface CurrentTasksProps {
   tasksList: Task[];
