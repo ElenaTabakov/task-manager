@@ -8,6 +8,7 @@ interface FormProps {
   // props: object;
   // addNewTask:object;
   setTasksList: React.Dispatch<React.SetStateAction<Task[]>>;
+  // closeModal:boolean;
 }
 
 const Form = ({ setTasksList }: FormProps) => {
@@ -48,6 +49,7 @@ const Form = ({ setTasksList }: FormProps) => {
         },
       ];
     });
+
   };
 
   return (

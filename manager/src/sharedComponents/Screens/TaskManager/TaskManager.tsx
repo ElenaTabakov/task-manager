@@ -2,7 +2,9 @@ import { useState } from "react";
 import * as Sc from "../../FormElements/Input/Input.styles";
 import "../../../App.css";
 import CurrentTasks from "../../List/Tasks";
-import Form from '../../FormElements/Form'
+import Form from "../../FormElements/Form";
+import Button from "../../Button/Button";
+import ModalWindow from "./ModalWindow/ModalWindow";
 
 export interface Task {
   [x: string]: any;
@@ -47,9 +49,8 @@ const TaskManager = () => {
     // console.log(tasksList);
     <>
       <Sc.InputWrapper>
-        <Form setTasksList={setTasksList} />
+        <CurrentTasks tasksList={tasksList} setTasksList={setTasksList} />
       </Sc.InputWrapper>
-      <CurrentTasks tasksList={tasksList} setTasksList={setTasksList} />
     </>
   );
 };
