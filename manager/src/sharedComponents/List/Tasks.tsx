@@ -6,13 +6,13 @@ import ModalWindow from "../Screens/TaskManager/ModalWindow/ModalWindow";
 import Form from "../FormElements/Form";
 import Button from "../Button/Button";
 
-interface CurrentTasksProps {
+interface TasksProps {
   tasksList: Task[];
   setTasksList: React.Dispatch<React.SetStateAction<Task[]>>;
   // handleDeleteTask:React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
-const CurrentTasks = ({ tasksList, setTasksList }: CurrentTasksProps) => {
+const Tasks = ({ tasksList, setTasksList }: TasksProps) => {
   const handleDeleteTask = (id: string) => {
     setTasksList((prevState) => {
       return prevState.filter((task) => task.id !== id);
@@ -46,4 +46,4 @@ const CurrentTasks = ({ tasksList, setTasksList }: CurrentTasksProps) => {
   );
 };
 
-export default CurrentTasks;
+export default Tasks;

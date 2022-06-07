@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as Sc from "../../FormElements/Input/Input.styles";
 import "../../../App.css";
-import CurrentTasks from "../../List/Tasks";
+import Tasks from "../../List/Tasks";
 import Form from "../../FormElements/Form";
 import Button from "../../Button/Button";
 import ModalWindow from "./ModalWindow/ModalWindow";
@@ -49,7 +49,7 @@ const TaskManager = () => {
     // console.log(tasksList);
     <>
       <Sc.InputWrapper>
-        <CurrentTasks tasksList={tasksList} setTasksList={setTasksList} />
+        <Tasks tasksList={tasksList} setTasksList={setTasksList} />
       </Sc.InputWrapper>
     </>
   );
