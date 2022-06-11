@@ -39,7 +39,7 @@ const Tasks = ({ tasksList, setTasksList }: TasksProps) => {
           })}
         </S.ListUl>
       </S.ListWrapper>
-     <ModalWindow title="Boo"  visible={isShow} onClose={() => setIsShow(false)}>
+     <ModalWindow title="Boo"  visible={isShow} setIsShow={setIsShow} cancelBtnText="Cancel" confirmBtnText="Confirm" onSubmit={handleAddItem}>
         <Form setTasksList={setTasksList} setIsShow={setIsShow}/>
      </ModalWindow>
     </>

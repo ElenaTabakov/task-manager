@@ -55,3 +55,8 @@ export const ModalTitle = styled.div`
     right: 5px;
   } */
 `;
+
+export const ModalFooter = styled.div`
+    padding: 15px;
+    border-top: 1px solid #c1c1c1;
+`

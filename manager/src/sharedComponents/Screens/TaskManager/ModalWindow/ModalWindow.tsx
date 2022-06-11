@@ -1,12 +1,15 @@
-import { ReactElement } from "react";
+import { ReactElement, ReactEventHandler } from "react";
 import Button from "../../../Button/Button";
 import * as S from "./ModalWindow.styles";
 
 interface ModalWindowProps {
   title: string;
+  confirmBtnText: string;
+  cancelBtnText: string;
   children: ReactElement | string;
   visible: boolean;
-  onClose: () => void;
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+  onSubmit:(e: React.MouseEvent<HTMLButtonElement> ) => void;
   //   closeModal: boolean;
 }
 
@@ -14,7 +17,10 @@ const ModalWindow = ({
   title,
   children,
   visible = false,
-  onClose,
+  setIsShow,
+  confirmBtnText,
+  cancelBtnText,
+  onSubmit
 }: ModalWindowProps) => {
 
   if (!visible) return null;
@@ -25,10 +31,15 @@ const ModalWindow = ({
       <S.ModalInner>
         <S.ModalContent>
           <S.ModalTitle>
-            {title} <Button onClick={onClose}> x </Button>
+            {title} <Button onClick={() => setIsShow(false)}> x </Button>
           </S.ModalTitle>
           {children}
+          <S.ModalFooter>
+            <Button onClick={onSubmit}>{confirmBtnText}</Button> 
+            <Button  onClick={() => setIsShow(false)}>{cancelBtnText}</Button>
+        </S.ModalFooter>
         </S.ModalContent>
+        
       </S.ModalInner>
     </S.ModalWrapper>
   );
