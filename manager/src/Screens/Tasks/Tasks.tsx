@@ -80,7 +80,7 @@ const Tasks = () => {
         </S.ListUl>
       </S.ListWrapper>
     
-        <Form setTasksList={setTasksList} setIsShow={setIsShow} isShow={isShow}/>
+        <Form setTasksList={setTasksList} setIsShow={setIsShow} isShow={isShow} isEdit={false}/>
     
     </S.TasksContainer>
   );

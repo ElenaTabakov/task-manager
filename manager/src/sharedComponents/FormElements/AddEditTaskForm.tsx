@@ -3,7 +3,7 @@ import * as S from "./Form.styled";
 import Input from "./Input/Input";
 import { Task } from "../../Screens/Tasks/Tasks";
 import ModalWindow from "../ModalWindow/ModalWindow";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 
 interface FormProps {
   // props: object;
@@ -11,17 +11,28 @@ interface FormProps {
   setTasksList: React.Dispatch<React.SetStateAction<Task[]>>;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
   isShow: boolean;
-  isEdit?: boolean;
-  task?: Task;
+  isEdit: boolean;
+  task?: Task ;
   tasksList?: Task[];
 }
 
-const Form = ({ setTasksList, setIsShow, isShow, isEdit, task, tasksList}: FormProps) => {
+const Form = ({
+  setTasksList,
+  setIsShow,
+  isShow,
+  isEdit = false,
+  task,
+  tasksList,
+}: FormProps) => {
   const [errorMessage, setErrorMessage] = useState({
     title: "",
     description: "",
   });
-  const [inputValue, setInputValue] = useState({ title: "", description: "" });
+  const [inputValue, setInputValue] = useState(
+    task
+      ? { title: task.title, description: task.description }
+      : { title: "", description: "" }
+  );
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -55,44 +66,43 @@ const Form = ({ setTasksList, setIsShow, isShow, isEdit, task, tasksList}: FormP
       ];
     });
     setIsShow(false);
-    setInputValue({title: "", description: "" })
+    setInputValue({ title: "", description: "" });
   };
 
-
-  const editTaskHandler = (e:  React.MouseEvent<HTMLButtonElement>) => {
+  const editTaskHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (tasksList)  {
+    if (tasksList && task) {
+      console.log(task.id);
 
-      const newTasksList = tasksList.map((task) => {
-        console.log(task.id);
-        if (task.id === task.id) {    
-          return { ...task, title: inputValue.title , description: inputValue.description};
+      const newTasksList = tasksList.map((localtask) => {
+        if (localtask.id === task.id) {
+          return {
+            ...localtask,
+            title: inputValue.title,
+            description: inputValue.description,
+          };
         }
-  
-        return task;
+
+        return localtask;
       });
-    
+
       setTasksList(newTasksList);
-   
+      setIsShow(false);
     }
 
-
+    return task;
   };
-
-
-
-
 
   return (
     <ModalWindow
-      title={isEdit ? 'Edit Task' : 'Add New Task'}
+      title={isEdit ? "Edit Task" : "Add New Task"}
       visible={isShow}
       setIsShow={setIsShow}
       cancelBtnText="Cancel"
-      confirmBtnText={isEdit ? 'Edit' : 'Add'}
-      onSubmit={task ?  editTaskHandler : handleAddItem}
-      disabled={!inputValue.title || !inputValue.description}     
+      confirmBtnText={isEdit ? "Edit" : "Add"}
+      onSubmit={isEdit ? editTaskHandler : handleAddItem}
+      disabled={!inputValue.title || !inputValue.description}
     >
       <S.Form>
         <Input
@@ -101,7 +111,7 @@ const Form = ({ setTasksList, setIsShow, isShow, isEdit, task, tasksList}: FormP
           placeholder="Task Title"
           onChange={handleInputChange}
           error={errorMessage.title}
-          value={task ? task.title : inputValue.title}
+          value={inputValue.title}
         />
         <Input
           type="text"
@@ -109,7 +119,7 @@ const Form = ({ setTasksList, setIsShow, isShow, isEdit, task, tasksList}: FormP
           placeholder="Task Description"
           onChange={handleInputChange}
           error={errorMessage.description}
-          value={task ? task.description : inputValue.description}
+          value={inputValue.description}
         />
       </S.Form>
     </ModalWindow>
