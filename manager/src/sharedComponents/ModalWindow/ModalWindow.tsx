@@ -1,5 +1,5 @@
 import { ReactElement, ReactEventHandler } from "react";
-import Button from "../../../Button/Button";
+import Button from "../Button/Button";
 import * as S from "./ModalWindow.styles";
 
 interface ModalWindowProps {
@@ -10,17 +10,18 @@ interface ModalWindowProps {
   visible: boolean;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit:(e: React.MouseEvent<HTMLButtonElement> ) => void;
-  //   closeModal: boolean;
+  disabled: boolean;
 }
 
 const ModalWindow = ({
   title,
   children,
   visible = false,
-  setIsShow,
   confirmBtnText,
+  setIsShow,
   cancelBtnText,
-  onSubmit
+  onSubmit,
+  disabled
 }: ModalWindowProps) => {
 
   if (!visible) return null;
@@ -35,7 +36,7 @@ const ModalWindow = ({
           </S.ModalTitle>
           {children}
           <S.ModalFooter>
-            <Button onClick={onSubmit}>{confirmBtnText}</Button> 
+            <Button onClick={onSubmit} disabled={disabled}>{confirmBtnText}</Button> 
             <Button  onClick={() => setIsShow(false)}>{cancelBtnText}</Button>
         </S.ModalFooter>
         </S.ModalContent>

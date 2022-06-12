@@ -1,5 +1,5 @@
 import { ChangeEvent,useState } from "react";
-import { Task } from "../Screens/TaskManager/TaskManager";
+import { Task } from "../../Screens/Tasks/Tasks";
 import Button from "../Button/Button";
 import * as S from "./Form.styled";
 import Input from "./Input/Input";

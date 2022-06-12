@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Task } from "../../Screens/TaskManager/TaskManager";
-import Button from "../../Button/Button";
-import Circle from "../../CircleTitle/CircleTitle";
-import EditTaskForm from "../../FormElements/EditTaskForm";
+import { Task } from "../../Tasks/Tasks";
+import Button from "../../../sharedComponents/Button/Button";
+import Circle from "../../../sharedComponents/CircleTitle/CircleTitle";
+import EditTaskForm from "../../../sharedComponents/FormElements/EditTaskForm";
 import * as S from "./TaskItem.styles";
+import Form from "../../../sharedComponents/FormElements/AddEditTaskForm";
 
 interface TaskItemProps {
   task: Task;
@@ -15,6 +16,7 @@ interface TaskItemProps {
 
 const TaskItem = ({
   task: { id, title, description, date },
+  task: Task,
   className,
   onDelete,
   setTasksList,
@@ -39,7 +41,8 @@ const [visibleEdirForm,setVisibleEditForm] = useState<boolean>(false);
         x
       </Button>
       <Button size='small' onClick={() => setVisibleEditForm(!visibleEdirForm)}> {(visibleEdirForm) ? 'Close Edit Form' : 'Edit Task'} </Button>
-      {visibleEdirForm && <EditTaskForm id={id} setTasksList={setTasksList} tasksList={tasksList} title={title} description={description}/>}
+      <Form isEdit isShow={visibleEdirForm} setIsShow={setVisibleEditForm} setTasksList={setTasksList} task={Task} tasksList={tasksList}/>
+   
     </S.ListItem>
   );
 };

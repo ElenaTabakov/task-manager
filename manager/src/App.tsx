@@ -1,4 +1,4 @@
-import TaskManager from "./sharedComponents/Screens/TaskManager/TaskManager";
+import Tasks from "./Screens/Tasks/Tasks";
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
         <Form setTasksList={setTasksList} />
       </Sc.InputWrapper>
       <CurrentTasks tasksList={tasksList} setTasksList={setTasksList}/> */}
-      <TaskManager />
+      <Tasks/>
     </>
   );
 }
