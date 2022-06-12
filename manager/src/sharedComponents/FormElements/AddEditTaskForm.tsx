@@ -3,7 +3,7 @@ import * as S from "./Form.styled";
 import Input from "./Input/Input";
 import { Task } from "../../Screens/Tasks/Tasks";
 import ModalWindow from "../ModalWindow/ModalWindow";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from 'uuid';
 
 interface FormProps {
   // props: object;
@@ -47,7 +47,7 @@ const Form = ({ setTasksList, setIsShow, isShow, isEdit, task, tasksList}: FormP
       return [
         ...prevState,
         {
-          id: uuidv4(),
+          id: uuid(),
           title: inputValue.title,
           description: inputValue.description,
           date: new Date(),

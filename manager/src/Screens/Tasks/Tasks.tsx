@@ -4,7 +4,7 @@ import * as S from "./Tasks.styles";
 // import { Task } from "../TaskManager/TaskManager";
 import Form from "../../sharedComponents/FormElements/AddEditTaskForm";
 import Button from "../../sharedComponents/Button/Button";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from 'uuid';
 
 export interface Task {
   [x: string]: any;
@@ -16,26 +16,26 @@ export interface Task {
 
 const tasks: Task[] = [
   {
-    id: uuidv4(),
+    id: uuid(),
     title: "Daily Status Too",
     description:
       "Finest fish and veggies  german specialty! American, raw, meaty. Healthy...and green...Finest fish and veggies  german specialty!Finest fish and veggies  german specialty!",
     date: new Date("2019-01-16"),
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     title: "call",
     description: "A german specialty!",
     date: new Date("2019-01-16"),
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     title: "BB",
     description: "American, raw, meaty",
     date: new Date("2019-01-16"),
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     title: "Green Bowl",
     description: "Healthy...and green...",
     date: new Date("2019-01-16"),
