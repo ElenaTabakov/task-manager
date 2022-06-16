@@ -4,6 +4,8 @@ import Input from "./Input/Input";
 import { Task } from "../../Screens/Tasks/Tasks";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import { v4 as uuid } from "uuid";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface FormProps {
   // props: object;
@@ -33,6 +35,8 @@ const Form = ({
       ? { title: task.title, description: task.description }
       : { title: "", description: "" }
   );
+  const [startDate, setStartDate] = useState(task ? task.date : new Date());
+
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -61,7 +65,7 @@ const Form = ({
           id: uuid(),
           title: inputValue.title,
           description: inputValue.description,
-          date: new Date(),
+          date: startDate,
         },
       ];
     });
@@ -81,6 +85,7 @@ const Form = ({
             ...localtask,
             title: inputValue.title,
             description: inputValue.description,
+            date: startDate,
           };
         }
 
@@ -95,6 +100,7 @@ const Form = ({
   };
 
   return (
+    
     <ModalWindow
       title={isEdit ? "Edit Task" : "Add New Task"}
       visible={isShow}
@@ -121,6 +127,7 @@ const Form = ({
           error={errorMessage.description}
           value={inputValue.description}
         />
+       <DatePicker selected={startDate} onChange={(date:Date) => setStartDate(date)} />
       </S.Form>
     </ModalWindow>
   );
