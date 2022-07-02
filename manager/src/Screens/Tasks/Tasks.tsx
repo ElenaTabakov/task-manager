@@ -1,46 +1,22 @@
 import { useState } from "react";
+import { RootState } from "../../store/store";
+import { useSelector, useDispatch } from "react-redux"; 
 import TaskItem from "./TaskItem/TaskItem";
 import * as S from "./Tasks.styles";
 // import { Task } from "../TaskManager/TaskManager";
 import Form from "../../sharedComponents/FormElements/AddEditTaskForm";
 import Button from "../../sharedComponents/Button/Button";
 import { v4 as uuid } from 'uuid';
+import  { deleteTask }  from '../../store/slices/tasksSlice'
 
 export interface Task {
-  [x: string]: any;
   id: string;
   title: string;
   description: string;
   date: Date;
 }
 
-const tasks: Task[] = [
-  {
-    id: uuid(),
-    title: "Daily Status Too",
-    description:
-      "Finest fish and veggies  german specialty! American, raw, meaty. Healthy...and green...Finest fish and veggies  german specialty!Finest fish and veggies  german specialty!",
-    date: new Date("2019-01-16"),
-  },
-  {
-    id: uuid(),
-    title: "call",
-    description: "A german specialty!",
-    date: new Date("2019-01-16"),
-  },
-  {
-    id: uuid(),
-    title: "BB",
-    description: "American, raw, meaty",
-    date: new Date("2019-01-16"),
-  },
-  {
-    id: uuid(),
-    title: "Green Bowl",
-    description: "Healthy...and green...",
-    date: new Date("2019-01-16"),
-  },
-];
+// const tasks: Task[] = 
 
 
 // interface TasksProps {
@@ -51,12 +27,13 @@ const tasks: Task[] = [
 
 const Tasks = () => {
 
-  const [tasksList, setTasksList] = useState<Task[]>(tasks);
+  const tasks = useSelector((state: RootState) => state.taskSlice.tasks)
+  const dispatch = useDispatch()
+
+  // const [tasksList, setTasksList] = useState<Task[]>(tasks);
 
   const handleDeleteTask = (id: string) => {
-    setTasksList((prevState) => {
-      return prevState.filter((task) => task.id !== id);
-    });
+    dispatch(deleteTask(id));
   };
 
   const [isShow, setIsShow] = useState(false);
@@ -66,21 +43,22 @@ const Tasks = () => {
       <Button onClick={() => setIsShow(true)}>Add Task</Button>
       <S.ListWrapper>
         <S.ListUl>
-          {tasksList.map((task) => {
+          {tasks.map((task) => {
             return (
               <TaskItem
                 key={task.id}
                 task={task}
-                onDelete={handleDeleteTask}
-                setTasksList={setTasksList}
-                tasksList={tasksList}
+                // id={task.id}
+                onDelete={() => handleDeleteTask(task.id)}
+                // setTasksList={setTasksList}
+                // tasksList={tasksList}
               />
             );
           })}
         </S.ListUl>
       </S.ListWrapper>
     
-        <Form setTasksList={setTasksList} setIsShow={setIsShow} isShow={isShow} isEdit={false}/>
+        <Form  setIsShow={setIsShow} isShow={isShow} isEdit={false}/>
     
     </S.TasksContainer>
   );

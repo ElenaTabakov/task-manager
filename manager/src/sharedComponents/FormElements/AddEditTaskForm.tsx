@@ -1,16 +1,19 @@
 import React, { ChangeEvent, useState } from "react";
+import { RootState } from "../../store/store";
+import { useSelector, useDispatch } from "react-redux"; 
 import * as S from "./Form.styled";
 import Input from "./Input/Input";
 import { Task } from "../../Screens/Tasks/Tasks";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import { v4 as uuid } from "uuid";
 import DatePicker from "react-datepicker";
+import  { addTask , editTask }  from '../../store/slices/tasksSlice'
 import "react-datepicker/dist/react-datepicker.css";
 
+
+
 interface FormProps {
-  // props: object;
-  // addNewTask:object;
-  setTasksList: React.Dispatch<React.SetStateAction<Task[]>>;
+  setTasksList?: React.Dispatch<React.SetStateAction<Task[]>>;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
   isShow: boolean;
   isEdit: boolean;
@@ -19,12 +22,11 @@ interface FormProps {
 }
 
 const Form = ({
-  setTasksList,
   setIsShow,
   isShow,
   isEdit = false,
-  task,
-  tasksList,
+  // task,
+  // tasksList,
 }: FormProps) => {
   const [errorMessage, setErrorMessage] = useState({
     title: "",
@@ -37,6 +39,9 @@ const Form = ({
   );
   const [startDate, setStartDate] = useState(task ? task.date : new Date());
 
+  const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
+
+  const dispatch = useDispatch();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -58,17 +63,7 @@ const Form = ({
 
   const handleAddItem = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setTasksList((prevState) => {
-      return [
-        ...prevState,
-        {
-          id: uuid(),
-          title: inputValue.title,
-          description: inputValue.description,
-          date: startDate,
-        },
-      ];
-    });
+    dispatch(addTask({id: uuid(), title: inputValue.title, description: inputValue.description, date: startDate,}));
     setIsShow(false);
     setInputValue({ title: "", description: "" });
   };
@@ -77,7 +72,7 @@ const Form = ({
     e.preventDefault();
 
     if (tasksList && task) {
-      console.log(task.id);
+      // console.log(task.id);
 
       const newTasksList = tasksList.map((localtask) => {
         if (localtask.id === task.id) {
@@ -92,7 +87,7 @@ const Form = ({
         return localtask;
       });
 
-      setTasksList(newTasksList);
+      // setTasksList(newTasksList);
       setIsShow(false);
     }
 

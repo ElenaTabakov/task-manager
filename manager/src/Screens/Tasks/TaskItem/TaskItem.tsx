@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Task } from "../../Tasks/Tasks";
+import { Task } from "../Tasks";
+import { RootState } from "../../../store/store";
+import { useSelector, useDispatch } from "react-redux"; 
 import Button from "../../../sharedComponents/Button/Button";
 import Circle from "../../../sharedComponents/CircleTitle/CircleTitle";
 import EditTaskForm from "../../../sharedComponents/FormElements/EditTaskForm";
@@ -10,8 +12,8 @@ interface TaskItemProps {
   task: Task;
   className?: string;
   onDelete: (id:string) => void;
-  tasksList: Task[];
-  setTasksList: React.Dispatch<React.SetStateAction<Task[]>>;
+  tasksList?: Task[];
+  setTasksList?: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
 const TaskItem = ({
@@ -19,11 +21,13 @@ const TaskItem = ({
   task: Task,
   className,
   onDelete,
-  setTasksList,
-  tasksList
+  // setTasksList,
+  // tasksList
 }: TaskItemProps ) => {
  
 const [visibleEdirForm,setVisibleEditForm] = useState<boolean>(false);  
+const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
+
 
   return (
     <S.ListItem id={id} className={className}>
@@ -41,7 +45,7 @@ const [visibleEdirForm,setVisibleEditForm] = useState<boolean>(false);
         x
       </Button>
       <Button size='small' onClick={() => setVisibleEditForm(!visibleEdirForm)}> {(visibleEdirForm) ? 'Close Edit Form' : 'Edit Task'} </Button>
-      <Form isEdit isShow={visibleEdirForm} setIsShow={setVisibleEditForm} setTasksList={setTasksList} task={Task} tasksList={tasksList}/>
+      <Form isEdit isShow={visibleEdirForm} setIsShow={setVisibleEditForm} task={Task} tasks={tasks}/>
    
     </S.ListItem>
   );
