@@ -13,19 +13,19 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 interface FormProps {
-  setTasksList?: React.Dispatch<React.SetStateAction<Task[]>>;
+  // setTasksList?: React.Dispatch<React.SetStateAction<Task[]>>;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
   isShow: boolean;
   isEdit: boolean;
   task?: Task ;
-  tasksList?: Task[];
+  // tasksList?: Task[];
 }
 
 const Form = ({
   setIsShow,
   isShow,
   isEdit = false,
-  // task,
+  task
   // tasksList,
 }: FormProps) => {
   const [errorMessage, setErrorMessage] = useState({
@@ -63,7 +63,7 @@ const Form = ({
 
   const handleAddItem = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch(addTask({id: uuid(), title: inputValue.title, description: inputValue.description, date: startDate,}));
+    dispatch(addTask({title: inputValue.title, description: inputValue.description, date: startDate,}));
     setIsShow(false);
     setInputValue({ title: "", description: "" });
   };
@@ -71,23 +71,9 @@ const Form = ({
   const editTaskHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (tasksList && task) {
+    if (tasks && task) {
       // console.log(task.id);
-
-      const newTasksList = tasksList.map((localtask) => {
-        if (localtask.id === task.id) {
-          return {
-            ...localtask,
-            title: inputValue.title,
-            description: inputValue.description,
-            date: startDate,
-          };
-        }
-
-        return localtask;
-      });
-
-      // setTasksList(newTasksList);
+      dispatch(editTask({id: uuid(), title: inputValue.title, description: inputValue.description, date: startDate,}));
       setIsShow(false);
     }
 

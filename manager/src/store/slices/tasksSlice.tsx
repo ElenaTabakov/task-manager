@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { Task } from '../../Screens/Tasks/Tasks'
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { Task } from '../../Screens/Tasks/Tasks';
 import { v4 as uuid } from "uuid";
 
 export interface TasksState {
@@ -46,7 +46,7 @@ export const tasksSlice = createSlice({
             state.tasks = state.tasks.filter((task) => payload !== task.id);    
     },
 
-    addTask: ( state, {payload}: PayloadAction<Task>) =>{
+    addTask: ( state, {payload}: PayloadAction<Omit<Task, 'id'>>) =>{
       state.tasks  =  [
             ...state.tasks,
             {
@@ -58,8 +58,20 @@ export const tasksSlice = createSlice({
           ]
     },
 
-    editTask: (state,{payload}: PayloadAction<Task>) => {
-     
+    editTask: (state,{payload}: PayloadAction<Task>) => {  
+      // state.tasks   
+      state.tasks = state.tasks.map((tasks) => {
+        if (payload.id === tasks.id) {
+          return {
+            ...tasks,
+            title: payload.title,
+            description: payload.description,
+            date: payload.date,
+          };
+        }
+
+        return tasks;
+      });
     },
   },
 })

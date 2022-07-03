@@ -12,8 +12,8 @@ interface TaskItemProps {
   task: Task;
   className?: string;
   onDelete: (id:string) => void;
-  tasksList?: Task[];
-  setTasksList?: React.Dispatch<React.SetStateAction<Task[]>>;
+  // tasksList?: Task[];
+  // setTasksList?: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
 const TaskItem = ({
@@ -21,8 +21,6 @@ const TaskItem = ({
   task: Task,
   className,
   onDelete,
-  // setTasksList,
-  // tasksList
 }: TaskItemProps ) => {
  
 const [visibleEdirForm,setVisibleEditForm] = useState<boolean>(false);  
@@ -45,7 +43,7 @@ const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
         x
       </Button>
       <Button size='small' onClick={() => setVisibleEditForm(!visibleEdirForm)}> {(visibleEdirForm) ? 'Close Edit Form' : 'Edit Task'} </Button>
-      <Form isEdit isShow={visibleEdirForm} setIsShow={setVisibleEditForm} task={Task} tasks={tasks}/>
+      <Form isEdit isShow={visibleEdirForm} setIsShow={setVisibleEditForm} task={task}/>
    
     </S.ListItem>
   );
