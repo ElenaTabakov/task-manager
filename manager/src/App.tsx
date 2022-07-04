@@ -1,19 +1,15 @@
-import Tasks from "./Screens/Tasks/Tasks";
-
+import { Link } from "react-router-dom";
+import  *  as S from "./Screens/Pages.styles";
 
 function App() {
-  // const [tasksList, setTasksList] = useState<Task[]>(tasks);
-  // console.log(tasksList);
 
 
   return (
-    <>
-      {/* <Sc.InputWrapper>
-        <Form setTasksList={setTasksList} />
-      </Sc.InputWrapper>
-      <CurrentTasks tasksList={tasksList} setTasksList={setTasksList}/> */}
-      <Tasks/>
-    </>
+    <S.PageContainer>
+        <Link to="/">Home</Link> | {" "}
+        <Link to="/login">Login</Link> | {" "}
+        <Link to="/tasks">Tasks</Link>   
+    </S.PageContainer>
   );
 }
 

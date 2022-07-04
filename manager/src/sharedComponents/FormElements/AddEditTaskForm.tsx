@@ -5,7 +5,6 @@ import * as S from "./Form.styled";
 import Input from "./Input/Input";
 import { Task } from "../../Screens/Tasks/Tasks";
 import ModalWindow from "../ModalWindow/ModalWindow";
-import { v4 as uuid } from "uuid";
 import DatePicker from "react-datepicker";
 import  { addTask , editTask }  from '../../store/slices/tasksSlice'
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,12 +12,10 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 interface FormProps {
-  // setTasksList?: React.Dispatch<React.SetStateAction<Task[]>>;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
   isShow: boolean;
   isEdit: boolean;
   task?: Task ;
-  // tasksList?: Task[];
 }
 
 const Form = ({
@@ -73,7 +70,7 @@ const Form = ({
 
     if (tasks && task) {
       // console.log(task.id);
-      dispatch(editTask({id: uuid(), title: inputValue.title, description: inputValue.description, date: startDate,}));
+      dispatch(editTask({id: task.id, title: inputValue.title, description: inputValue.description, date: startDate,}));
       setIsShow(false);
     }
 

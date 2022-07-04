@@ -16,21 +16,12 @@ export interface Task {
   date: Date;
 }
 
-// const tasks: Task[] = 
-
-
-// interface TasksProps {
-//   tasksList: Task[];
-//   setTasksList: React.Dispatch<React.SetStateAction<Task[]>>;
-//   // handleDeleteTask:React.Dispatch<React.SetStateAction<Task[]>>;
-// }
-
 const Tasks = () => {
 
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks)
   const dispatch = useDispatch()
 
-  // const [tasksList, setTasksList] = useState<Task[]>(tasks);
+
 
   const handleDeleteTask = (id: string) => {
     dispatch(deleteTask(id));
@@ -48,10 +39,7 @@ const Tasks = () => {
               <TaskItem
                 key={task.id}
                 task={task}
-                // id={task.id}
                 onDelete={() => handleDeleteTask(task.id)}
-                // setTasksList={setTasksList}
-                // tasksList={tasksList}
               />
             );
           })}

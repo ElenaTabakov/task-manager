@@ -46,7 +46,8 @@ export const tasksSlice = createSlice({
             state.tasks = state.tasks.filter((task) => payload !== task.id);    
     },
 
-    addTask: ( state, {payload}: PayloadAction<Omit<Task, 'id'>>) =>{
+    addTask: ( state, {payload}: PayloadAction<Omit<Task,'id'>>) =>{
+     
       state.tasks  =  [
             ...state.tasks,
             {
@@ -56,22 +57,28 @@ export const tasksSlice = createSlice({
               date: payload.date,
             },
           ]
+
+         
     },
 
-    editTask: (state,{payload}: PayloadAction<Task>) => {  
-      // state.tasks   
-      state.tasks = state.tasks.map((tasks) => {
-        if (payload.id === tasks.id) {
+    editTask: (state, {payload}: PayloadAction<Task>) => {  
+     
+      state.tasks = state.tasks.map((localtask) => {
+        console.log(payload.id , localtask.id); 
+        if (localtask.id === payload.id) {         
           return {
-            ...tasks,
+            ...localtask,
             title: payload.title,
             description: payload.description,
             date: payload.date,
           };
         }
 
-        return tasks;
+        return localtask;
       });
+
+    
+    //  state.tasks = newTasksList
     },
   },
 })

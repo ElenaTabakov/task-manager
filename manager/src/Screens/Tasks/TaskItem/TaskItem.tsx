@@ -4,7 +4,6 @@ import { RootState } from "../../../store/store";
 import { useSelector, useDispatch } from "react-redux"; 
 import Button from "../../../sharedComponents/Button/Button";
 import Circle from "../../../sharedComponents/CircleTitle/CircleTitle";
-import EditTaskForm from "../../../sharedComponents/FormElements/EditTaskForm";
 import * as S from "./TaskItem.styles";
 import Form from "../../../sharedComponents/FormElements/AddEditTaskForm";
 
@@ -12,13 +11,11 @@ interface TaskItemProps {
   task: Task;
   className?: string;
   onDelete: (id:string) => void;
-  // tasksList?: Task[];
-  // setTasksList?: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
 const TaskItem = ({
   task: { id, title, description, date },
-  task: Task,
+  task,
   className,
   onDelete,
 }: TaskItemProps ) => {

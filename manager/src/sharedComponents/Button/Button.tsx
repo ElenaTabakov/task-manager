@@ -22,6 +22,7 @@ const Button = ({
       className={className}
       disabled={disabled}
       margin ={margin || 'right'}
+      type = {'button' || 'reset' || 'submit'}
       {...props}
     >
       {children}
