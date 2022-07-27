@@ -66,16 +66,22 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
   };
 
   const onSubmit = () => {
-    usersTest.users.map((localUser) => {
-        if (localUser.email !== inputValue.email && localUser.password !== inputValue.password){
-            console.log('ERROR');
-            setIsAuth(false);
-        } else {
-            setIsAuth(true);
-        }
-    })
+    // usersTest.users.map((localUser) => {
+    //     if (localUser.email !== inputValue.email && localUser.password !== inputValue.password){
+    //         console.log('ERROR');
+    //         setIsAuth(false);
+    //     } else {
+    //         setIsAuth(true);
+    //     }
+    // })
+    let newUsers = usersTest.users.filter((user) => user.email === inputValue.email);
 
-       
+    if ( newUsers[0].password === inputValue.password){
+        // console.log(newUsers);
+        newUsers.map((user) => user.isAuth = true);
+        console.log(newUsers);
+        setIsAuth(true);
+    }       
   };
   
   return (
