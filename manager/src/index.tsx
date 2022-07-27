@@ -8,6 +8,7 @@ import { store } from "./store/store";
 import { Provider } from "react-redux";
 import Login from "./routes/login";
 import TasksList from "./routes/tasks";
+import { Register } from "./routes/register";
 
 
 const root = ReactDOM.createRoot(
@@ -16,11 +17,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      {/* <App /> */}
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="login" element={<Login />} />
         <Route path="tasks" element={<TasksList />} />
+        <Route path="register" element={<Register/>} />
         <Route
           path="*"
           element={

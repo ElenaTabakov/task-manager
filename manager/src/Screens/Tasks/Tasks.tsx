@@ -6,7 +6,6 @@ import * as S from "./Tasks.styles";
 // import { Task } from "../TaskManager/TaskManager";
 import Form from "../../sharedComponents/FormElements/AddEditTaskForm";
 import Button from "../../sharedComponents/Button/Button";
-import { v4 as uuid } from 'uuid';
 import  { deleteTask }  from '../../store/slices/tasksSlice'
 
 export interface Task {
@@ -14,6 +13,7 @@ export interface Task {
   title: string;
   description: string;
   date: Date;
+  userId: number;
 }
 
 const Tasks = () => {

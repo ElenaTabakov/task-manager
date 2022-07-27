@@ -60,7 +60,7 @@ const Form = ({
 
   const handleAddItem = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch(addTask({title: inputValue.title, description: inputValue.description, date: startDate,}));
+    dispatch(addTask({title: inputValue.title, description: inputValue.description, date: startDate, userId: 1}));
     setIsShow(false);
     setInputValue({ title: "", description: "" });
   };
@@ -70,7 +70,7 @@ const Form = ({
 
     if (tasks && task) {
       // console.log(task.id);
-      dispatch(editTask({id: task.id, title: inputValue.title, description: inputValue.description, date: startDate,}));
+      dispatch(editTask({id: task.id, title: inputValue.title, description: inputValue.description, date: startDate, userId: task.userId}));
       setIsShow(false);
     }
 

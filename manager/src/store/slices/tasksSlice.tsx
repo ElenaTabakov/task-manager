@@ -15,24 +15,28 @@ const initialState: TasksState = {
       description:
         "Finest fish and veggies  german specialty! American, raw, meaty. Healthy...and green...Finest fish and veggies  german specialty!Finest fish and veggies  german specialty!",
       date: new Date("2019-01-16"),
+      userId: 1,
     },
     {
       id: uuid(),
       title: "call",
       description: "A german specialty!",
       date: new Date("2019-01-16"),
+      userId: 1,
     },
     {
       id: uuid(),
       title: "BB",
       description: "American, raw, meaty",
       date: new Date("2019-01-16"),
+      userId: 2,
     },
     {
       id: uuid(),
       title: "Green Bowl",
       description: "Healthy...and green...",
       date: new Date("2019-01-16"),
+      userId: 2,
     },
   ]
 }
@@ -55,6 +59,7 @@ export const tasksSlice = createSlice({
               title:  payload.title,
               description: payload.description,
               date: payload.date,
+              userId: payload.userId,
             },
           ]
 
@@ -71,6 +76,7 @@ export const tasksSlice = createSlice({
             title: payload.title,
             description: payload.description,
             date: payload.date,
+            userId: payload.userId,
           };
         }
 
