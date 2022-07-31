@@ -1,36 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChangeEvent } from "react";
+import { useSelector, useDispatch } from "react-redux"; 
+import { RootState } from "store/store";
 import Button from "../Button/Button";
 import * as S from "./Form.styled";
 import Input from "./Input/Input";
+import { setUser , removeUser } from '../../store/slices/usersSlice'
+import { useNavigate } from "react-router-dom";
+import React from "react";
 
-export interface User {
-  id: number;
-  email: string;
-  password: string;
-  isAuth: boolean;
-}
-
-export interface usersTest {
-  users: User[];
-}
-
-const usersTest: usersTest = {
-  users: [
-    {
-      id: 1,
-      email: "a@test.tt",
-      password: "123",
-      isAuth: false,
-    },
-    {
-      id: 2,
-      email: "b@test.tt",
-      password: "123",
-      isAuth: false,
-    },
-  ],
-};
 
 interface LoginFormProps {
   loginBtnText: string;
@@ -42,7 +20,9 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
     email: "",
     password: ""
   });
-  const [isAuth, setIsAuth] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -64,26 +44,29 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
         })
     }
   };
+  const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
+ 
+  console.log('..' + isAuth);
+
+
+  useEffect(() => {  
+
+      if ( isAuth === true){
+
+        navigate('/tasks');
+        console.log('useEffect =>' + isAuth);
+    } 
+
+  }, [isAuth]);
 
   const onSubmit = () => {
-    // usersTest.users.map((localUser) => {
-    //     if (localUser.email !== inputValue.email && localUser.password !== inputValue.password){
-    //         console.log('ERROR');
-    //         setIsAuth(false);
-    //     } else {
-    //         setIsAuth(true);
-    //     }
-    // })
-    let newUsers = usersTest.users.filter((user) => user.email === inputValue.email);
 
-    if ( newUsers[0].password === inputValue.password){
-        // console.log(newUsers);
-        newUsers.map((user) => user.isAuth = true);
-        console.log(newUsers);
-        setIsAuth(true);
-    }       
+    dispatch(setUser({email: inputValue.email, password: inputValue.password}));
+    // console.log(user);
   };
   
+
+
   return (
     <S.Form>
       <Input
@@ -108,7 +91,7 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
       >
         {loginBtnText}
       </Button>
-      {isAuth && "Yahoo"}
+      {!isAuth && "Email or Password is incorrect"}
     </S.Form>
   );
 };
