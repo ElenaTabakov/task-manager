@@ -8,6 +8,7 @@ import ModalWindow from "../ModalWindow/ModalWindow";
 import DatePicker from "react-datepicker";
 import  { addTask , editTask }  from '../../store/slices/tasksSlice'
 import "react-datepicker/dist/react-datepicker.css";
+import {useAuth} from '../../hooks/use-auth'
 
 
 
@@ -25,6 +26,10 @@ const Form = ({
   task
   // tasksList,
 }: FormProps) => {
+
+
+  const {id} = useAuth();
+
   const [errorMessage, setErrorMessage] = useState({
     title: "",
     description: "",
@@ -60,7 +65,7 @@ const Form = ({
 
   const handleAddItem = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch(addTask({title: inputValue.title, description: inputValue.description, date: startDate, userId: 1}));
+    dispatch(addTask({title: inputValue.title, description: inputValue.description, date: startDate, userId: id }));
     setIsShow(false);
     setInputValue({ title: "", description: "" });
   };

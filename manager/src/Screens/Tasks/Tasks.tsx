@@ -13,7 +13,7 @@ export interface Task {
   title: string;
   description: string;
   date: Date;
-  userId: number;
+  userId: number | null;
 }
 
 const Tasks = () => {
