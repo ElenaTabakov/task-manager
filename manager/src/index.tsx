@@ -4,11 +4,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { store } from "./store/store";
+import { persistor, store } from "./store/store";
 import { Provider } from "react-redux";
 import Login from "./routes/login";
 import TasksList from "./routes/tasks";
 import { Register } from "./routes/register";
+import { PersistGate } from "redux-persist/integration/react";
 
 
 const root = ReactDOM.createRoot(
@@ -16,6 +17,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
+    <PersistGate persistor={persistor} loading={null}>
     <BrowserRouter>
       {/* <App /> */}
       <Routes>
@@ -33,6 +35,7 @@ root.render(
         />
       </Routes>
     </BrowserRouter>
+    </PersistGate>
   </Provider>
 );
 

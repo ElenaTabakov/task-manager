@@ -33,10 +33,11 @@ export default function TasksList() {
       </h2>
       {isAuth ? (
         <>
-          <Tasks />
           <Button type="button" size="medium" onClick={handleLogout}>
             Logout
           </Button>
+          <Tasks />
+          
         </>
       ) : (
         <Navigate to="/login" />
