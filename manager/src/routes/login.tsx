@@ -1,26 +1,30 @@
+import { useEffect } from "react";
 import LoginForm from "../sharedComponents/FormElements/LoginForm";
-import  *  as S from "../Screens/Pages.styles";
+import * as S from "../Screens/Pages.styles";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import Button from "../sharedComponents/Button/Button";
 import { useAuth } from "../hooks/use-auth";
-import { removeUser } from "../store/slices/usersSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
-  const dispatch = useDispatch();
   const { id, isAuth, email } = useAuth();
-  const handleLogout = () => {
-    dispatch(removeUser()) ;
-  };
+  const navigate = useNavigate();
+
+  useEffect(() => {  
+
+    if ( isAuth === true){
+      navigate('/tasks');
+  } 
+
+}, [isAuth]);
 
   return (
     <S.PageContainer>
       <h2>Login</h2>
-      {isAuth ? <Button type="button" size="medium" onClick={handleLogout}>Logout</Button> : <LoginForm loginBtnText="Log in" />}    
-       <Link  to='/register'> Register</Link>
+
+      <LoginForm loginBtnText="Log in" />
+      <Link to="/register"> Register</Link>
     </S.PageContainer>
-  )
+  );
 };
 
 export default Login;

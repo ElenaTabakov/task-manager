@@ -8,6 +8,7 @@ import { useAuth } from "../hooks/use-auth";
 import Button from "../sharedComponents/Button/Button";
 import { removeUser } from "../store/slices/usersSlice";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function TasksList() {
   // const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
@@ -17,14 +18,14 @@ export default function TasksList() {
   const handleLogout = () => {
     dispatch(removeUser()) ;
   };
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if ( isAuth === true){
-
-  //     dispatch(removeUser) 
-  // } 
+  useEffect(() => {
+    if ( isAuth === false){
+      navigate('/login');
+  } 
      
-  // },[isAuth]);
+  },[isAuth]);
 
   return (
     <S.PageContainer>

@@ -55,7 +55,7 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
       if ( isAuth === true){
 
         navigate('/tasks');
-        console.log('useEffect =>' + isAuth);
+        // console.log('useEffect =>' + isAuth);
         setErrorLogin(false);
     } 
 
