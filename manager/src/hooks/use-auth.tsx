@@ -3,10 +3,10 @@ import { RootState } from "../store/store";
 
 export const useAuth = () => {
     
-    const {email,  id} = useSelector((state: RootState) => state.userSlice);
+    const {email, id ,isAuth} = useSelector((state: RootState) => state.userSlice);
 
     return{
-        isAuth: !!email,
+        isAuth,
         email,
         id
     }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChangeEvent } from "react";
 import { useSelector, useDispatch } from "react-redux"; 
-import { RootState } from "store/store";
+import { RootState } from "../../store/store";
 import Button from "../Button/Button";
 import * as S from "./Form.styled";
 import Input from "./Input/Input";
@@ -20,7 +20,7 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
     email: "",
     password: ""
   });
-  const [isLogin, setIsLogin] = useState(false);
+  const [errorLogin, setErrorLogin] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -43,6 +43,7 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
             };
         })
     }
+    setErrorLogin(false);
   };
   const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
  
@@ -55,6 +56,7 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
 
         navigate('/tasks');
         console.log('useEffect =>' + isAuth);
+        setErrorLogin(false);
     } 
 
   }, [isAuth]);
@@ -62,6 +64,9 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
   const onSubmit = () => {
 
     dispatch(setUser({email: inputValue.email, password: inputValue.password}));
+    if( !isAuth  ){
+        setErrorLogin(true);
+    }
     // console.log(user);
   };
   
@@ -91,7 +96,7 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
       >
         {loginBtnText}
       </Button>
-      {!isAuth && "Email or Password is incorrect"}
+      {errorLogin && "Email or Password is incorrect"}
     </S.Form>
   );
 };

@@ -50,26 +50,18 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, { payload }: PayloadAction<Omit<User, "id">>) => {
        
-      usersTest.users.find((localUser) => {
-        if (
-          localUser.email == payload.email &&
-          localUser.password == payload.password
-        ) {
-            state = {
-               email : payload.email,
-                id : localUser.id,
-                password : payload.password,
-                isAuth : true,
-            }
+     const user = usersTest.users.find((localUser) => 
+                  localUser.email === payload.email &&
+                  localUser.password === payload.password 
+                  );
 
-            console.log(state)
-        //   state.email = payload.email;
-        //   state.id = localUser.id;
-        //   state.password = payload.password;
-        //   state.isAuth = true;
-        }
-      });
-
+          if(user) {
+            state.email = user.email;
+            state.id =  user.id;
+            state.isAuth =  true;
+          }
+      
+        console.log(state);
       console.log(' action =>' + state.isAuth);
     },
     removeUser(state) {

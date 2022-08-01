@@ -21,7 +21,10 @@ const Tasks = () => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks)
   const dispatch = useDispatch()
 
-
+  const userId = useSelector((state:RootState) => state.userSlice.id)
+  const isAuth = useSelector((state:RootState) => state.userSlice.isAuth)
+  
+  const tasksById = tasks.filter((task) =>  task.userId == userId );
 
   const handleDeleteTask = (id: string) => {
     dispatch(deleteTask(id));
@@ -34,11 +37,11 @@ const Tasks = () => {
       <Button onClick={() => setIsShow(true)}>Add Task</Button>
       <S.ListWrapper>
         <S.ListUl>
-          {tasks.map((task) => {
+          {tasksById.map((task) => {
             return (
               <TaskItem
                 key={task.id}
-                task={task}
+                task={task}               
                 onDelete={() => handleDeleteTask(task.id)}
               />
             );

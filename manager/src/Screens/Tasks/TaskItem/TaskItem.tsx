@@ -14,7 +14,7 @@ interface TaskItemProps {
 }
 
 const TaskItem = ({
-  task: { id, title, description, date },
+  task: { id, title, description, date, userId },
   task,
   className,
   onDelete,
