@@ -1,34 +1,40 @@
 import React, { ChangeEvent, useState } from "react";
 import { RootState } from "../../store/store";
-import { useSelector, useDispatch } from "react-redux"; 
+import { useSelector, useDispatch } from "react-redux";
 import * as S from "./Form.styled";
 import Input from "./Input/Input";
 import { Task } from "../../Screens/Tasks/Tasks";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import DatePicker from "react-datepicker";
-import  { addTask , editTask }  from '../../store/slices/tasksSlice'
+import { addTask, editTask } from "../../store/slices/tasksSlice";
 import "react-datepicker/dist/react-datepicker.css";
-import {useAuth} from '../../hooks/use-auth'
+import { useAuth } from "../../hooks/use-auth";
+import InputDate from "./InputDate";
+import { Formik } from "formik";
+import * as yup from "yup";
 
-
+export interface FormikTaskValues {
+  id: string;
+  title: string;
+  description: string;
+  date: Date;
+}
 
 interface FormProps {
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
   isShow: boolean;
   isEdit: boolean;
-  task?: Task ;
+  task?: Task;
 }
 
 const Form = ({
   setIsShow,
   isShow,
   isEdit = false,
-  task
-  // tasksList,
-}: FormProps) => {
-
-
-  const {id} = useAuth();
+  task,
+}: // tasksList,
+FormProps) => {
+  const { id } = useAuth();
 
   const [errorMessage, setErrorMessage] = useState({
     title: "",
@@ -39,7 +45,6 @@ const Form = ({
       ? { title: task.title, description: task.description }
       : { title: "", description: "" }
   );
-  const [startDate, setStartDate] = useState(task ? task.date : new Date());
 
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
 
@@ -63,56 +68,123 @@ const Form = ({
     }
   };
 
-  const handleAddItem = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAddItem = (
+    values: FormikTaskValues,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     e.preventDefault();
-    dispatch(addTask({title: inputValue.title, description: inputValue.description, date: startDate, userId: id }));
+    dispatch(
+      addTask({
+        title: inputValue.title,
+        description: inputValue.description,
+        date: values.date,
+        userId: id,
+      })
+    );
     setIsShow(false);
     setInputValue({ title: "", description: "" });
   };
 
-  const editTaskHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const editTaskHandler = (
+    values: FormikTaskValues,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     e.preventDefault();
 
     if (tasks && task) {
       // console.log(task.id);
-      dispatch(editTask({id: task.id, title: inputValue.title, description: inputValue.description, date: startDate, userId: task.userId}));
+      dispatch(
+        editTask({
+          id: task.id,
+          title: inputValue.title,
+          description: inputValue.description,
+          date: values.date,
+          userId: task.userId,
+        })
+      );
       setIsShow(false);
     }
 
     return task;
   };
 
+  const initialValuesTask = (task?: Task) => {
+    if (task) {
+      return {
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        date: task.date,
+      };
+    }
+    return {
+      id: "",
+      title: "",
+      description: "",
+      date: new Date(),
+    };
+  };
+
+  const validationSchema = yup.object().shape({
+    id: yup.string(),
+    title: yup.string().required("Requred").min(3, "Too short"),
+    description: yup.string().required("Requred").min(3, "Too short"),
+    date: yup.date(),
+  });
+
   return (
-    
-    <ModalWindow
-      title={isEdit ? "Edit Task" : "Add New Task"}
-      visible={isShow}
-      setIsShow={setIsShow}
-      cancelBtnText="Cancel"
-      confirmBtnText={isEdit ? "Edit" : "Add"}
-      onSubmit={isEdit ? editTaskHandler : handleAddItem}
-      disabled={!inputValue.title || !inputValue.description}
+    <Formik
+      initialValues={initialValuesTask(task)}
+      validateOnBlur
+      validationSchema={validationSchema}
+      onSubmit={(values: FormikTaskValues): void | Promise<any> => {
+
+
+        console.log(values);
+        // {isEdit ? editTaskHandler : handleAddItem}
+      }}
     >
-      <S.Form>
-        <Input
-          type="text"
-          name="title"
-          placeholder="Task Title"
-          onChange={handleInputChange}
-          error={errorMessage.title}
-          value={inputValue.title}
-        />
-        <Input
-          type="text"
-          name="description"
-          placeholder="Task Description"
-          onChange={handleInputChange}
-          error={errorMessage.description}
-          value={inputValue.description}
-        />
-       <DatePicker selected={startDate} onChange={(date:Date) => setStartDate(date)} />
-      </S.Form>
-    </ModalWindow>
+      {({
+        values,
+        errors,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        touched,
+        isValid,
+        dirty,
+      }) => (
+        <ModalWindow
+          title={isEdit ? "Edit Task" : "Add New Task"}
+          visible={isShow}
+          setIsShow={setIsShow}
+          cancelBtnText="Cancel"
+          confirmBtnText={isEdit ? "Edit" : "Add"}
+          onSubmit={handleSubmit}
+          disabled={!values.title || !values.description}
+        >
+          <S.Form>
+            <Input
+              type="text"
+              name="title"
+              placeholder="Task Title"
+              onChange={handleChange}
+              error={errors.title}
+              value={values.title}
+            />
+            <Input
+              type="text"
+              name="description"
+              placeholder="Task Description"
+              onChange={handleChange}
+              error={errors.description}
+              value={values.description}
+            />
+            <InputDate />
+          </S.Form>
+        </ModalWindow>
+      )}
+    </Formik>
   );
 };
 

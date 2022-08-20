@@ -1,4 +1,4 @@
-import { ReactElement, ReactEventHandler } from "react";
+import { FormEvent, ReactElement, ReactEventHandler } from "react";
 import Button from "../Button/Button";
 import * as S from "./ModalWindow.styles";
 
@@ -9,7 +9,7 @@ interface ModalWindowProps {
   children: ReactElement | string;
   visible: boolean;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
-  onSubmit:(e: React.MouseEvent<HTMLButtonElement> ) => void;
+  onSubmit:( ) => void ; 
   disabled: boolean;
 }
 
