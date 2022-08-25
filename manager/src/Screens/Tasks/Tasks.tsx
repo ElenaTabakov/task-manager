@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { RootState } from "../../store/store";
-import { useSelector, useDispatch } from "react-redux"; 
+import { useSelector, useDispatch } from "react-redux";
 import TaskItem from "./TaskItem/TaskItem";
 import * as S from "./Tasks.styles";
 // import { Task } from "../TaskManager/TaskManager";
 import Form from "../../sharedComponents/FormElements/AddEditTaskForm";
 import Button from "../../sharedComponents/Button/Button";
-import  { deleteTask }  from '../../store/slices/tasksSlice'
+import { deleteTask } from "../../store/slices/tasksSlice";
+import { Input } from "../../sharedComponents/FormElements/Input/Input.styles";
 
 export interface Task {
   id: string;
@@ -17,40 +18,58 @@ export interface Task {
 }
 
 const Tasks = () => {
+  const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
+  const dispatch = useDispatch();
 
-  const tasks = useSelector((state: RootState) => state.taskSlice.tasks)
-  const dispatch = useDispatch()
+  const userId = useSelector((state: RootState) => state.userSlice.id);
+  const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
 
-  const userId = useSelector((state:RootState) => state.userSlice.id)
-  const isAuth = useSelector((state:RootState) => state.userSlice.isAuth)
-  
-  const tasksById = tasks.filter((task) =>  task.userId == userId );
+  const tasksById = tasks.filter((task) => task.userId == userId);
 
   const handleDeleteTask = (id: string) => {
     dispatch(deleteTask(id));
   };
 
   const [isShow, setIsShow] = useState(false);
-  
+
+  const [tasksNew, setTasksNew] = useState(tasksById);
+
+  const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let inputVal = e.target.value;
+
+    const tasksOnSearch = tasksById.filter((task) => {
+      if (
+        task.title.includes(inputVal) ||
+        task.description.includes(inputVal)
+      ) {
+        return task;
+      }
+    });
+
+    setTasksNew(tasksOnSearch);
+  };
+
   return (
     <S.TasksContainer>
+      <form>
+        <Input type="search" onChange={handleOnChangeSearch} error  placeholder="Search" />
+      </form>
       <Button onClick={() => setIsShow(true)}>Add Task</Button>
       <S.ListWrapper>
         <S.ListUl>
-          {tasksById.map((task) => {
+          {tasksNew.map((task) => {
             return (
               <TaskItem
                 key={task.id}
-                task={task}               
+                task={task}
                 onDelete={() => handleDeleteTask(task.id)}
               />
             );
           })}
         </S.ListUl>
       </S.ListWrapper>
-    
-      <Form  setIsShow={setIsShow} isShow={isShow} isEdit={false}/>
-    
+
+      <Form setIsShow={setIsShow} isShow={isShow} isEdit={false} />
     </S.TasksContainer>
   );
 };
