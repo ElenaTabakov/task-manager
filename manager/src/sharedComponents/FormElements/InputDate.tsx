@@ -12,7 +12,7 @@ console.log(values.date);
 
     return (
       
-        <DatePicker selected={values.date} onChange={(date:Date) => setFieldValue('values.date' , date )} />
+        <DatePicker selected={values.date} onChange={(date:Date) => setFieldValue('date' , date )} />
     )
 }
 
