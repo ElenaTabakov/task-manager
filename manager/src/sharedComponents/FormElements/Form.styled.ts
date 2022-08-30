@@ -3,6 +3,9 @@ import styled from "styled-components";
 
 export const Form = styled.form`
     margin:15px;
+    &.search_form{
+        margin-left: 0;
+    }
 `
 
 export const FormWrapper = styled.div`

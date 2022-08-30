@@ -7,7 +7,7 @@ import * as S from "./Tasks.styles";
 import Form from "../../sharedComponents/FormElements/AddEditTaskForm";
 import Button from "../../sharedComponents/Button/Button";
 import { deleteTask } from "../../store/slices/tasksSlice";
-import { Input } from "../../sharedComponents/FormElements/Input/Input.styles";
+import SearchForm from "../../sharedComponents/SearchForm";
 
 export interface Task {
   id: string;
@@ -24,7 +24,7 @@ const Tasks = () => {
   const userId = useSelector((state: RootState) => state.userSlice.id);
   const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
 
-  const tasksById = tasks.filter((task) => task.userId == userId);
+  const tasksByUser = tasks.filter((task) => task.userId == userId);
 
   const handleDeleteTask = (id: string) => {
     dispatch(deleteTask(id));
@@ -32,12 +32,12 @@ const Tasks = () => {
 
   const [isShow, setIsShow] = useState(false);
 
-  const [tasksNew, setTasksNew] = useState(tasksById);
+  const [filteredTasks, setFilteredTasks] = useState(tasksByUser);
 
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputVal = e.target.value;
 
-    const tasksOnSearch = tasksById.filter((task) => {
+    const tasksOnSearch = tasksByUser.filter((task) => {
       if (
         task.title.includes(inputVal) ||
         task.description.includes(inputVal)
@@ -46,18 +46,29 @@ const Tasks = () => {
       }
     });
 
-    setTasksNew(tasksOnSearch);
+    setFilteredTasks(tasksOnSearch);
+    
   };
+  
+  const handleToggleSortTasks = () => {
+   
+    const sortedTasks = [...filteredTasks].sort((a,b) => {return a.title > b.title ? 1 : -1 });
+
+   console.log(sortedTasks); 
+   setFilteredTasks(sortedTasks);
+
+  }
 
   return (
     <S.TasksContainer>
-      <form>
-        <Input type="search" onChange={handleOnChangeSearch} error  placeholder="Search" />
-      </form>
+      <SearchForm handleOnChangeSearch={handleOnChangeSearch} />
+      <Button type="button" onClick={handleToggleSortTasks} size="small" >
+        Sort A-Z
+      </Button>
       <Button onClick={() => setIsShow(true)}>Add Task</Button>
       <S.ListWrapper>
         <S.ListUl>
-          {tasksNew.map((task) => {
+          {filteredTasks.map((task) => {
             return (
               <TaskItem
                 key={task.id}
