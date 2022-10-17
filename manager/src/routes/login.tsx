@@ -6,7 +6,7 @@ import { useAuth } from "../hooks/use-auth";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { id, isAuth, email } = useAuth();
+  const { isAuth, users} = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {  

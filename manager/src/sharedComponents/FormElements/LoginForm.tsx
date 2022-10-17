@@ -1,30 +1,23 @@
-import React from "react";
 import { useEffect, useState } from "react";
-import { ChangeEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
 import Button from "../Button/Button";
 import * as S from "./Form.styled";
 import Input from "./Input/Input";
-import { setUser, removeUser } from "../../store/slices/usersSlice";
+// import { setUser} from "../../store/slices/usersSlice";
 import { useNavigate } from "react-router-dom";
-import { Formik, FormikHelpers } from "formik";
+import { Formik } from "formik";
 import * as yup from 'yup';
-import { isValidDateValue } from "@testing-library/user-event/dist/utils";
-import { queryHelpers } from "@testing-library/react";
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { loginUser } from "../../store/slices/usersSlice";
 
 interface LoginFormProps {
   loginBtnText: string;
 }
 
 const LoginForm = ({ loginBtnText }: LoginFormProps) => {
-  // const [inputValue, setInputValue] = useState({ email: "", password: "" });
-  // const [errorMessage, setErrorMessage] = useState({
-  //   email: "",
-  //   password: "",
-  // });
   const [errorLogin, setErrorLogin] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const navigate = useNavigate();
 
   // const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,17 +56,6 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
     }
   }, [isAuth]);
 
-  // const handleFormValidation = ( value : LoginFormValues, helpers: FormikHelpers<LoginFormValues>) => {
-  //   dispatch(
-  //     setUser({ email: value.email, password: value.password })
-  //   );
-  //   if (!isAuth) {
-  //     setErrorLogin(true);
-  //     // console.log('Email or Password is incorrect ')
-  //   }
-  //   // console.log(user);
-  // };
-
   const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Required'),
     password: yup.string().required('Reuired')
@@ -90,9 +72,7 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
       }}
       validateOnBlur
       onSubmit={( values : LoginFormValues) => {
-        dispatch(
-          setUser({ email:values.email, password: values.password })
-        );
+        dispatch(loginUser({email: values.email, password: values.password}));
         if (!isAuth) {
           setErrorLogin(true);       
         }

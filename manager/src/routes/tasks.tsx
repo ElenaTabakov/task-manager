@@ -6,17 +6,17 @@ import * as S from "../Screens/Pages.styles";
 import * as St from "../sharedComponents/Button/Button.styles";
 import { useAuth } from "../hooks/use-auth";
 import Button from "../sharedComponents/Button/Button";
-import { removeUser } from "../store/slices/usersSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../store/slices/usersSlice";
 
 export default function TasksList() {
   // const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
 
   const dispatch = useDispatch();
-  const { id, isAuth, email } = useAuth();
+  const { isAuth, users } = useAuth();
   const handleLogout = () => {
-    dispatch(removeUser()) ;
+     dispatch(logoutUser());
   };
   const navigate = useNavigate();
 
@@ -27,10 +27,12 @@ export default function TasksList() {
      
   },[isAuth]);
 
+  console.log(users);
   return (
     <S.PageContainer>
       <h2>
-        Tasks of user id {id} email: {email}
+
+        {/* Tasks of user id {id} email: {email} */}
       </h2>
       {isAuth ? (
         <>

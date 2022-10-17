@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import tasksReducer from "./slices/tasksSlice";
+import tasksReducer from './slices/tasksSlice';
 import userReducer from "./slices/usersSlice";
 import storage from "redux-persist/lib/storage";
 import {

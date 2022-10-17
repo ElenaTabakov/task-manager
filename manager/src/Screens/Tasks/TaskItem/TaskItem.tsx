@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Task } from "../Tasks";
 import { RootState } from "../../../store/store";
-import { useSelector, useDispatch } from "react-redux"; 
+import { useSelector, useDispatch } from "react-redux";
 import Button from "../../../sharedComponents/Button/Button";
 import Circle from "../../../sharedComponents/CircleTitle/CircleTitle";
 import * as S from "./TaskItem.styles";
@@ -10,19 +10,17 @@ import Form from "../../../sharedComponents/FormElements/AddEditTaskForm";
 interface TaskItemProps {
   task: Task;
   className?: string;
-  onDelete: (id:string) => void;
+  onDelete: (id: string) => void;
 }
 
 const TaskItem = ({
-  task: { id, title, description, date, userId },
+  task: { id, title, description, shortDescription, dueDate, duration, status },
   task,
   className,
   onDelete,
-}: TaskItemProps ) => {
- 
-const [visibleEdirForm,setVisibleEditForm] = useState<boolean>(false);  
-const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
-
+}: TaskItemProps) => {
+  const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
+  const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
 
   return (
     <S.ListItem id={id} className={className}>
@@ -34,18 +32,23 @@ const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
         } } */}
         <S.ListName>{title}</S.ListName>
         <S.ListDescription>{description}</S.ListDescription>
-        <S.ListDate>{date.toLocaleString()}</S.ListDate>
+        <S.ListDate>{dueDate.toLocaleString()}</S.ListDate>
       </S.ListItemContent>
-      <Button size="small" onClick={() => onDelete(id)} >
+      <Button size="small" onClick={() => onDelete(id)}>
         x
       </Button>
-      <Button size='small' onClick={() => setVisibleEditForm(!visibleEdirForm)}> {(visibleEdirForm) ? 'Close Edit Form' : 'Edit Task'} </Button>
-      <Form isEdit isShow={visibleEdirForm} setIsShow={setVisibleEditForm} task={task}/>
-   
+      <Button size="small" onClick={() => setVisibleEditForm(!visibleEdirForm)}>
+        {" "}
+        {visibleEdirForm ? "Close Edit Form" : "Edit Task"}{" "}
+      </Button>
+      <Form
+        isEdit
+        isShow={visibleEdirForm}
+        setIsShow={setVisibleEditForm}
+        task={task}
+      />
     </S.ListItem>
   );
 };
 
 export default TaskItem;
-
-

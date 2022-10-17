@@ -5,19 +5,28 @@ import * as S from "./Form.styled";
 import Input from "./Input/Input";
 import { Task } from "../../Screens/Tasks/Tasks";
 import ModalWindow from "../ModalWindow/ModalWindow";
-import { addTask, editTask } from "../../store/slices/tasksSlice";
+// import { addTask, editTask } from "../../store/slices/tasksSlice";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAuth } from "../../hooks/use-auth";
 import InputDate from "./InputDate";
 import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
-
+import {
+  fetchTasksByUserId,
+  createTasks,
+  updateTasks,
+  deleteTasks,
+} from "../../store/slices/tasksSlice";
+import { AnyAction, ThunkAction, ThunkDispatch } from "@reduxjs/toolkit";
 
 export interface FormikTaskValues {
   id: string;
   title: string;
   description: string;
-  date: Date;
+  shortDescription: string;
+  dueDate: Date;
+  duration: number;
+  status: string;
 }
 
 interface FormProps {
@@ -34,7 +43,7 @@ const Form = ({
   task,
 }: // tasksList,
 FormProps) => {
-  const { id } = useAuth();
+  //////// const { id } = useAuth();
 
   // const [errorMessage, setErrorMessage] = useState({
   //   title: "",
@@ -47,8 +56,7 @@ FormProps) => {
   // );
 
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
 
   // const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
   //   const value = e.target.value;
@@ -74,11 +82,14 @@ FormProps) => {
   ) => {
     // e.preventDefault();
     dispatch(
-      addTask({
+      createTasks({
+        id: "",
         title: values.title,
         description: values.description,
-        date: values.date,
-        userId: id,
+        shortDescription: values.shortDescription,
+        dueDate: new Date(),
+        duration: values.duration,
+        status: "UPCOMING",
       })
     );
     setIsShow(false);
@@ -86,20 +97,20 @@ FormProps) => {
     // setInputValue({ title: "", description: "" });
   };
 
-  const editTaskHandler = (
-    values: FormikTaskValues
-  ) => {
+  const editTaskHandler = (values: FormikTaskValues) => {
     // e.preventDefault();
 
     if (tasks && task) {
       // console.log(task.id);
       dispatch(
-        editTask({
+        updateTasks({
           id: values.id,
           title: values.title,
           description: values.description,
-          date: values.date,
-          userId: task.userId,
+          shortDescription: values.shortDescription,
+          dueDate: new Date(),
+          duration: values.duration,
+          status: "UPCOMING",
         })
       );
       setIsShow(false);
@@ -114,14 +125,20 @@ FormProps) => {
         id: task.id,
         title: task.title,
         description: task.description,
-        date: new Date(task.date),
+        shortDescription: task.shortDescription,
+        dueDate: new Date(task.dueDate),
+        duration: task.duration,
+        status: task.status,
       };
     }
     return {
       id: "",
       title: "",
       description: "",
-      date: new Date(),
+      shortDescription: "",
+      dueDate: new Date(),
+      duration: 0,
+      status: "",
     };
   };
 
@@ -129,9 +146,10 @@ FormProps) => {
     id: yup.string(),
     title: yup.string().required("Requred").min(3, "Too short"),
     description: yup.string().required("Requred").min(3, "Too short"),
-    date: yup.date(),
+    shortDescription: yup.string().required("Requred").min(3, "Too short"),
+    duration: yup.number(),
+    dueDate: yup.date(),
   });
-
 
   return (
     <Formik
@@ -141,10 +159,10 @@ FormProps) => {
       onSubmit={
         // (values: FormikTaskValues): void | Promise<any> => {
         // console.log(values);
-        
+
         isEdit ? editTaskHandler : handleAddItem
-      // }
-    }
+        // }
+      }
     >
       {({
         values,
@@ -154,7 +172,7 @@ FormProps) => {
         handleSubmit,
         touched,
         isValid,
-        dirty
+        dirty,
       }) => (
         <ModalWindow
           title={isEdit ? "Edit Task" : "Add New Task"}
@@ -182,6 +200,22 @@ FormProps) => {
               error={errors.description}
               value={values.description}
             />
+            <Input
+              type="text"
+              name="shortDescription"
+              placeholder="Short Description"
+              onChange={handleChange}
+              error={errors.shortDescription}
+              value={values.shortDescription}
+            />
+            <Input
+              type="number"
+              name="duration"
+              placeholder="Duration"
+              onChange={handleChange}
+              error={errors.duration}
+              value={values.duration}
+            />
             <InputDate />
           </S.Form>
         </ModalWindow>
@@ -194,4 +228,3 @@ export default Form;
 function submitForm(values: FormikTaskValues, submitForm: any) {
   throw new Error("Function not implemented.");
 }
-

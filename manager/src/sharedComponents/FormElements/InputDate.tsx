@@ -4,17 +4,17 @@ import { FormikHelpers, useFormikContext } from "formik";
 import "react-datepicker/dist/react-datepicker.css";
 import { FormikTaskValues } from "./AddEditTaskForm";
 
-const InputDate = ( ) => {
+const InputDate = () => {
+  const { values, setFieldValue } = useFormikContext<FormikTaskValues>();
+  // console.log(values.dueDate);
+  // const [startDate, setStartDate] = useState(task ? task.date : new Date());
 
-    const {values, setFieldValue} = useFormikContext<FormikTaskValues>();
-console.log(values.date);
-    // const [startDate, setStartDate] = useState(task ? task.date : new Date());
-
-    return (
-      
-        <DatePicker selected={values.date} onChange={(date:Date) => setFieldValue('date' , date )} />
-    )
-}
-
+  return (
+    <DatePicker
+      selected={values.dueDate}
+      onChange={(date: Date) => setFieldValue("date", date)}
+    />
+  );
+};
 
 export default InputDate;

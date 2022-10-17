@@ -1,77 +1,160 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { _renderMatches } from "react-router/lib/hooks";
+import { axiosApi } from "../axios";
+import { v4 as uuid } from "uuid";
 
-export interface User {
-  id: number;
+export interface User extends RegisterUserPost {
+  id: string;
+}
+interface LoginUserPost {
   email: string;
   password: string;
 }
 
-export interface usersTest {
+interface RegisterUserPost extends LoginUserPost {
+  name: string;
+}
+export interface UsersProps {
   users: User[];
 }
 
-const usersTest: usersTest = {
-  users: [
-    {
-      id: 1,
-      email: "a@test.tt",
-      password: "123",
-    },
-    {
-      id: 2,
-      email: "b@test.tt",
-      password: "123",
-    },
-  ],
-};
-
-export interface UserState {
-  email: string | null;
-  id: number | null;
-  password: string | null;
+interface userState {
+  users: [];
+  statusRegister: "loading" | "succeeded" | "failed" | "idle";
+  statusLogin: "loading" | "succeeded" | "failed" | "idle";
   isAuth: boolean;
 }
 
-const initialState: UserState = {
-  email: null,
-  password: null,
-  id: null,
+const initialState: userState = {
+  users: [],
+  statusRegister: "idle",
+  statusLogin: "idle",
   isAuth: false,
 };
 
+export const registerUser = createAsyncThunk(
+  "users/register",
+  async ({ email, password, name }: RegisterUserPost, { rejectWithValue }) => {
+    try {
+      const responce = await axiosApi.post("users/register", {
+        email,
+        password,
+        name,
+      });
+      console.log(responce.data);
+    } catch (error: any | undefined) {
+      console.log(error.message);
+    }
+  }
+);
 
+export const loginUser = createAsyncThunk(
+  "users/login",
+  async ({ email, password }: LoginUserPost, { rejectWithValue }) => {
+    try {
+      const responce = await axiosApi.post("users/login", { email, password });
+      console.log(responce.data);
+    } catch (error: any | undefined) {
+      console.log(error.message);
+    }
+  }
+);
+// export const logoutUser = createAsyncThunk(
+//   "users/login",
+//   async ({ email, password }: LoginUserPost, { rejectWithValue }) => {
+//     try {
+//       const responce = await axiosApi.post("users/login", { email, password });
+//       console.log(responce.data);
+//     } catch (error: any | undefined) {
+//       console.log(error.message);
+//     }
+//   }
+// );
+// const initialState:  {
+//   users: [
+//     {
+//       id: '1',
+//       email: "a@test.tt",
+//       password: "123",
+//     },
+//     {
+//       id: '2',
+//       email: "b@test.tt",
+//       password: "123",
+//     },
+//   ],
+//   isAuth: false
+// };
 
 export const userSlice = createSlice({
-
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, { payload }: PayloadAction<Omit<User, "id">>) => {
-       
-     const user = usersTest.users.find((localUser) => 
-                  localUser.email === payload.email &&
-                  localUser.password === payload.password 
-                  );
+    // setUser: (state, { payload }: PayloadAction<Omit<User, "id">>) => {
+    //  const user = state.users.find((localUser) =>
+    //               localUser.email === payload.email &&
+    //               localUser.password === payload.password
+    //               );
+    //       if(user) {
+    //         console.log(state.users)
+    //         // state.users.email = user.email;
+    //         // state.users.id =  user.id;
+    //         // state.users.isAuth =  true;
+    //       }
+    //     console.log(state);
+    //   //  console.log(' action =>' + state.isAuth);
+    // },
+    // addUser: (state, {payload} : PayloadAction<Omit<User, ' id'>>) => {
+    //   state.users = [
+    //     ...state.users,
+    //     {
+    //       id: uuid(),
+    //       email: payload.email,
+    //       password: payload.password,
+    //     }
+    //   ]
+    // },
+    // removeUser(state) {
+    //   state.email = null;
+    //   state.id = null;
+    //   state.isAuth = false;
+    // },
+    logoutUser: (state) => {
+      state.isAuth =  false;
+      state.statusLogin = 'idle';
+    }
+  },
 
-          if(user) {
-            state.email = user.email;
-            state.id =  user.id;
-            state.isAuth =  true;
-          }
-      
-        console.log(state);
-      console.log(' action =>' + state.isAuth);
-    },
-    removeUser(state) {
-      state.email = null;
-      state.id = null;
-      state.isAuth = false;
-    },
+  extraReducers(builder) {
+    builder
+      .addCase(registerUser.pending, (state, action) => {
+        state.statusRegister = "loading";
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.statusRegister = "succeeded";
+        // state.isAuth = true;
+        console.log(state.isAuth);
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.statusRegister = "failed";
+        console.log(action);
+      })
+      .addCase(loginUser.pending, (state, action) => {
+        state.statusLogin = "loading";
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.statusLogin = "succeeded";
+        state.isAuth = true;
+        console.log(state.isAuth);
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.statusLogin = "failed";
+        console.log(action);
+      });
   },
 });
 
-export const { setUser, removeUser } = userSlice.actions;
-
+// export const { setUser } = userSlice.actions;
+export const { logoutUser } = userSlice.actions;
 export default userSlice.reducer;
