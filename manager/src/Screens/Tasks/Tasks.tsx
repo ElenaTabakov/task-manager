@@ -8,15 +8,20 @@ import Button from "../../sharedComponents/Button/Button";
 // import { deleteTask } from "../../store/slices/tasksSlice";
 import SearchForm from "../../sharedComponents/SearchForm";
 import { Action, AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { fetchTasksByUserId, createTasks , updateTasks, deleteTasks } from "../../store/slices/tasksSlice";
+import {
+  fetchTasksByUserId,
+  createTasks,
+  updateTasks,
+  deleteTasks,
+} from "../../store/slices/tasksSlice";
 
 export interface Task {
   id: string;
   title: string;
   description: string;
   shortDescription: string;
-  dueDate: Date ;
-  duration: number ;
+  dueDate: Date;
+  duration: number;
   status: string;
 }
 
@@ -38,58 +43,58 @@ const Tasks = () => {
 
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
 
-  useEffect( () =>
-    setFilteredTasks(tasks)
-    ,[])
+  useEffect(() => {
+    dispatch(fetchTasksByUserId());
+    // setFilteredTasks(tasks);
+  }, []);
+
+  useEffect(() => setFilteredTasks(tasks), [tasks]);
 
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputVal = e.target.value;
     console.log(inputVal);
 
-    const tasksOnSearch = filteredTasks.filter((task: Task) => {
-      if (
-        task.title.includes(inputVal) ||
-        task.description.includes(inputVal)
-      ) {
-        return task;
-      }
-    });
-
-    setFilteredTasks(tasksOnSearch);
-    
+      const tasksOnSearch = filteredTasks.filter((task: Task) => {
+        if (
+          task.title.includes(inputVal) ||
+          task.description.includes(inputVal)      
+        ) {
+          return task;
+        }
+      });
+      setFilteredTasks(tasksOnSearch);
+     
   };
-  
 
   const [isAscSortButton, setIsAscButton] = useState<boolean>(true);
 
   const handleToggleSortTasks = () => {
-    
-    
-    
-    if (isAscSortButton) { 
-      const sortedTasks =  [...filteredTasks].sort((a,b) => {  return  a.title > b.title  ? 1 : -1 });
+    if (isAscSortButton) {
+      const sortedTasks = [...filteredTasks].sort((a, b) => {
+        return a.title > b.title ? 1 : -1;
+      });
       setFilteredTasks(sortedTasks);
-      // setIsAscButton(false); 
+      // setIsAscButton(false);
     } else {
-      const sortedTasks =  [...filteredTasks].sort((a,b) => { return   a.title < b.title ? 1 : -1 ; });  
+      const sortedTasks = [...filteredTasks].sort((a, b) => {
+        return a.title < b.title ? 1 : -1;
+      });
       setFilteredTasks(sortedTasks);
     }
-     
+
     setIsAscButton(!isAscSortButton);
-      
-   
-};
+  };
 
   return (
     <S.TasksContainer>
       <SearchForm handleOnChangeSearch={handleOnChangeSearch} />
-      <Button type="button" onClick={handleToggleSortTasks} size="small" >
-        {isAscSortButton ? 'Sort A-Z' : 'Sort Z-A' }
+      <Button type="button" onClick={handleToggleSortTasks} size="small">
+        {isAscSortButton ? "Sort A-Z" : "Sort Z-A"}
       </Button>
       <Button onClick={() => setIsShow(true)}>Add Task</Button>
       <S.ListWrapper>
         <S.ListUl>
-          {filteredTasks.map((task : Task) => {
+          {filteredTasks.map((task: Task) => {
             return (
               <TaskItem
                 key={task.id}

@@ -12,7 +12,7 @@ const InputDate = () => {
   return (
     <DatePicker
       selected={values.dueDate}
-      onChange={(date: Date) => setFieldValue("date", date)}
+      onChange={(date: Date) => setFieldValue("dueDate", date)}
     />
   );
 };
