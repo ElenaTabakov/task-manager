@@ -54,7 +54,7 @@ const Tasks = () => {
     let inputVal = e.target.value;
     console.log(inputVal);
 
-      const tasksOnSearch = filteredTasks.filter((task: Task) => {
+      const tasksOnSearch = tasks.filter((task: Task) => {
         if (
           task.title.includes(inputVal) ||
           task.description.includes(inputVal)      

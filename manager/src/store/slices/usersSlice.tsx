@@ -123,6 +123,7 @@ export const userSlice = createSlice({
     logoutUser: (state) => {
       state.isAuth =  false;
       state.statusLogin = 'idle';
+      state.statusRegister = 'idle';
     }
   },
 

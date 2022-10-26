@@ -184,37 +184,41 @@ FormProps) => {
           disabled={!values.title || !values.description}
         >
           <S.Form>
-            <Input
+             <Input
+              label = 'Task Title'
               type="text"
               name="title"
               placeholder="Task Title"
-              onChange={handleChange}
-              error={errors.title}
-              value={values.title}
+              // onChange={handleChange}
+              // error={errors.title}
+              // value={values.title}
             />
             <Input
+              label = 'Task Description'
               type="text"
               name="description"
               placeholder="Task Description"
-              onChange={handleChange}
-              error={errors.description}
-              value={values.description}
+              // onChange={handleChange}
+              // error={errors.description}
+              // value={values.description}
             />
             <Input
+            label = 'Short Description'
               type="text"
               name="shortDescription"
               placeholder="Short Description"
-              onChange={handleChange}
-              error={errors.shortDescription}
-              value={values.shortDescription}
+              // onChange={handleChange}
+              // error={errors.shortDescription}
+              // value={values.shortDescription}
             />
             <Input
+              label = 'Duration'
               type="number"
               name="duration"
               placeholder="Duration"
-              onChange={handleChange}
-              error={errors.duration}
-              value={values.duration}
+              // onChange={handleChange}
+              // error={errors.duration}
+              // value={values.duration}
             />
             <InputDate />
           </S.Form>

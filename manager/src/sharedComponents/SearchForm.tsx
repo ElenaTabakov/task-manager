@@ -6,7 +6,7 @@ import * as S from './FormElements/Form.styled';
  const SearchForm = ({handleOnChangeSearch}:{ handleOnChangeSearch:(e: React.ChangeEvent<HTMLInputElement>) => void})  => {
   return (
     <S.Form className='search_form'>
-    <Input type="search" onChange={(e) => handleOnChangeSearch(e)} error  placeholder="Search" />
+    <input type="search" onChange={(e) => handleOnChangeSearch(e)}  placeholder="Search" />
   </S.Form>
   )
 }

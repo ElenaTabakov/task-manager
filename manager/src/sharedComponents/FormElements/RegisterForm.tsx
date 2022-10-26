@@ -59,32 +59,35 @@ const RegisterForm = ({registerBtnText} : RegisterFormProps) => {
       }) => (
         <S.Form onSubmit={handleSubmit}>
           <Input
+            label = 'Name'
             type="text"
             placeholder="Name"
             id="name"
             name="name"
-            onChange={handleChange}
-            error={errors.name}
-            value={values.name}
+            // onChange={handleChange}
+            // error={errors.name}
+            // value={values.name}
           ></Input>
           <Input
-          autoComplete="off"
+            label = 'Email'
+            autoComplete="off"
             type="email"
             id="email"
             placeholder="Email"
             name="email"
-            onChange={handleChange}
-            error={errors.email}
-            value={values.email}
+            // onChange={handleChange}
+            // error={errors.email}
+            // value={values.email}
           ></Input>
           <Input
+            label = 'Password'
             type="password"
             id="password"
             placeholder="Password"
             name="password"
-            onChange={handleChange}
-            value={values.password}
-            error={errors.password}
+            // onChange={handleChange}
+            // value={values.password}
+            // error={errors.password}
           ></Input>
           <Button
             type="submit"

@@ -93,20 +93,22 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
       }) => (
         <S.Form onSubmit={handleSubmit}> 
           <Input
+            label = 'Email'
             type="text"
             placeholder="Email"
             name="email"
-            onChange={handleChange}
-            error={errors.email}
-            value={values.email}
+            // onChange={handleChange}
+            // error={errors.email}
+            // value={values.email}
           ></Input>
           <Input
+            label = 'Password'
             type="password"
             placeholder="Password"
             name="password"
-            onChange={handleChange}
-            value={values.password}
-            error={errors.password}
+            // onChange={handleChange}
+            // value={values.password}
+            // error={errors.password}
           ></Input>
           <Button
             type="submit"

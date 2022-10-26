@@ -6,9 +6,7 @@ export const InputWrapper = styled.div`
   border: 1px solid #000;
 `;
 
-export const Input = styled.input<{ error: boolean }>`
-  border-color: ${({ error }) => (error ? "red" : "black")};
-  margin-bottom: ${({ error }) => (error ? "0px" : "15px")};
+export const Input = styled.input`
   border-radius: 10px;
   border-width: 1px;
   width: 100%;
