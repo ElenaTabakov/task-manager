@@ -14,20 +14,30 @@ import {
 } from "redux-persist";
 import thunk from "redux-thunk";
 
+
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ['userSlice']
 };
 
+const authPersistConfig = {
+  key: 'userSlice',
+  storage: storage,
+  whitelist: ['isAuth']
+}
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const rootReducer = combineReducers({
+  auth: persistReducer(authPersistConfig, userReducer),
   taskSlice: tasksReducer,
   userSlice: userReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export const store = configureStore({
-  reducer: persistedReducer,
+  // auth: persistReducer(authPersistConfig, userReducer),
+  // other: tasksReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({
     serializableCheck: false

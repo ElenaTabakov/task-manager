@@ -94,7 +94,7 @@ const Tasks = () => {
       <Button onClick={() => setIsShow(true)}>Add Task</Button>
       <S.ListWrapper>
         <S.ListUl>
-          {filteredTasks.map((task: Task) => {
+          {filteredTasks?.map((task: Task) => {
             return (
               <TaskItem
                 key={task.id}

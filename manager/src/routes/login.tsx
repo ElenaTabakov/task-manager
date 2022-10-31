@@ -4,14 +4,23 @@ import * as S from "../Screens/Pages.styles";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const Login = () => {
-  const { isAuth, users} = useAuth();
+  // const { isAuth, users} = useAuth();
   const navigate = useNavigate();
-
+  const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
   useEffect(() => {  
+    console.log( isAuth );
+    if ( isAuth == true){
+      navigate('/tasks');
+  } 
 
-    if ( isAuth === true){
+}, []);
+  useEffect(() => {  
+    console.log( isAuth );
+    if ( isAuth == true){
       navigate('/tasks');
   } 
 

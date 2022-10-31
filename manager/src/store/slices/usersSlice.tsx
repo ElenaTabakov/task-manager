@@ -45,6 +45,7 @@ export const registerUser = createAsyncThunk(
       console.log(responce.data);
     } catch (error: any | undefined) {
       console.log(error.message);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -57,6 +58,7 @@ export const loginUser = createAsyncThunk(
       console.log(responce.data);
     } catch (error: any | undefined) {
       console.log(error.message);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -151,6 +153,7 @@ export const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.statusLogin = "failed";
+        state.isAuth = false;
         console.log(action);
       });
   },

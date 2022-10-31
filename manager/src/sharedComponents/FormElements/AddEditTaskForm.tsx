@@ -36,45 +36,9 @@ interface FormProps {
   task?: Task;
 }
 
-const Form = ({
-  setIsShow,
-  isShow,
-  isEdit = false,
-  task,
-}: // tasksList,
-FormProps) => {
-  //////// const { id } = useAuth();
-
-  // const [errorMessage, setErrorMessage] = useState({
-  //   title: "",
-  //   description: "",
-  // });
-  // const [inputValue, setInputValue] = useState(
-  //   task
-  //     ? { title: task.title, description: task.description }
-  //     : { title: "", description: "" }
-  // );
-
+const Form = ({ setIsShow, isShow, isEdit = false, task }: FormProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
-
-  // const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   const inputName = e.target.name;
-
-  //   setInputValue((prevState) => {
-  //     return { ...prevState, [inputName]: value };
-  //   });
-  //   setErrorMessage((prevState) => {
-  //     return { ...prevState, [inputName]: "" };
-  //   });
-
-  //   if (!value) {
-  //     setErrorMessage((prevState) => {
-  //       return { ...prevState, [inputName]: "Enter your " + inputName };
-  //     });
-  //   }
-  // };
 
   const handleAddItem = (
     values: FormikTaskValues,
@@ -98,10 +62,7 @@ FormProps) => {
   };
 
   const editTaskHandler = (values: FormikTaskValues) => {
-    // e.preventDefault();
-
     if (tasks && task) {
-      // console.log(task.id);
       dispatch(
         updateTasks({
           id: values.id,
@@ -137,7 +98,7 @@ FormProps) => {
       description: "",
       shortDescription: "",
       dueDate: new Date(),
-      duration: 0,
+      duration: 15,
       status: "",
     };
   };
@@ -147,7 +108,7 @@ FormProps) => {
     title: yup.string().required("Requred").min(3, "Too short"),
     description: yup.string().required("Requred").min(3, "Too short"),
     shortDescription: yup.string().required("Requred").min(3, "Too short"),
-    duration: yup.number(),
+    duration: yup.number().min(15, "Duration must be at least 15 minutes"),
     dueDate: yup.date(),
   });
 
@@ -184,8 +145,8 @@ FormProps) => {
           disabled={!values.title || !values.description}
         >
           <S.Form>
-             <Input
-              label = 'Task Title'
+            <Input
+              label="Task Title"
               type="text"
               name="title"
               placeholder="Task Title"
@@ -194,7 +155,7 @@ FormProps) => {
               // value={values.title}
             />
             <Input
-              label = 'Task Description'
+              label="Task Description"
               type="text"
               name="description"
               placeholder="Task Description"
@@ -203,7 +164,7 @@ FormProps) => {
               // value={values.description}
             />
             <Input
-            label = 'Short Description'
+              label="Short Description"
               type="text"
               name="shortDescription"
               placeholder="Short Description"
@@ -212,7 +173,7 @@ FormProps) => {
               // value={values.shortDescription}
             />
             <Input
-              label = 'Duration'
+              label="Duration"
               type="number"
               name="duration"
               placeholder="Duration"

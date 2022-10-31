@@ -19,30 +19,6 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
   const [errorLogin, setErrorLogin] = useState(false);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const navigate = useNavigate();
-
-  // const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   const inputName = e.target.name;
-
-  //   setInputValue((prevState) => {
-  //     return { ...prevState, [inputName]: value };
-  //   });
-  //   setErrorMessage((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       [inputName]: "",
-  //     };
-  //   });
-  //   if (!value) {
-  //     setErrorMessage((prevState) => {
-  //       return {
-  //         ...prevState,
-  //         [inputName]: "Your " + inputName + " is empty",
-  //       };
-  //     });
-  //   }
-  //   setErrorLogin(false);
-  // };
   const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
 
   console.log(".." + isAuth);
@@ -73,9 +49,7 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
       validateOnBlur
       onSubmit={( values : LoginFormValues) => {
         dispatch(loginUser({email: values.email, password: values.password}));
-        if (!isAuth) {
-          setErrorLogin(true);       
-        }
+      
       }}
 
       validationSchema={validationSchema}
@@ -106,9 +80,6 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
             type="password"
             placeholder="Password"
             name="password"
-            // onChange={handleChange}
-            // value={values.password}
-            // error={errors.password}
           ></Input>
           <Button
             type="submit"
