@@ -9,6 +9,7 @@ import Button from "../sharedComponents/Button/Button";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../store/slices/usersSlice";
+import CustomCalendar from "../sharedComponents/Calendar/CaustomCalendar";
 
 export default function TasksList() {
   // const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
@@ -31,7 +32,6 @@ export default function TasksList() {
   return (
     <S.PageContainer>
       <h2>
-
         {/* Tasks of user id {id} email: {email} */}
       </h2>
       {isAuth ? (
@@ -39,6 +39,7 @@ export default function TasksList() {
           <Button type="button" size="medium" onClick={handleLogout}>
             Logout
           </Button>
+          <CustomCalendar />
           <Tasks />
           
         </>

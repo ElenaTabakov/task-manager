@@ -8,16 +8,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
 const Login = () => {
-  // const { isAuth, users} = useAuth();
+  const { isAuth, users} = useAuth();
   const navigate = useNavigate();
-  const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
-  useEffect(() => {  
-    console.log( isAuth );
-    if ( isAuth == true){
-      navigate('/tasks');
-  } 
+//   useEffect(() => {  
+//     if (isAuth){
+//       navigate('/tasks');
+//   } 
+// }, []);
 
-}, []);
   useEffect(() => {  
     console.log( isAuth );
     if ( isAuth == true){

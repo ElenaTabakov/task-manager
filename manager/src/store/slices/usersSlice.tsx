@@ -62,32 +62,6 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-// export const logoutUser = createAsyncThunk(
-//   "users/login",
-//   async ({ email, password }: LoginUserPost, { rejectWithValue }) => {
-//     try {
-//       const responce = await axiosApi.post("users/login", { email, password });
-//       console.log(responce.data);
-//     } catch (error: any | undefined) {
-//       console.log(error.message);
-//     }
-//   }
-// );
-// const initialState:  {
-//   users: [
-//     {
-//       id: '1',
-//       email: "a@test.tt",
-//       password: "123",
-//     },
-//     {
-//       id: '2',
-//       email: "b@test.tt",
-//       password: "123",
-//     },
-//   ],
-//   isAuth: false
-// };
 
 export const userSlice = createSlice({
   name: "user",

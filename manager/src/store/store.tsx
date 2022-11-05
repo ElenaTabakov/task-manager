@@ -22,21 +22,18 @@ const persistConfig = {
 };
 
 const authPersistConfig = {
-  key: 'userSlice',
-  storage: storage,
+  key: 'root',
+  storage,
   whitelist: ['isAuth']
 }
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedUserAuth= persistReducer( authPersistConfig , userReducer);
 
 const rootReducer = combineReducers({
-  auth: persistReducer(authPersistConfig, userReducer),
   taskSlice: tasksReducer,
-  userSlice: userReducer,
+  userSlice: persistedUserAuth,
 });
 
 export const store = configureStore({
-  // auth: persistReducer(authPersistConfig, userReducer),
-  // other: tasksReducer,
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({
