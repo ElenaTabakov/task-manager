@@ -9,7 +9,7 @@ import Button from "../sharedComponents/Button/Button";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../store/slices/usersSlice";
-import CustomCalendar from "../sharedComponents/Calendar/CaustomCalendar";
+import CustomCalendar from "../sharedComponents/Calendar/CustomCalendar";
 
 export default function TasksList() {
   // const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);

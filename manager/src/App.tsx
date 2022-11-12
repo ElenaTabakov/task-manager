@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import  *  as S from "./Screens/Pages.styles";
+// import GlobalStyles from 'styles/global'
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
         <Link to="/">Home</Link> | {" "}
         <Link to="/login">Login</Link> | {" "}
         <Link to="/tasks">Tasks</Link>   
+        <GlobalStyles />
     </S.PageContainer>
   );
 }
