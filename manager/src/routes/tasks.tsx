@@ -10,8 +10,10 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../store/slices/usersSlice";
 import CustomCalendar from "../sharedComponents/Calendar/CustomCalendar";
+import Header from "../sharedComponents/Header/Header";
+import { HeaderProps } from "../sharedComponents/Header/Header";
 
-export default function TasksList() {
+export default function TasksList({setTheme} : HeaderProps ) {
   // const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
 
   const dispatch = useDispatch();
@@ -31,6 +33,7 @@ export default function TasksList() {
   console.log(users);
   return (
     <S.PageContainer>
+      {/* <Header setTheme={setTheme}/> */}
       <h2>
         {/* Tasks of user id {id} email: {email} */}
       </h2>

@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { persistor, store } from "./store/store";
 import { Provider } from "react-redux";
-import Login from "./routes/login";
-import TasksList from "./routes/tasks";
-import { Register } from "./routes/register";
-import { PersistGate } from "redux-persist/integration/react";
 
+import { PersistGate } from "redux-persist/integration/react";
+import styled, { ThemeProvider } from "styled-components";
+import GlobalStyles from "./styles/global";
+import * as S from "./styles/theme";
+import { lightTheme, darkTheme } from "./styles/theme";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,23 +18,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <PersistGate persistor={persistor} loading={null}>
-    <BrowserRouter>
-      {/* <App /> */}
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="login" element={<Login />} />
-        <Route path="tasks" element={<TasksList />} />
-        <Route path="register" element={<Register/>} />
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: "1rem" }}>
-              <p>There's nothing here!</p>
-            </main>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+      <App />
     </PersistGate>
   </Provider>
 );
