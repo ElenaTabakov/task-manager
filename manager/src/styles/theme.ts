@@ -1,4 +1,5 @@
-import styled, { DefaultTheme } from "styled-components";
+import styled from "styled-components";
+import { number } from "yup";
 
 export const theme = {
   colors: {
@@ -45,6 +46,7 @@ export const lightTheme = {
   background: '#363537',
   primary: "#f86e6e",
   secondary: '#676bf1',
+  link: '#676bf1',
 }
 export const darkTheme = {
   body: '#363537',
@@ -53,8 +55,13 @@ export const darkTheme = {
   background: '#999',
   primary: "#22a5a5",
   secondary: '#384444',
+  link: '#21c6c6',
 }
 
+export interface WrapperProps  {
+  marginTop? : number | 0;
+  marginBottom? : number;
+}
 
 export const Main = styled.main`
   background: ${({ theme }) => theme.primary};
@@ -69,12 +76,12 @@ export const Main = styled.main`
   box-sizing: border-box;
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<WrapperProps>`
   background:${({ theme }) => theme.body};
   border-radius: 15px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
   padding: 1.5rem 1rem;
-
+  margin-top: ${({marginTop}) => `${marginTop}px` || 0}; 
   & a {
     margin: 0 5px;
     text-decoration: none;

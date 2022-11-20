@@ -1,11 +1,9 @@
-import { Link } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import * as S from "./Screens/Pages.styles";
 import Header from "./sharedComponents/Header/Header";
 import * as St from "./styles/theme";
-import styled, { ThemeProvider } from "styled-components";
-import GlobalStyles from "./styles/global";
-import * as Sty from "./styles/theme";
+import styled, { ThemeProvider, useTheme } from "styled-components";
+import {GlobalStyles} from "./styles/global";
 import { lightTheme, darkTheme } from "./styles/theme";
 import { useState } from "react";
 import Login from "./routes/login";
@@ -18,7 +16,7 @@ function App() {
     setTheme(!theme);
     console.log('theme' + theme);
   };
-
+  
   return (
     <ThemeProvider theme={theme === true ? lightTheme : darkTheme}>
       <St.Main>

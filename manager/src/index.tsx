@@ -5,12 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { persistor, store } from "./store/store";
 import { Provider } from "react-redux";
-
 import { PersistGate } from "redux-persist/integration/react";
-import styled, { ThemeProvider } from "styled-components";
-import GlobalStyles from "./styles/global";
-import * as S from "./styles/theme";
-import { lightTheme, darkTheme } from "./styles/theme";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
