@@ -124,6 +124,7 @@ export const userSlice = createSlice({
         state.statusLogin = "succeeded";
         state.isAuth = true;
         console.log(state.isAuth);
+        console.log(action.payload);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.statusLogin = "failed";

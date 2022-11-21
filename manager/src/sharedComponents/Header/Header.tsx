@@ -18,19 +18,15 @@ const Header = ({setTheme} : HeaderProps) => {
     dispatch(logoutUser());
   };
   return (
+    <>
     <Wrapper>
       <Grid  align="center">
         <Grid.Col span={9}  >
           
           <Link to="/">Home</Link>
-          {isAuth ? (
-            <a href="#" onClick={handleLogout}>
-              Logout
-            </a>
-          ) : (
-            <Link to="/login">Login</Link>
-          )}
           <Link to="/tasks">Tasks</Link>
+          {isAuth && <a href="#" onClick={handleLogout}> Logout</a> }
+          
          
         </Grid.Col>
         <Grid.Col span={3}>
@@ -46,6 +42,8 @@ const Header = ({setTheme} : HeaderProps) => {
         </Grid.Col>
       </Grid>
     </Wrapper>
+   
+    </>
   );
 };
 

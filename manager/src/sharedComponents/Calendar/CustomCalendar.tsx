@@ -9,8 +9,7 @@ const CustomCalendar = () => {
 
   return (
     <>
-      {/* <Calendar month={month} onMonthChange={onMonthChange} />; */}
-      <Calendar initialMonth={new Date()} initialLevel="month" />
+
       <Calendar
         initialMonth={new Date()}
         value ={valueDate}
@@ -18,7 +17,6 @@ const CustomCalendar = () => {
         labelFormat="MMMM, YYYY"
         renderDay={(date) => {
           const day = date.getDate();
-          console.log(day);
           if( day == 13){
             return (
             <Indicator size={20} color="blue" offset={8}>
@@ -32,11 +30,7 @@ const CustomCalendar = () => {
             </Indicator>
           );
         }}
-        // dayStyle = {(date) =>
-        //   date.getDay() ===  6
-        //     ? { backgroundColor: theme.colors.red[9], color: theme.white }
-        //     : {backgroundColor: theme.colors.dark[1], color: theme.white }
-        // }
+      
       />
     </>
   );

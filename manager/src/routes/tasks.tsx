@@ -12,40 +12,40 @@ import { logoutUser } from "../store/slices/usersSlice";
 import CustomCalendar from "../sharedComponents/Calendar/CustomCalendar";
 import Header from "../sharedComponents/Header/Header";
 import { HeaderProps } from "../sharedComponents/Header/Header";
+import { Grid } from "@mantine/core";
+import { Wrapper } from "../styles/theme";
 
-export default function TasksList({setTheme} : HeaderProps ) {
+export default function TasksList({ setTheme }: HeaderProps) {
   // const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
 
   const dispatch = useDispatch();
   const { isAuth, users } = useAuth();
   const handleLogout = () => {
-     dispatch(logoutUser());
+    dispatch(logoutUser());
   };
   const navigate = useNavigate();
 
   useEffect(() => {
-    if ( isAuth === false){
-      navigate('/login');
-  } 
-     
-  },[isAuth]);
+    if (isAuth === false) {
+      navigate("/login");
+    }
+  }, [isAuth]);
 
   console.log(users);
   return (
     <S.PageContainer>
       {/* <Header setTheme={setTheme}/> */}
-      <h2>
-        {/* Tasks of user id {id} email: {email} */}
-      </h2>
+      <h2>{/* Tasks of user id {id} email: {email} */}</h2>
       {isAuth ? (
-        <>
-          <Button type="button" size="medium" onClick={handleLogout}>
+        <Wrapper marginTop={50}>
+          {/* <Button type="button" size="medium" onClick={handleLogout}>
             Logout
-          </Button>
-          <CustomCalendar />
-          <Tasks />
-          
-        </>
+          </Button> */}
+          <Grid>
+            <Grid.Col span={5}><CustomCalendar /></Grid.Col>
+            <Grid.Col span={7}><Tasks /></Grid.Col>
+          </Grid>
+        </Wrapper>
       ) : (
         <Navigate to="/login" />
       )}
