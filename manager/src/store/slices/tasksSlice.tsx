@@ -25,9 +25,9 @@ export const fetchTasksByUserId = createAsyncThunk('tasks/fetch', async() => {
     return err.masssage;
   }
 });
-export const fetchTasksDates = createAsyncThunk('tasks/date', async() => {
+export const fetchTasksDates = createAsyncThunk('tasks/dates', async() => {
   try {
-    const response = await axiosApi.get("tasks/dates/");
+    const response = await axiosApi.get("tasks/dates");
     return response.data.tasks;
   } catch (err: any | undefined) {
     return err.masssage;
