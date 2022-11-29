@@ -29,8 +29,7 @@ const Tasks = () => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
 
-  // const userId = useSelector((state: RootState) => state.userSlice.users);
-  const users = useSelector((state: RootState) => state.userSlice.users);
+  // const user = useSelector((state: RootState) => state.userSlice.user);
   const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
 
   // const tasksByUser = tasks.filter((task) => task.userId == userId);
@@ -86,7 +85,7 @@ const Tasks = () => {
   };
 
   return (
-    <S.TasksContainer>
+    <>
       <SearchForm handleOnChangeSearch={handleOnChangeSearch} />
       <Button type="button" onClick={handleToggleSortTasks} size="small">
         {isAscSortButton ? "Sort A-Z" : "Sort Z-A"}
@@ -107,7 +106,7 @@ const Tasks = () => {
       </S.ListWrapper>
 
       <Form setIsShow={setIsShow} isShow={isShow} isEdit={false} />
-    </S.TasksContainer>
+    </>
   );
 };
 

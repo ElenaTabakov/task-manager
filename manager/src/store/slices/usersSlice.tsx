@@ -4,8 +4,10 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { axiosApi } from "../axios";
 import { v4 as uuid } from "uuid";
 
-export interface User extends RegisterUserPost {
+export interface User {
   id: string;
+  email: string;
+  name: string;
 }
 interface LoginUserPost {
   email: string;
@@ -15,19 +17,18 @@ interface LoginUserPost {
 interface RegisterUserPost extends LoginUserPost {
   name: string;
 }
-export interface UsersProps {
-  users: User[];
-}
 
 interface userState {
-  users: [];
+  user: User;
+  userEmail: string;
   statusRegister: "loading" | "succeeded" | "failed" | "idle";
   statusLogin: "loading" | "succeeded" | "failed" | "idle";
   isAuth: boolean;
 }
 
 const initialState: userState = {
-  users: [],
+  user: { id: "", email: "", name: "" },
+  userEmail: "",
   statusRegister: "idle",
   statusLogin: "idle",
   isAuth: false,
@@ -54,8 +55,9 @@ export const loginUser = createAsyncThunk(
   "users/login",
   async ({ email, password }: LoginUserPost, { rejectWithValue }) => {
     try {
-      const responce = await axiosApi.post("users/login", { email, password });
-      console.log(responce.data);
+      const response = await axiosApi.post("users/login", { email, password });
+      return response.data;
+      console.log(response.data);
     } catch (error: any | undefined) {
       console.log(error.message);
       return rejectWithValue(error.response.data);
@@ -97,10 +99,10 @@ export const userSlice = createSlice({
     //   state.isAuth = false;
     // },
     logoutUser: (state) => {
-      state.isAuth =  false;
-      state.statusLogin = 'idle';
-      state.statusRegister = 'idle';
-    }
+      state.isAuth = false;
+      state.statusLogin = "idle";
+      state.statusRegister = "idle";
+    },
   },
 
   extraReducers(builder) {
@@ -125,6 +127,8 @@ export const userSlice = createSlice({
         state.isAuth = true;
         console.log(state.isAuth);
         console.log(action.payload);
+        state.userEmail = action.payload.email;
+        state.user = action.payload;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.statusLogin = "failed";

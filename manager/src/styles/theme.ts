@@ -45,7 +45,7 @@ export type DarkTheme = typeof darkTheme;
 export const lightTheme = {
   body: '#FFF',
   text: '#363537',
-  toggleBorder: '#FFF',
+  toggleBorder: '#999',
   background: '#363537',
   primary: "#f86e6e",
   secondary: '#676bf1',
@@ -54,7 +54,7 @@ export const lightTheme = {
 export const darkTheme = {
   body: '#363537',
   text: '#FAFAFA',
-  toggleBorder: '#6B8096',
+  toggleBorder: '#f1f1f1',
   background: '#999',
   primary: "#22a5a5",
   secondary: '#384444',

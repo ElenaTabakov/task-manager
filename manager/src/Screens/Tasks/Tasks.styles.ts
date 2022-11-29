@@ -1,4 +1,6 @@
+import { Grid } from "@mantine/core";
 import styled, { css } from "styled-components";
+
 
 export const TasksContainer = styled.div`
   margin: 35px auto;
@@ -15,3 +17,4 @@ export const ListUl = styled.ul`
   padding: 0;
   width: 100%;
 `;
+

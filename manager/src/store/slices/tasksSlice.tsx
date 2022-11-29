@@ -25,6 +25,14 @@ export const fetchTasksByUserId = createAsyncThunk('tasks/fetch', async() => {
     return err.masssage;
   }
 });
+export const fetchTasksDates = createAsyncThunk('tasks/date', async() => {
+  try {
+    const response = await axiosApi.get("tasks/dates/");
+    return response.data.tasks;
+  } catch (err: any | undefined) {
+    return err.masssage;
+  }
+});
 export const createTasks = createAsyncThunk(
   "tasks/createTasks",
   async (
@@ -95,7 +103,9 @@ export const deleteTasks = createAsyncThunk(
 );
 interface tasksState {
   tasks: [];
+  dates: [];
   statusFetch: "loading" | "succeeded" | "failed" | "idle";
+  statusFetchDates: "loading" | "succeeded" | "failed" | "idle";
   statusUpdate: "loading" | "succeeded" | "failed" | "idle";
   statusDelete: "loading" | "succeeded" | "failed" | "idle";
   statusCreate: "loading" | "succeeded" | "failed" | "idle";
@@ -103,7 +113,9 @@ interface tasksState {
 
 const initialState: tasksState = {
   tasks: [],
+  dates: [],
   statusFetch: "idle",
+  statusFetchDates: 'idle',
   statusDelete: "idle",
   statusUpdate: "idle",
   statusCreate: "idle",
@@ -227,6 +239,18 @@ export const tasksSlice = createSlice({
     })
     .addCase(createTasks.rejected, (state, action) => {
       state.statusCreate = "failed";
+      console.log(action);
+    })
+    .addCase(fetchTasksDates.pending, (state, action) => {
+      state.statusFetchDates = "loading";
+    })
+    .addCase(fetchTasksDates.fulfilled, (state, action) => {
+      state.statusFetchDates = "succeeded";
+      state.dates = action.payload;
+      console.log(state.dates);
+    })
+    .addCase(fetchTasksDates.rejected, (state, action) => {
+      state.statusFetchDates = "failed";
       console.log(action);
     });
   }
