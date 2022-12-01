@@ -27,8 +27,8 @@ export const fetchTasksByUserId = createAsyncThunk('tasks/fetch', async() => {
 });
 export const fetchTasksDates = createAsyncThunk('tasks/dates', async() => {
   try {
-    const response = await axiosApi.get("tasks/dates/");
-    return response.data.tasks;
+    const response = await axiosApi.get("tasks/dates");
+    return response.data;
   } catch (err: any | undefined) {
     return err.masssage;
   }
@@ -247,7 +247,7 @@ export const tasksSlice = createSlice({
     .addCase(fetchTasksDates.fulfilled, (state, action) => {
       state.statusFetchDates = "succeeded";
       state.dates = action.payload;
-      console.log(action.payload + ' action');
+      console.log(action.payload);
     })
     .addCase(fetchTasksDates.rejected, (state, action) => {
       state.statusFetchDates = "failed";

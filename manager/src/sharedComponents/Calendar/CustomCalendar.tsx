@@ -13,7 +13,9 @@ const CustomCalendar = () => {
   const [value, setValue] = useState<Date| null>(null);
   const theme = useMantineTheme();
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
-  const taskDates = useSelector((state: RootState) => state.taskSlice.tasks)
+  const taskDates = useSelector((state: RootState) => state.taskSlice.dates)
+
+  console.log(taskDates, 'dates')
   useEffect(() => {
     dispatch(fetchTasksDates());
   },[]);
@@ -34,17 +36,15 @@ const CustomCalendar = () => {
           const day = date.getDate();
           const dayT = (new Date(date)).toLocaleDateString();
           const currD = (new Date()).toLocaleDateString();
-          taskDates.filter((taskDate: Date) => {
-            const taskFormatDate = (new Date(taskDate)).toLocaleDateString();
-            console.log(taskFormatDate);
-            if (taskFormatDate == dayT) {
-              return (
-                <Indicator size={20} color="green" offset={8}>
-                  <div>{day}</div>
-                </Indicator>
-                )
-            }
-          })
+         
+            // if (taskFormatDate == dayT) {
+            //   return (
+            //     <Indicator size={20} color="green" offset={8}>
+            //       <div>{day}</div>
+            //     </Indicator>
+            //     )
+            // }
+        
           // if( dayT == currD ){
           //   return (
           //   <Indicator size={20} color="green" offset={8}>
@@ -60,6 +60,7 @@ const CustomCalendar = () => {
         }}
       
       />
+      
     </>
   );
 };
