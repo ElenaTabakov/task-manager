@@ -16,11 +16,15 @@ const CustomCalendar = () => {
   const taskDates = useSelector((state: RootState) => state.taskSlice.dates)
 
   console.log(taskDates, 'dates')
+
+ 
+
   useEffect(() => {
     dispatch(fetchTasksDates());
   },[]);
 
-  console.log(value?.toISOString());
+ 
+  // console.log(value?.toISOString());
 
   return (
     <>
@@ -32,11 +36,21 @@ const CustomCalendar = () => {
         allowLevelChange={false}
         labelFormat="MMMM, YYYY"
         size="xl"
+        
         renderDay={(date) => {
           const day = date.getDate();
           const dayT = (new Date(date)).toLocaleDateString();
-          const currD = (new Date()).toLocaleDateString();
-         
+          // const currD = (new Date()).toLocaleDateString();
+          taskDates.find((dateD)=> {
+            const formatingDate = (new Date(dateD)).toLocaleDateString();
+            console.log(formatingDate);
+            if(formatingDate == dayT){
+             <Indicator size={20} color="green" offset={8}>
+                  <div>{day}</div>
+             </Indicator>
+            }
+           }
+         )
             // if (taskFormatDate == dayT) {
             //   return (
             //     <Indicator size={20} color="green" offset={8}>

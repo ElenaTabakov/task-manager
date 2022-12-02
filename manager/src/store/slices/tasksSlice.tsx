@@ -28,7 +28,7 @@ export const fetchTasksByUserId = createAsyncThunk('tasks/fetch', async() => {
 export const fetchTasksDates = createAsyncThunk('tasks/dates', async() => {
   try {
     const response = await axiosApi.get("tasks/dates");
-    return response.data;
+    return response.data.dates;
   } catch (err: any | undefined) {
     return err.masssage;
   }
@@ -103,7 +103,7 @@ export const deleteTasks = createAsyncThunk(
 );
 interface tasksState {
   tasks: [];
-  dates: [];
+  dates: string[];
   statusFetch: "loading" | "succeeded" | "failed" | "idle";
   statusFetchDates: "loading" | "succeeded" | "failed" | "idle";
   statusUpdate: "loading" | "succeeded" | "failed" | "idle";
