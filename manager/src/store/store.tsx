@@ -24,7 +24,7 @@ const persistConfig = {
 const authPersistConfig = {
   key: 'root',
   storage,
-  whitelist: ['isAuth']
+  whitelist: ['isAuth', 'user']
 }
 const persistedUserAuth= persistReducer( authPersistConfig , userReducer);
 

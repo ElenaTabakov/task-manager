@@ -32,7 +32,7 @@ const TaskItem = ({
         } } */}
         <S.ListName>{title}</S.ListName>
         <S.ListDescription>{description}</S.ListDescription>
-        <S.ListDate>{ (new Date(dueDate)).toLocaleString()}</S.ListDate>
+        <S.ListDate>{ (new Date(dueDate)).toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'})}</S.ListDate>
       </S.ListItemContent>
       <Button size="small" onClick={() => onDelete(id)}>
         x

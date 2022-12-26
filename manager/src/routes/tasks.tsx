@@ -4,7 +4,7 @@ import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import * as S from "../Screens/Pages.styles";
 import { useAuth } from "../hooks/use-auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutUser, User } from "../store/slices/usersSlice";
 import CustomCalendar from "../sharedComponents/Calendar/CustomCalendar";
@@ -22,6 +22,7 @@ export default function TasksList({ setTheme }: HeaderProps) {
     dispatch(logoutUser());
   };
   const navigate = useNavigate();
+  const [dateValue, setDateValue] = useState<Date>(new Date());
 
   useEffect(() => {
     if (isAuth === false) {
@@ -30,6 +31,7 @@ export default function TasksList({ setTheme }: HeaderProps) {
   }, [isAuth]);
 
   
+
   return (
     <S.PageContainer>
       {/* <Header setTheme={setTheme}/> */}
@@ -42,8 +44,8 @@ export default function TasksList({ setTheme }: HeaderProps) {
             Logout
           </Button> */}
           <Grid>
-            <S.ColBorder span={5} className={'borderRight'}><CustomCalendar /></S.ColBorder>
-            <Grid.Col span={7}><Tasks /></Grid.Col>
+            <S.ColBorder span={5} className={'borderRight'}><CustomCalendar setDateValue={setDateValue} /></S.ColBorder>
+            <Grid.Col span={7}><Tasks dateValue = {dateValue}/></Grid.Col>
           </Grid>
         </Wrapper>
       ) : (

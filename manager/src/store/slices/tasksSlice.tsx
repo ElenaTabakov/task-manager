@@ -33,6 +33,14 @@ export const fetchTasksDates = createAsyncThunk('tasks/dates', async() => {
     return err.masssage;
   }
 });
+export const fetchTasksByDate = createAsyncThunk('tasks/by-date', async(date: string, thunkAPI) => {
+  try {
+    const response = await axiosApi.get(`tasks/tasks-by-day?date=${date}`);
+    return response.data;
+  } catch (err: any | undefined) {
+    return err.masssage;
+  }
+});
 export const createTasks = createAsyncThunk(
   "tasks/createTasks",
   async (
@@ -106,6 +114,7 @@ interface tasksState {
   dates: string[];
   statusFetch: "loading" | "succeeded" | "failed" | "idle";
   statusFetchDates: "loading" | "succeeded" | "failed" | "idle";
+  statusFetchByDate: "loading" | "succeeded" | "failed" | "idle";
   statusUpdate: "loading" | "succeeded" | "failed" | "idle";
   statusDelete: "loading" | "succeeded" | "failed" | "idle";
   statusCreate: "loading" | "succeeded" | "failed" | "idle";
@@ -116,6 +125,7 @@ const initialState: tasksState = {
   dates: [],
   statusFetch: "idle",
   statusFetchDates: 'idle',
+  statusFetchByDate: 'idle',
   statusDelete: "idle",
   statusUpdate: "idle",
   statusCreate: "idle",
@@ -251,6 +261,18 @@ export const tasksSlice = createSlice({
     })
     .addCase(fetchTasksDates.rejected, (state, action) => {
       state.statusFetchDates = "failed";
+      console.log(action);
+    })
+    .addCase(fetchTasksByDate.pending, (state, action) => {
+      state.statusFetchByDate = "loading";
+    })
+    .addCase(fetchTasksByDate.fulfilled, (state, action) => {
+      state.statusFetchByDate = "succeeded";
+      state.tasks = action.payload;
+      console.log(action.payload);
+    })
+    .addCase(fetchTasksByDate.rejected, (state, action) => {
+      state.statusFetchByDate = "failed";
       console.log(action);
     });
   }

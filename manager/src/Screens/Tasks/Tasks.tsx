@@ -13,8 +13,12 @@ import {
   createTasks,
   updateTasks,
   deleteTasks,
+  fetchTasksByDate,
 } from "../../store/slices/tasksSlice";
 
+interface TasksProps {
+  dateValue: Date;
+}
 export interface Task {
   id: string;
   title: string;
@@ -25,14 +29,12 @@ export interface Task {
   status: string;
 }
 
-const Tasks = () => {
+const Tasks = ({dateValue} : TasksProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
 
   // const user = useSelector((state: RootState) => state.userSlice.user);
   const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
-
-  // const tasksByUser = tasks.filter((task) => task.userId == userId);
 
   const handleDeleteTask = (id: string) => {
     dispatch(deleteTasks(id));
@@ -42,12 +44,26 @@ const Tasks = () => {
 
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
 
+
   useEffect(() => {
     dispatch(fetchTasksByUserId());
     // setFilteredTasks(tasks);
   }, []);
 
-  useEffect(() => setFilteredTasks(tasks), [tasks]);
+  useEffect(() => {
+  // setFilteredTasks(tasks)
+  // const convertD = tasks.map((task: Task) => 
+  //   ...task , task.dueDate == new Date(task.dueDate).toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'})
+ 
+  // )
+  const date = dateValue.toLocaleDateString()
+  const dateReplaced = date.replace('/','-').replace('/','-')
+  dispatch(fetchTasksByDate(dateReplaced));
+  console.log(dateReplaced);
+  console.log(tasks);
+  }
+  , []);
+  
 
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputVal = e.target.value;
