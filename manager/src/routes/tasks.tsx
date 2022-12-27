@@ -30,6 +30,7 @@ export default function TasksList({ setTheme }: HeaderProps) {
     }
   }, [isAuth]);
 
+
   
 
   return (
@@ -44,7 +45,7 @@ export default function TasksList({ setTheme }: HeaderProps) {
             Logout
           </Button> */}
           <Grid>
-            <S.ColBorder span={5} className={'borderRight'}><CustomCalendar setDateValue={setDateValue} /></S.ColBorder>
+            <S.ColBorder span={5} className={'borderRight'}><CustomCalendar setDateValue={setDateValue} dateValue={dateValue}/></S.ColBorder>
             <Grid.Col span={7}><Tasks dateValue = {dateValue}/></Grid.Col>
           </Grid>
         </Wrapper>

@@ -8,13 +8,14 @@ import { ThunkActionDispatch, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
 
 interface CustomCalendarProps {
-  setDateValue : React.Dispatch<React.SetStateAction<Date>>
+  setDateValue : React.Dispatch<React.SetStateAction<Date>>,
+  dateValue : Date
 }
 
-const CustomCalendar = ({setDateValue} : CustomCalendarProps) => {
+const CustomCalendar = ({setDateValue, dateValue} : CustomCalendarProps) => {
   const [month, onMonthChange] = useState(new Date());
-  const [valueDate, setValueDate] = useState(new Date());
-  const [value, setValue] = useState<Date | null>(null);
+  // const [valueDate, setValueDate] = useState(new Date());
+  // const [value, setValue] = useState<Date | null>(null);
   const theme = useMantineTheme();
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const taskDates = useSelector((state: RootState) => state.taskSlice.dates);
@@ -27,18 +28,18 @@ const CustomCalendar = ({setDateValue} : CustomCalendarProps) => {
   useEffect(() => {
     dispatch(fetchTasksDates());
   }, []);
- const handleChangeFetchDate = () => {
-  setValue(value);
-  // setDateValue(value);
-  console.log(value)
- }
+//  const handleChangeFetchDate = () => {
+//   setValue(value);
+//   // setDateValue(value);
+//   console.log(value)
+//  }
   return (
     <>
       <Calendar
-        onChange={(valueDate) => setDateValue}
+        onChange={(date) => {date !== null && setDateValue(date)}}
         // onChange={handleChangeFetchDate}
         initialMonth={new Date()}
-        value={valueDate}
+        value={dateValue}
         allowLevelChange={false}
         labelFormat="MMMM, YYYY"
         size="xl"

@@ -59,10 +59,10 @@ const Tasks = ({dateValue} : TasksProps) => {
   const date = dateValue.toLocaleDateString()
   const dateReplaced = date.replace('/','-').replace('/','-')
   dispatch(fetchTasksByDate(dateReplaced));
-  console.log(dateReplaced);
-  console.log(tasks);
+  // console.log(dateReplaced);
+  console.log(tasks, ' dispatch');
   }
-  , []);
+  , [dateValue]);
   
 
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
