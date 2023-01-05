@@ -8,8 +8,8 @@ import { ThunkActionDispatch, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
 
 interface CustomCalendarProps {
-  setDateValue : React.Dispatch<React.SetStateAction<Date>>,
-  dateValue : Date
+  setDateValue : React.Dispatch<React.SetStateAction<string>>,
+  dateValue : string
 }
 
 const CustomCalendar = ({setDateValue, dateValue} : CustomCalendarProps) => {
@@ -23,23 +23,30 @@ const CustomCalendar = ({setDateValue, dateValue} : CustomCalendarProps) => {
     new Date(date).toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'})
   )
 
-  // console.log(convertDates, "dates");
-
   useEffect(() => {
     dispatch(fetchTasksDates());
   }, []);
-//  const handleChangeFetchDate = () => {
-//   setValue(value);
-//   // setDateValue(value);
-//   console.log(value)
-//  }
+
+ const handleChangeFetchDate = ( date : Date | null) => {
+   if ( date) {
+    const d = date.getDate();
+    const dd = d < 10 ? '0' + d : d;
+    const m = date.getMonth() + 1;
+    const mm = m < 10 ? '0' + m : m;
+    const y = date.getFullYear();
+    const fullDate =  mm + '-' + dd + '-' + y ;
+    console.log(fullDate);
+    setDateValue(fullDate);
+   }
+ 
+ }
   return (
     <>
       <Calendar
-        onChange={(date) => {date !== null && setDateValue(date)}}
-        // onChange={handleChangeFetchDate}
+       // onChange={(date) => {date !== null && setDateValue(date)}}
+        onChange={(date) => handleChangeFetchDate(date)}
         initialMonth={new Date()}
-        value={dateValue}
+        value={new Date (dateValue)}
         allowLevelChange={false}
         labelFormat="MMMM, YYYY"
         size="xl"
@@ -54,41 +61,7 @@ const CustomCalendar = ({setDateValue, dateValue} : CustomCalendarProps) => {
               </Indicator>
               )
           }
-          // convertDates.find((dayY) => {
-          //   // const formatingDate = (new Date(dayY)).toLocaleDateString();
-          //   // console.log(formatingDate);
-          //   if ( dayY  == dayT) {
-          //     return(
-          //     <Indicator size={20} color="green" offset={8}>
-          //        <div>{day}</div>
-          //     </Indicator>
-          //     )
-             
-          //   }
-          // });
-          //   taskDates.find((dateD)=> {
-          //     const formatingDate = (new Date(dateD)).toLocaleDateString();
-          //     console.log(formatingDate);
-          //     if(formatingDate == dayT){
-
-          //     }
-          //    }
-          //  )
-          // if (taskFormatDate == dayT) {
-          //   return (
-          //     <Indicator size={20} color="green" offset={8}>
-          //       <div>{day}</div>
-          //     </Indicator>
-          //     )
-          // }
-
-          // if( dayT == currD ){
-          //   return (
-          //   <Indicator size={20} color="green" offset={8}>
-          //     <div>{day}</div>
-          //   </Indicator>
-          //   )
-          // }
+         
           return (
             <Indicator size={6} color="red" offset={8} disabled={day != 16}>
               <div>{day}</div>

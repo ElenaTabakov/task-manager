@@ -21,8 +21,19 @@ export default function TasksList({ setTheme }: HeaderProps) {
   const handleLogout = () => {
     dispatch(logoutUser());
   };
+
   const navigate = useNavigate();
-  const [dateValue, setDateValue] = useState<Date>(new Date());
+  const currentDay = new Date();
+  const d = currentDay.getDate();
+  const dd = d < 10 ? '0' + d : d;
+  const m = currentDay.getMonth() + 1;
+  const mm = m < 10 ? '0' + m : m;
+  const y = currentDay.getFullYear();
+  const fullDate =  mm + '-' + dd + '-' + y ;
+  // console.log(fullDate);
+
+
+  const [dateValue, setDateValue] = useState<string>(fullDate);
 
   useEffect(() => {
     if (isAuth === false) {

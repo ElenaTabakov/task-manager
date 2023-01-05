@@ -33,7 +33,7 @@ export const fetchTasksDates = createAsyncThunk('tasks/dates', async() => {
     return err.masssage;
   }
 });
-export const fetchTasksByDate = createAsyncThunk('tasks/by-date', async(date: string, thunkAPI) => {
+export const fetchTasksByDate = createAsyncThunk('tasks/by-day', async(date: string, thunkAPI) => {
   try {
     const response = await axiosApi.get(`tasks/tasks-by-day?date=${date}`);
     return response.data.tasks;

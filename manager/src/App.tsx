@@ -6,9 +6,9 @@ import styled, { ThemeProvider, useTheme } from "styled-components";
 import { GlobalStyles } from "./styles/global";
 import { lightTheme, darkTheme } from "./styles/theme";
 import { useState } from "react";
-import Login from "./routes/login";
-import TasksList from "./routes/tasks";
-import { Register } from "./routes/register";
+import Login from "./routes/login.route";
+import TasksList from "./routes/tasks.route";
+import { Register } from "./routes/register.route";
 import LoginForm from "./sharedComponents/FormElements/LoginForm";
 
 function App() {

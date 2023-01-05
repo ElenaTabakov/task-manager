@@ -17,7 +17,7 @@ import {
 } from "../../store/slices/tasksSlice";
 
 interface TasksProps {
-  dateValue: Date;
+  dateValue: string;
 }
 export interface Task {
   id: string;
@@ -51,18 +51,24 @@ const Tasks = ({dateValue} : TasksProps) => {
   }, []);
 
   useEffect(() => {
-  // setFilteredTasks(tasks)
+ 
   // const convertD = tasks.map((task: Task) => 
   //   ...task , task.dueDate == new Date(task.dueDate).toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'})
  
   // )
-  const date = dateValue.toLocaleDateString()
-  const dateReplaced = date.replace('/','-').replace('/','-')
-  dispatch(fetchTasksByDate(dateReplaced));
+  // const date = dateValue.toLocaleDateString()
+  // const dateReplaced = date.replace('/','-').replace('/','-')
+     dispatch(fetchTasksByDate(dateValue));
   // console.log(dateReplaced);
-  console.log(tasks, ' dispatch');
+     console.log(tasks, ' dispatch');
   }
   , [dateValue]);
+
+  useEffect(() => {
+    setFilteredTasks(tasks);
+  }, [tasks]);
+
+
   
 
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
