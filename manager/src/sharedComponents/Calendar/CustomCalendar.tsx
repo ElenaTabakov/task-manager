@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTasksDates } from "../../store/slices/tasksSlice";
 import { ThunkActionDispatch, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
+import { formatDate } from "../../Screens/Tasks/Tasks";
 
 interface CustomCalendarProps {
-  setDateValue : React.Dispatch<React.SetStateAction<string>>,
-  dateValue : string
+  setDateValue : React.Dispatch<React.SetStateAction<Date>>,
+  dateValue : Date
 }
 
 const CustomCalendar = ({setDateValue, dateValue} : CustomCalendarProps) => {
@@ -27,26 +28,28 @@ const CustomCalendar = ({setDateValue, dateValue} : CustomCalendarProps) => {
     dispatch(fetchTasksDates());
   }, []);
 
- const handleChangeFetchDate = ( date : Date | null) => {
-   if ( date) {
-    const d = date.getDate();
-    const dd = d < 10 ? '0' + d : d;
-    const m = date.getMonth() + 1;
-    const mm = m < 10 ? '0' + m : m;
-    const y = date.getFullYear();
-    const fullDate =  mm + '-' + dd + '-' + y ;
-    console.log(fullDate);
-    setDateValue(fullDate);
-   }
+//  const handleChangeFetchDate = ( date : Date | null) => {
+//    if ( date) {
+//     const d = date.getDate();
+//     const dd = d < 10 ? '0' + d : d;
+//     const m = date.getMonth() + 1;
+//     const mm = m < 10 ? '0' + m : m;
+//     const y = date.getFullYear();
+//     const fullDate =  mm + '-' + dd + '-' + y ;
+//     console.log();
+//     setDateValue(fullDate);
+//    }
  
- }
+//  }
+
+
   return (
     <>
       <Calendar
-       // onChange={(date) => {date !== null && setDateValue(date)}}
-        onChange={(date) => handleChangeFetchDate(date)}
+       onChange={(date) => {date !== null && setDateValue(date)}}
+        // onChange={(date) => handleChangeFetchDate(date)}
         initialMonth={new Date()}
-        value={new Date (dateValue)}
+        value={dateValue}
         allowLevelChange={false}
         labelFormat="MMMM, YYYY"
         size="xl"

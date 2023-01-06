@@ -30,10 +30,10 @@ export default function TasksList({ setTheme }: HeaderProps) {
   const mm = m < 10 ? '0' + m : m;
   const y = currentDay.getFullYear();
   const fullDate =  mm + '-' + dd + '-' + y ;
-  // console.log(fullDate);
+  console.log(new Date(fullDate));
 
 
-  const [dateValue, setDateValue] = useState<string>(fullDate);
+  const [dateValue, setDateValue] = useState<Date>(new Date());
 
   useEffect(() => {
     if (isAuth === false) {

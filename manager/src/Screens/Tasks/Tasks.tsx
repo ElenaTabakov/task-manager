@@ -17,7 +17,7 @@ import {
 } from "../../store/slices/tasksSlice";
 
 interface TasksProps {
-  dateValue: string;
+  dateValue: Date;
 }
 export interface Task {
   id: string;
@@ -28,6 +28,18 @@ export interface Task {
   duration: number;
   status: string;
 }
+
+export const formatDate = (date: Date) => {
+  const d = date.getDate();
+  const dd = d < 10 ? '0' + d : d;
+  const m = date.getMonth() + 1;
+  const mm = m < 10 ? '0' + m : m;
+  const y = date.getFullYear();
+  const fullDate =  mm + '-' + dd + '-' + y ;
+  return fullDate;
+}
+
+// console.log(formatDate(new Date()) , 'date')
 
 const Tasks = ({dateValue} : TasksProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
@@ -47,19 +59,10 @@ const Tasks = ({dateValue} : TasksProps) => {
 
   useEffect(() => {
     dispatch(fetchTasksByUserId());
-    // setFilteredTasks(tasks);
   }, []);
 
   useEffect(() => {
- 
-  // const convertD = tasks.map((task: Task) => 
-  //   ...task , task.dueDate == new Date(task.dueDate).toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'})
- 
-  // )
-  // const date = dateValue.toLocaleDateString()
-  // const dateReplaced = date.replace('/','-').replace('/','-')
-     dispatch(fetchTasksByDate(dateValue));
-  // console.log(dateReplaced);
+     dispatch(fetchTasksByDate(formatDate(dateValue)));
      console.log(tasks, ' dispatch');
   }
   , [dateValue]);
