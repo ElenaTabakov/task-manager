@@ -5,11 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "../../../sharedComponents/Button/Button";
 import Circle from "../../../sharedComponents/CircleTitle/CircleTitle";
 import * as S from "./TaskItem.styles";
-import Form from "../../../sharedComponents/FormElements/AddEditTaskForm";
+import AddEditForm from "../../../sharedComponents/FormElements/AddEditTaskForm";
 
 interface TaskItemProps {
   task: Task;
   className?: string;
+  dateValue: Date;
   onDelete: (id: string) => void;
 }
 
@@ -17,6 +18,7 @@ const TaskItem = ({
   task: { id, title, description, shortDescription, dueDate, duration, status },
   task,
   className,
+  dateValue,
   onDelete,
 }: TaskItemProps) => {
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
@@ -26,10 +28,6 @@ const TaskItem = ({
     <S.ListItem id={id} className={className}>
       <Circle circleContent={title} />
       <S.ListItemContent>
-        {/* {visibleEdirForm {
-          return {<Input value={title} name="new-title"/>  <Input value={description} name="new-description"/>}
-
-        } } */}
         <S.ListName>{title}</S.ListName>
         <S.ListDescription>{description}</S.ListDescription>
         <S.ListDate>{ (new Date(dueDate)).toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'})}</S.ListDate>
@@ -41,11 +39,12 @@ const TaskItem = ({
         {" "}
         {visibleEdirForm ? "Close Edit Form" : "Edit Task"}{" "}
       </Button>
-      <Form
+      <AddEditForm
         isEdit
         isShow={visibleEdirForm}
         setIsShow={setVisibleEditForm}
         task={task}
+        dateValue = {dateValue}
       />
     </S.ListItem>
   );

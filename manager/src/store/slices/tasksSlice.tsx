@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-// import { Task } from '../../Screens/Tasks/Tasks';
 import axiosApi from '../axios';
-import { v4 as uuid } from "uuid";
+import { formatDate } from "../../store/utils";
 
 export interface TasksProps {
   tasks: Task[];
@@ -15,6 +13,7 @@ interface Task {
   dueDate: Date | null;
   duration: number | null;
   status: string;
+  date: Date;
 }
 
 export const fetchTasksByUserId = createAsyncThunk('tasks/fetch', async() => {
@@ -33,9 +32,10 @@ export const fetchTasksDates = createAsyncThunk('tasks/dates', async() => {
     return err.masssage;
   }
 });
-export const fetchTasksByDate = createAsyncThunk('tasks/by-day', async(date: string, thunkAPI) => {
+export const fetchTasksByDate = createAsyncThunk('tasks/by-day', async(date: Date, thunkAPI) => {
   try {
-    const response = await axiosApi.get(`tasks/tasks-by-day?date=${date}`);
+    const converDate = formatDate(date);
+    const response = await axiosApi.get(`tasks/tasks-by-day?date=${converDate}`);
     return response.data.tasks;
   } catch (err: any | undefined) {
     return err.masssage;
@@ -44,7 +44,7 @@ export const fetchTasksByDate = createAsyncThunk('tasks/by-day', async(date: str
 export const createTasks = createAsyncThunk(
   "tasks/createTasks",
   async (
-    { title, description, shortDescription, dueDate, duration, status }: Task,
+    { title, description, shortDescription, dueDate, duration, status, date }: Task,
     thunkAPI
   ) => {
     try {
@@ -56,9 +56,8 @@ export const createTasks = createAsyncThunk(
         duration,
         status,
       });
-      thunkAPI.dispatch(fetchTasksByUserId());
+      thunkAPI.dispatch(fetchTasksByDate(date));
       return response.data.tasks;
-      //   console.log(response);
     } catch (err: any | undefined) {
       return err.masssage;
     }
@@ -75,6 +74,7 @@ export const updateTasks = createAsyncThunk(
       dueDate,
       duration,
       status,
+      date 
     }: Task,
     thunkAPI
   ) => {
@@ -87,9 +87,8 @@ export const updateTasks = createAsyncThunk(
         duration,
         status,
       });
-      thunkAPI.dispatch(fetchTasksByUserId());
+      thunkAPI.dispatch(fetchTasksByDate(date));
       return response.data.tasks;
-      //   console.log(response);
     } catch (err: any | undefined) {
       return err.masssage;
     }
@@ -98,12 +97,11 @@ export const updateTasks = createAsyncThunk(
 
 export const deleteTasks = createAsyncThunk(
   "tasks/deleteTasks",
-  async (id: string, thunkAPI) => {
+  async ({id , date} :{id: string, date: Date}, thunkAPI) => {
     try {
       const response = await axiosApi.delete(`tasks/${id}`);
-      thunkAPI.dispatch(fetchTasksByUserId());
+      thunkAPI.dispatch(fetchTasksByDate(date));
       return response.data.tasks;
-      //   console.log(response);
     } catch (err: any | undefined) {
       return err.masssage;
     }
@@ -131,85 +129,10 @@ const initialState: tasksState = {
   statusCreate: "idle",
 };
 
-// const initialState: TasksProps = {
-//   tasks: [
-//     {
-//       id: uuid(),
-//       title: "Daily Status Too",
-//       description:
-//         "Finest fish and veggies  german specialty! American, raw, meaty. Healthy...and green...Finest fish and veggies  german specialty!Finest fish and veggies  german specialty!",
-//       date: new Date("2019-01-16"),
-//       userId: '1',
-//     },
-//     {
-//       id: uuid(),
-//       title: "call",
-//       description: "A german specialty!",
-//       date: new Date("2019-01-16"),
-//       userId: '1',
-//     },
-//     {
-//       id: uuid(),
-//       title: "BB",
-//       description: "American, raw, meaty",
-//       date: new Date("2019-01-16"),
-//       userId: '2',
-//     },
-//     {
-//       id: uuid(),
-//       title: "Green Bowl",
-//       description: "Healthy...and green...",
-//       date: new Date("2019-01-16"),
-//       userId: '2',
-//     },
-//   ]
-// }
-
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-
-    // deleteTask: ( state, {payload}: PayloadAction<string>) => {    
-    //         state.tasks = state.tasks.filter((task) => payload !== task.id);    
-    // },
-
-    // addTask: ( state, {payload}: PayloadAction<Omit<Task,'id'>>) =>{
-     
-    //   state.tasks  =  [
-    //         ...state.tasks,
-    //         {
-    //           id: uuid(),
-    //           title:  payload.title,
-    //           description: payload.description,
-    //           date: payload.date,
-    //           userId: payload.userId,
-    //         },
-    //       ]
-
-         
-    // },
-
-    // editTask: (state, {payload}: PayloadAction<Task>) => {  
-     
-    //   state.tasks = state.tasks.map((localtask) => {
-    //     console.log(payload.id , localtask.id); 
-    //     if (localtask.id === payload.id) {         
-    //       return {
-    //         ...localtask,
-    //         title: payload.title,
-    //         description: payload.description,
-    //         date: payload.date,
-    //         userId: payload.userId,
-    //       };
-    //     }
-
-    //     return localtask;
-    //   });
-
-    
-    // //  state.tasks = newTasksList
-    // },
   },
   extraReducers(builder){
     builder

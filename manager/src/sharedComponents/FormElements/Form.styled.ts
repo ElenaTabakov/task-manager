@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 
 export const Form = styled.form`
+padding: 25px;
     &.search_form{
         margin-left: 0;
     }

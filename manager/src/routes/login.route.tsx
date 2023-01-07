@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import LoginForm from "../sharedComponents/FormElements/LoginForm";
-import * as S from "../Screens/Pages.styles";
+import * as S from "../screens/Pages.styles";
 import { Link, RouterProvider } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth";
 import { useNavigate } from "react-router-dom";

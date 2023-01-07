@@ -3,7 +3,7 @@ import { RootState } from "../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import * as S from "./Form.styled";
 import Input from "./Input/Input";
-import { Task } from "../../Screens/Tasks/Tasks";
+import { Task } from "../../screens/Tasks/Tasks";
 import ModalWindow from "../ModalWindow/ModalWindow";
 // import { addTask, editTask } from "../../store/slices/tasksSlice";
 import "react-datepicker/dist/react-datepicker.css";
@@ -34,9 +34,10 @@ interface FormProps {
   isShow: boolean;
   isEdit: boolean;
   task?: Task;
+  dateValue: Date;
 }
 
-const Form = ({ setIsShow, isShow, isEdit = false, task }: FormProps) => {
+const AddEditForm = ({ setIsShow, isShow, isEdit = false, task , dateValue}: FormProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
 
@@ -51,9 +52,10 @@ const Form = ({ setIsShow, isShow, isEdit = false, task }: FormProps) => {
         title: values.title,
         description: values.description,
         shortDescription: values.shortDescription,
-        dueDate: new Date(),
+        dueDate: values.dueDate,
         duration: values.duration,
         status: "UPCOMING",
+        date: dateValue
       })
     );
     setIsShow(false);
@@ -69,9 +71,10 @@ const Form = ({ setIsShow, isShow, isEdit = false, task }: FormProps) => {
           title: values.title,
           description: values.description,
           shortDescription: values.shortDescription,
-          dueDate: new Date(),
+          dueDate: values.dueDate,
           duration: values.duration,
           status: "UPCOMING",
+          date: dateValue
         })
       );
       setIsShow(false);
@@ -97,7 +100,7 @@ const Form = ({ setIsShow, isShow, isEdit = false, task }: FormProps) => {
       title: "",
       description: "",
       shortDescription: "",
-      dueDate: new Date(),
+      dueDate: dateValue,
       duration: 15,
       status: "",
     };
@@ -118,11 +121,7 @@ const Form = ({ setIsShow, isShow, isEdit = false, task }: FormProps) => {
       validateOnBlur
       validationSchema={validationSchema}
       onSubmit={
-        // (values: FormikTaskValues): void | Promise<any> => {
-        // console.log(values);
-
-        isEdit ? editTaskHandler : handleAddItem
-        // }
+        isEdit ? editTaskHandler : handleAddItem 
       }
     >
       {({
@@ -150,36 +149,24 @@ const Form = ({ setIsShow, isShow, isEdit = false, task }: FormProps) => {
               type="text"
               name="title"
               placeholder="Task Title"
-              // onChange={handleChange}
-              // error={errors.title}
-              // value={values.title}
             />
             <Input
               label="Task Description"
               type="text"
               name="description"
               placeholder="Task Description"
-              // onChange={handleChange}
-              // error={errors.description}
-              // value={values.description}
             />
             <Input
               label="Short Description"
               type="text"
               name="shortDescription"
               placeholder="Short Description"
-              // onChange={handleChange}
-              // error={errors.shortDescription}
-              // value={values.shortDescription}
             />
             <Input
               label="Duration"
               type="number"
               name="duration"
               placeholder="Duration"
-              // onChange={handleChange}
-              // error={errors.duration}
-              // value={values.duration}
             />
             <InputDate />
           </S.Form>
@@ -189,7 +176,7 @@ const Form = ({ setIsShow, isShow, isEdit = false, task }: FormProps) => {
   );
 };
 
-export default Form;
+export default AddEditForm;
 function submitForm(values: FormikTaskValues, submitForm: any) {
   throw new Error("Function not implemented.");
 }

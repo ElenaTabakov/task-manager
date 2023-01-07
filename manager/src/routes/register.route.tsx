@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import  *  as S from "../Screens/Pages.styles";
+import  *  as S from "../screens/Pages.styles";
 import RegisterForm from '../sharedComponents/FormElements/RegisterForm';
 
 export const Register = () => {

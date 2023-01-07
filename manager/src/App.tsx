@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import * as S from "./Screens/Pages.styles";
+import * as S from "./screens/Pages.styles";
 import Header from "./sharedComponents/Header/Header";
 import * as St from "./styles/theme";
 import styled, { ThemeProvider, useTheme } from "styled-components";
