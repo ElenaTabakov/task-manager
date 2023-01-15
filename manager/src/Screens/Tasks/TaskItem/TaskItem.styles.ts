@@ -8,11 +8,18 @@ export const ListItem = styled.li`
   border-radius: 10px;
   margin-bottom: 15px;
   flex-wrap:wrap;
+  &.status-CANCELED{
+    border-color: red;
+  }
+  &.status-UPCOMING{
+    border-color: ${({ theme }) => theme.secondary};
+  }
 `
 export const ListItemContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+ 
 `
 
 export const ListName = styled.h2`

@@ -25,12 +25,13 @@ const TaskItem = ({
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
 
   return (
-    <S.ListItem id={id} className={className}>
+    <S.ListItem id={id} className={`${className} status-${status}`}>
       <Circle circleContent={title} />
       <S.ListItemContent>
         <S.ListName>{title}</S.ListName>
         <S.ListDescription>{description}</S.ListDescription>
         <S.ListDate>{ (new Date(dueDate)).toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'})}</S.ListDate>
+        <p>{status}</p>
       </S.ListItemContent>
       <Button size="small" onClick={() => onDelete(id)}>
         x

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { RootState } from "../../store/store";
 import { useSelector, useDispatch } from "react-redux";
-import TaskItem from "./TaskItem/TaskItem"
+import TaskItem from "./TaskItem/TaskItem";
 import * as S from "./Tasks.styles";
 import AddEditForm from "../../sharedComponents/FormElements/AddEditTaskForm";
 import Button from "../../sharedComponents/Button/Button";
@@ -13,7 +13,7 @@ import {
   deleteTasks,
   fetchTasksByDate,
 } from "../../store/slices/tasksSlice";
-import { formatDate } from "../../store/utils";
+import { Loader } from "@mantine/core";
 
 interface TasksProps {
   dateValue: Date;
@@ -28,52 +28,54 @@ export interface Task {
   status: string;
 }
 
-
-const Tasks = ({dateValue} : TasksProps) => {
+const Tasks = ({ dateValue }: TasksProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
-  const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
+  const statusFetchByDate = useSelector(
+    (state: RootState) => state.taskSlice.statusFetchByDate
+  );
 
   const handleDeleteTask = (id: string) => {
-    dispatch(deleteTasks({id, date: dateValue}));
+    dispatch(deleteTasks({ id, date: dateValue }));
   };
-
-  const [isShow, setIsShow] = useState(false);
-
+  const [isShow, setIsShow] = useState<boolean>(false);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
-
+  const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(fetchTasksByUserId());
+    if (statusFetchByDate == "loading") {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+  }, [statusFetchByDate]);
+
+  useEffect(() => {
+    dispatch(fetchTasksByDate(dateValue));
   }, []);
 
   useEffect(() => {
-     dispatch(fetchTasksByDate(dateValue));
-     console.log(tasks, ' dispatch');
-  }
-  , [dateValue]);
+    dispatch(fetchTasksByDate(dateValue));
+    console.log(tasks, " dispatch");
+  }, [dateValue]);
 
   useEffect(() => {
     setFilteredTasks(tasks);
   }, [tasks]);
 
-
-  
-
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputVal = e.target.value;
     console.log(inputVal);
 
-      const tasksOnSearch = tasks.filter((task: Task) => {
-        if (
-          task.title.includes(inputVal) ||
-          task.description.includes(inputVal)      
-        ) {
-          return task;
-        }
-      });
-      setFilteredTasks(tasksOnSearch);
-     
+    const tasksOnSearch = tasks.filter((task: Task) => {
+      if (
+        task.title.includes(inputVal) ||
+        task.description.includes(inputVal)
+      ) {
+        return task;
+      }
+    });
+    setFilteredTasks(tasksOnSearch);
   };
 
   const [isAscSortButton, setIsAscButton] = useState<boolean>(true);
@@ -96,11 +98,18 @@ const Tasks = ({dateValue} : TasksProps) => {
 
   return (
     <>
+      {visible && (
+        <S.LoadingOverlayWrapper>
+          <Loader variant="bars"   />
+        </S.LoadingOverlayWrapper>
+      )}
+
       <SearchForm handleOnChangeSearch={handleOnChangeSearch} />
       <Button type="button" onClick={handleToggleSortTasks} size="small">
         {isAscSortButton ? "Sort A-Z" : "Sort Z-A"}
       </Button>
       <Button onClick={() => setIsShow(true)}>Add Task</Button>
+
       <S.ListWrapper>
         <S.ListUl>
           {filteredTasks?.map((task: Task) => {
@@ -109,14 +118,20 @@ const Tasks = ({dateValue} : TasksProps) => {
                 key={task.id}
                 task={task}
                 onDelete={() => handleDeleteTask(task.id)}
-                dateValue = {dateValue}
+                dateValue={dateValue}
               />
             );
           })}
         </S.ListUl>
       </S.ListWrapper>
-
-      <AddEditForm  setIsShow={setIsShow} isShow={isShow} isEdit={false} dateValue = {dateValue}/>
+      {isShow && (
+        <AddEditForm
+          setIsShow={setIsShow}
+          isShow={isShow}
+          isEdit={false}
+          dateValue={dateValue}
+        />
+      )}
     </>
   );
 };

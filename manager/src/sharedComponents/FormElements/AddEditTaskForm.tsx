@@ -9,7 +9,7 @@ import ModalWindow from "../ModalWindow/ModalWindow";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAuth } from "../../hooks/use-auth";
 import InputDate from "./InputDate";
-import { Formik, FormikHelpers } from "formik";
+import { Field, Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import {
   fetchTasksByUserId,
@@ -18,6 +18,7 @@ import {
   deleteTasks,
 } from "../../store/slices/tasksSlice";
 import { AnyAction, ThunkAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { Radio } from "@mantine/core";
 
 export interface FormikTaskValues {
   id: string;
@@ -37,7 +38,13 @@ interface FormProps {
   dateValue: Date;
 }
 
-const AddEditForm = ({ setIsShow, isShow, isEdit = false, task , dateValue}: FormProps) => {
+const AddEditForm = ({
+  setIsShow,
+  isShow,
+  isEdit = false,
+  task,
+  dateValue,
+}: FormProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
 
@@ -55,12 +62,11 @@ const AddEditForm = ({ setIsShow, isShow, isEdit = false, task , dateValue}: For
         dueDate: values.dueDate,
         duration: values.duration,
         status: "UPCOMING",
-        date: dateValue
+        date: dateValue,
       })
     );
     setIsShow(false);
     helpers.resetForm();
-    // setInputValue({ title: "", description: "" });
   };
 
   const editTaskHandler = (values: FormikTaskValues) => {
@@ -73,8 +79,9 @@ const AddEditForm = ({ setIsShow, isShow, isEdit = false, task , dateValue}: For
           shortDescription: values.shortDescription,
           dueDate: values.dueDate,
           duration: values.duration,
-          status: "UPCOMING",
-          date: dateValue
+          // status: "UPCOMING",
+          status: values.status,
+          date: dateValue,
         })
       );
       setIsShow(false);
@@ -113,6 +120,7 @@ const AddEditForm = ({ setIsShow, isShow, isEdit = false, task , dateValue}: For
     shortDescription: yup.string().required("Requred").min(3, "Too short"),
     duration: yup.number().min(15, "Duration must be at least 15 minutes"),
     dueDate: yup.date(),
+    status: yup.string().required("Requred"),
   });
 
   return (
@@ -120,9 +128,7 @@ const AddEditForm = ({ setIsShow, isShow, isEdit = false, task , dateValue}: For
       initialValues={initialValuesTask(task)}
       validateOnBlur
       validationSchema={validationSchema}
-      onSubmit={
-        isEdit ? editTaskHandler : handleAddItem 
-      }
+      onSubmit={isEdit ? editTaskHandler : handleAddItem}
     >
       {({
         values,
@@ -169,6 +175,33 @@ const AddEditForm = ({ setIsShow, isShow, isEdit = false, task , dateValue}: For
               placeholder="Duration"
             />
             <InputDate />
+            {isEdit && (
+              // <Radio.Group
+              //   // name="status"
+              //   label="Task Status"
+              //   // id="status"
+              //   description="Select task status"
+              //   withAsterisk
+              // >
+              //   <Radio value="DONE" name="status" label="DONE" />
+              //   <Radio value="UPCOMING" name="status" label="UPCOMING" />
+              //   <Radio value="CANCELED" name="status" label="CANCELED" />
+              // </Radio.Group>
+              <div>
+                <label>
+                  <Field type="radio" name="status" value="DONE" />
+                  DONE
+                </label>
+                <label>
+                  <Field type="radio" name="status" value="UPCOMING" />
+                  UPCOMING
+                </label>
+                <label>
+                  <Field type="radio" name="status" value="CANCELED" />
+                  CANCELED
+                </label>
+              </div>
+            )}
           </S.Form>
         </ModalWindow>
       )}
