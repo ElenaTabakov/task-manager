@@ -27,7 +27,7 @@ export interface FormikTaskValues {
   shortDescription: string;
   dueDate: Date;
   duration: number;
-  status: string;
+  status: string ;
 }
 
 interface FormProps {
@@ -36,7 +36,10 @@ interface FormProps {
   isEdit: boolean;
   task?: Task;
   dateValue: Date;
+  status: string;
 }
+
+
 
 const AddEditForm = ({
   setIsShow,
@@ -44,9 +47,12 @@ const AddEditForm = ({
   isEdit = false,
   task,
   dateValue,
+  status
 }: FormProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
+  console.log(task, ' obj');
+  const [valueStatus, setValueStatus] = useState(status);
 
   const handleAddItem = (
     values: FormikTaskValues,
@@ -80,7 +86,7 @@ const AddEditForm = ({
           dueDate: values.dueDate,
           duration: values.duration,
           // status: "UPCOMING",
-          status: values.status,
+          status: valueStatus,
           date: dateValue,
         })
       );
@@ -120,7 +126,7 @@ const AddEditForm = ({
     shortDescription: yup.string().required("Requred").min(3, "Too short"),
     duration: yup.number().min(15, "Duration must be at least 15 minutes"),
     dueDate: yup.date(),
-    status: yup.string().required("Requred"),
+    status: yup.string(),
   });
 
   return (
@@ -176,31 +182,33 @@ const AddEditForm = ({
             />
             <InputDate />
             {isEdit && (
-              // <Radio.Group
-              //   // name="status"
-              //   label="Task Status"
-              //   // id="status"
-              //   description="Select task status"
-              //   withAsterisk
-              // >
-              //   <Radio value="DONE" name="status" label="DONE" />
-              //   <Radio value="UPCOMING" name="status" label="UPCOMING" />
-              //   <Radio value="CANCELED" name="status" label="CANCELED" />
-              // </Radio.Group>
-              <div>
-                <label>
-                  <Field type="radio" name="status" value="DONE" />
-                  DONE
-                </label>
-                <label>
-                  <Field type="radio" name="status" value="UPCOMING" />
-                  UPCOMING
-                </label>
-                <label>
-                  <Field type="radio" name="status" value="CANCELED" />
-                  CANCELED
-                </label>
-              </div>
+              <Radio.Group
+                name="status"
+                label="Task Status"
+                id="status"
+                value={valueStatus}
+                onChange={setValueStatus}
+                description="Select task status"
+                withAsterisk
+              >
+                <Radio value="DONE" name="status" label="DONE" />
+                <Radio value="UPCOMING" name="status" label="UPCOMING" />
+                <Radio value="CANCELED" name="status" label="CANCELED" />
+              </Radio.Group>
+              // <div>
+              //   <label>
+              //     <Field type="radio" name="status" value="DONE" />
+              //     DONE
+              //   </label>
+              //   <label>
+              //     <Field type="radio" name="status" value="UPCOMING" />
+              //     UPCOMING
+              //   </label>
+              //   <label>
+              //     <Field type="radio" name="status" value="CANCELED" />
+              //     CANCELED
+              //   </label>
+              // </div>
             )}
           </S.Form>
         </ModalWindow>

@@ -130,6 +130,7 @@ const Tasks = ({ dateValue }: TasksProps) => {
           isShow={isShow}
           isEdit={false}
           dateValue={dateValue}
+          status='UPCOMING'
         />
       )}
     </>

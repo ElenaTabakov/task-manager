@@ -45,6 +45,7 @@ const TaskItem = ({
         isShow={visibleEdirForm}
         setIsShow={setVisibleEditForm}
         task={task}
+        status={status}
         dateValue = {dateValue}
       />
     </S.ListItem>
