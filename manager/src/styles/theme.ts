@@ -43,9 +43,9 @@ export const Main = styled.main`
 
 export const Wrapper = styled.div<WrapperProps>`
   background:${({ theme }) => theme.body};
-  border-radius: 15px;
+  border-radius: 1rem;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
-  padding: 1.5rem 1rem;
+  padding: 1rem;
   margin-top: ${({marginTop}) => `${marginTop}px` || 0}; 
   & a {
     margin: 0 5px;

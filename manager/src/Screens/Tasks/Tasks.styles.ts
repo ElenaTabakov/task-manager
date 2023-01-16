@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components";
 
 export const TasksContainer = styled.div`
-  margin: 35px auto;
-  max-width: 500px;
+  margin: 2rem auto;
+  max-width: 100%;
 `;
 
 export const ListWrapper = styled.section`
-  margin: 15px auto;
+  margin: 1rem auto;
   width: 100%;
 `;
 

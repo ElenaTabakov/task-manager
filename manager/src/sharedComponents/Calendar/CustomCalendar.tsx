@@ -16,9 +16,21 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
   const theme = useMantineTheme();
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const taskDates = useSelector((state: RootState) => state.taskSlice.dates);
-  const convertDates = taskDates.map((date) =>
-    new Date(date).toLocaleDateString("he-IL", { timeZone: "Asia/Jerusalem" })
+   
+  const convertDatesBefore = taskDates.map((date) =>
+      new Date(date).toLocaleDateString("he-IL", { timeZone: "Asia/Jerusalem" })
   );
+
+  
+ 
+  useEffect(()=>{
+    const convertDatesBefore = taskDates.map((date) =>
+      new Date(date).toLocaleDateString("he-IL", { timeZone: "Asia/Jerusalem" })
+  );
+    setConvertDates(convertDatesBefore);
+  },[taskDates]);
+
+  const [convertDates, setConvertDates] = useState(convertDatesBefore);
 
   useEffect(() => {
     dispatch(fetchTasksDates());

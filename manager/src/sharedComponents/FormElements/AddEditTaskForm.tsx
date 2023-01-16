@@ -51,7 +51,7 @@ const AddEditForm = ({
 }: FormProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
-  console.log(task, ' obj');
+  // console.log(task, ' obj');
   const [valueStatus, setValueStatus] = useState(status);
 
   const handleAddItem = (
@@ -59,6 +59,7 @@ const AddEditForm = ({
     helpers: FormikHelpers<FormikTaskValues>
   ) => {
     // e.preventDefault();
+    console.log(values.dueDate, 'Add Item date');
     dispatch(
       createTasks({
         id: "",
@@ -77,6 +78,7 @@ const AddEditForm = ({
 
   const editTaskHandler = (values: FormikTaskValues) => {
     if (tasks && task) {
+
       dispatch(
         updateTasks({
           id: values.id,
@@ -195,20 +197,7 @@ const AddEditForm = ({
                 <Radio value="UPCOMING" name="status" label="UPCOMING" />
                 <Radio value="CANCELED" name="status" label="CANCELED" />
               </Radio.Group>
-              // <div>
-              //   <label>
-              //     <Field type="radio" name="status" value="DONE" />
-              //     DONE
-              //   </label>
-              //   <label>
-              //     <Field type="radio" name="status" value="UPCOMING" />
-              //     UPCOMING
-              //   </label>
-              //   <label>
-              //     <Field type="radio" name="status" value="CANCELED" />
-              //     CANCELED
-              //   </label>
-              // </div>
+             
             )}
           </S.Form>
         </ModalWindow>

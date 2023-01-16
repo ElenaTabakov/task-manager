@@ -69,8 +69,8 @@ const Tasks = ({ dateValue }: TasksProps) => {
 
     const tasksOnSearch = tasks.filter((task: Task) => {
       if (
-        task.title.includes(inputVal) ||
-        task.description.includes(inputVal)
+        task.title.toLowerCase().includes(inputVal.toLowerCase()) ||
+        task.description.toLowerCase().includes(inputVal.toLowerCase())
       ) {
         return task;
       }
@@ -83,12 +83,12 @@ const Tasks = ({ dateValue }: TasksProps) => {
   const handleToggleSortTasks = () => {
     if (isAscSortButton) {
       const sortedTasks = [...filteredTasks].sort((a, b) => {
-        return a.title > b.title ? 1 : -1;
+        return a.title.toLowerCase()  > b.title.toLowerCase() ? 1 : -1;
       });
       setFilteredTasks(sortedTasks);
     } else {
       const sortedTasks = [...filteredTasks].sort((a, b) => {
-        return a.title < b.title ? 1 : -1;
+        return a.title.toLowerCase() < b.title.toLowerCase() ? 1 : -1;
       });
       setFilteredTasks(sortedTasks);
     }

@@ -48,6 +48,7 @@ export const createTasks = createAsyncThunk(
     thunkAPI
   ) => {
     try {
+      console.log(dueDate);
       const response = await axiosApi.post("tasks", {
         title,
         description,
@@ -57,6 +58,7 @@ export const createTasks = createAsyncThunk(
         status,
       });
       thunkAPI.dispatch(fetchTasksByDate(date));
+      thunkAPI.dispatch(fetchTasksDates());
       return response.data.tasks;
     } catch (err: any | undefined) {
       return err.masssage;
@@ -101,6 +103,7 @@ export const deleteTasks = createAsyncThunk(
     try {
       const response = await axiosApi.delete(`tasks/${id}`);
       thunkAPI.dispatch(fetchTasksByDate(date));
+      thunkAPI.dispatch(fetchTasksDates());
       return response.data.tasks;
     } catch (err: any | undefined) {
       return err.masssage;

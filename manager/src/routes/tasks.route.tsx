@@ -9,12 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser, User } from "../store/slices/usersSlice";
 import CustomCalendar from "../sharedComponents/Calendar/CustomCalendar";
 import { HeaderProps } from "../sharedComponents/Header/Header";
-import { Grid } from "@mantine/core";
+import { Grid, ScrollArea } from "@mantine/core";
 import { Wrapper } from "../styles/theme";
-import { LightTheme, DarkTheme } from "../styles/theme";
 
 export default function TasksList({ setTheme }: HeaderProps) {
-  // const isAuth = useSelector((state: RootState) => state.userSlice.isAuth);
   const userEmail = useSelector(
     (state: RootState) => state.userSlice.userEmail
   );
@@ -25,14 +23,6 @@ export default function TasksList({ setTheme }: HeaderProps) {
   };
 
   const navigate = useNavigate();
-  const currentDay = new Date();
-  const d = currentDay.getDate();
-  const dd = d < 10 ? "0" + d : d;
-  const m = currentDay.getMonth() + 1;
-  const mm = m < 10 ? "0" + m : m;
-  const y = currentDay.getFullYear();
-  const fullDate = mm + "-" + dd + "-" + y;
-  console.log(new Date(fullDate));
 
   const [dateValue, setDateValue] = useState<Date>(new Date());
 
@@ -42,11 +32,21 @@ export default function TasksList({ setTheme }: HeaderProps) {
     }
   }, [isAuth]);
 
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
   return (
     <S.PageContainer>
       {isAuth ? (
-        <Wrapper marginTop={50}>
-          <h2>Tasks of user {user.name} </h2>
+        <Wrapper marginTop={15}>
+          <h2 className="main-title">Hello {user.name} </h2>
           <Grid>
             <S.ColBorder span={5} className={"borderRight"}>
               <CustomCalendar
@@ -54,8 +54,40 @@ export default function TasksList({ setTheme }: HeaderProps) {
                 dateValue={dateValue}
               />
             </S.ColBorder>
-            <Grid.Col span={7}>
-              <Tasks dateValue={dateValue} />
+            <Grid.Col span={7} className={"rightSide"}>
+              <h3>{`${dateValue.getDate()} ${dateValue.toLocaleString(
+                "default",
+                { month: "long" }
+              )} ${dateValue.getFullYear()}, ${days[dateValue.getDay()]}`}</h3>
+              <S.TasksWrapper
+                // style={{  height: 200 }}
+                type="always"
+                // styles={(theme) => ({
+                //   scrollbar: {
+                //     "&, &:hover": {
+                //       background:
+                //         theme.colorScheme === "dark"
+                //           ? theme.colors.dark[6]
+                //           : theme.colors.gray[0],
+                //     },
+
+                //     '&[data-orientation="vertical"] .mantine-ScrollArea-thumb':
+                //       {
+                //         backgroundColor: theme.colors.dark[6],
+                //       }
+                //   },
+
+                //   corner: {
+                //     opacity: 1,
+                //     background:
+                //       theme.colorScheme === "dark"
+                //         ? theme.colors.dark[6]
+                //         : theme.colors.gray[0],
+                //   },
+                // })}
+              >
+                <Tasks dateValue={dateValue} />
+              </S.TasksWrapper>
             </Grid.Col>
           </Grid>
         </Wrapper>
