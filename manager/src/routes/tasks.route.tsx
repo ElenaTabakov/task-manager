@@ -48,13 +48,13 @@ export default function TasksList({ setTheme }: HeaderProps) {
         <Wrapper marginTop={15}>
           <h2 className="main-title">Hello {user.name} </h2>
           <Grid>
-            <S.ColBorder span={5} className={"borderRight"}>
+            <S.ColBorder md={12} lg={5} className={"borderRight"}>
               <CustomCalendar
                 setDateValue={setDateValue}
                 dateValue={dateValue}
               />
             </S.ColBorder>
-            <Grid.Col span={7} className={"rightSide"}>
+            <Grid.Col md={12} lg={7} className={"rightSide"}>
               <h3>{`${dateValue.getDate()} ${dateValue.toLocaleString(
                 "default",
                 { month: "long" }
@@ -62,29 +62,7 @@ export default function TasksList({ setTheme }: HeaderProps) {
               <S.TasksWrapper
                 // style={{  height: 200 }}
                 type="always"
-                // styles={(theme) => ({
-                //   scrollbar: {
-                //     "&, &:hover": {
-                //       background:
-                //         theme.colorScheme === "dark"
-                //           ? theme.colors.dark[6]
-                //           : theme.colors.gray[0],
-                //     },
-
-                //     '&[data-orientation="vertical"] .mantine-ScrollArea-thumb':
-                //       {
-                //         backgroundColor: theme.colors.dark[6],
-                //       }
-                //   },
-
-                //   corner: {
-                //     opacity: 1,
-                //     background:
-                //       theme.colorScheme === "dark"
-                //         ? theme.colors.dark[6]
-                //         : theme.colors.gray[0],
-                //   },
-                // })}
+                mx="auto"
               >
                 <Tasks dateValue={dateValue} />
               </S.TasksWrapper>

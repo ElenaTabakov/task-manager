@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTasksDates } from "../../store/slices/tasksSlice";
 import { ThunkActionDispatch, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface CustomCalendarProps {
   setDateValue: React.Dispatch<React.SetStateAction<Date>>;
@@ -21,8 +22,6 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
       new Date(date).toLocaleDateString("he-IL", { timeZone: "Asia/Jerusalem" })
   );
 
-  
- 
   useEffect(()=>{
     const convertDatesBefore = taskDates.map((date) =>
       new Date(date).toLocaleDateString("he-IL", { timeZone: "Asia/Jerusalem" })
@@ -32,10 +31,13 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
 
   const [convertDates, setConvertDates] = useState(convertDatesBefore);
 
+
   useEffect(() => {
     dispatch(fetchTasksDates());
   }, []);
 
+  const largeScreen = useMediaQuery('(min-width: 900px)');
+  
   return (
     <>
       <Calendar
@@ -46,7 +48,8 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
         value={dateValue}
         allowLevelChange={false}
         labelFormat="MMMM, YYYY"
-        size="xl"
+        // size="xl"
+        size={largeScreen ? 'xl' : 'md'}
         renderDay={(date) => {
           const day = date.getDate();
           const dayT = new Date(date).toLocaleDateString("he-IL", {
@@ -55,7 +58,7 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
           const currD = new Date().toLocaleDateString();
           if (convertDates.includes(dayT)) {
             return (
-              <Indicator size={20} color="green" offset={8}>
+              <Indicator size={largeScreen ? 20 : 10} color="green" offset={8}>
                 <div>{day}</div>
               </Indicator>
             );

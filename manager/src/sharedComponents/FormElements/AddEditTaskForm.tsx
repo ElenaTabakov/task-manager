@@ -78,7 +78,7 @@ const AddEditForm = ({
 
   const editTaskHandler = (values: FormikTaskValues) => {
     if (tasks && task) {
-
+      console.log(values.dueDate, 'date before send axios');
       dispatch(
         updateTasks({
           id: values.id,

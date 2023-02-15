@@ -8,6 +8,7 @@ export const TasksContainer = styled.div`
 export const ListWrapper = styled.section`
   margin: 1rem auto;
   width: 100%;
+  box-sizing: border-box;
 `;
 
 export const ListUl = styled.ul`

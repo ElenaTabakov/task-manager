@@ -48,7 +48,7 @@ export const createTasks = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      console.log(dueDate);
+      console.log(dueDate, 'before send');
       const response = await axiosApi.post("tasks", {
         title,
         description,

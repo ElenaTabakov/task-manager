@@ -17,4 +17,5 @@ export const TasksWrapper = styled(ScrollArea)`
   & .mantine-ScrollArea-thumb {
     background: ${({ theme }) => theme.background};
   }
+  box-sizing: border-box;
 `;
