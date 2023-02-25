@@ -10,10 +10,11 @@ interface Task {
   title: string;
   description: string;
   shortDescription: string;
-  dueDate: Date | null;
+  dueDate: Date | string;
   duration: number | null;
   status: string;
   date: Date;
+  // fullDate:Date 
 }
 
 export const fetchTasksByUserId = createAsyncThunk('tasks/fetch', async() => {
@@ -76,7 +77,7 @@ export const updateTasks = createAsyncThunk(
       dueDate,
       duration,
       status,
-      date 
+      date
     }: Task,
     thunkAPI
   ) => {

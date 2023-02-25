@@ -19,6 +19,9 @@ import {
 } from "../../store/slices/tasksSlice";
 import { AnyAction, ThunkAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { Radio } from "@mantine/core";
+import { TimeInput } from "@mantine/dates";
+import { IconClock } from "@tabler/icons";
+import { fullDateISO } from "../../store/utils";
 
 export interface FormikTaskValues {
   id: string;
@@ -27,7 +30,8 @@ export interface FormikTaskValues {
   shortDescription: string;
   dueDate: Date;
   duration: number;
-  status: string ;
+  status: string;
+  dueTime: Date;
 }
 
 interface FormProps {
@@ -39,37 +43,37 @@ interface FormProps {
   status: string;
 }
 
-
-
 const AddEditForm = ({
   setIsShow,
   isShow,
   isEdit = false,
   task,
   dateValue,
-  status
+  status,
 }: FormProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
-  // console.log(task, ' obj');
   const [valueStatus, setValueStatus] = useState(status);
+  const [valueTime, setValueTime] = useState(dateValue);
 
   const handleAddItem = (
     values: FormikTaskValues,
     helpers: FormikHelpers<FormikTaskValues>
   ) => {
-    // e.preventDefault();
-    console.log(values.dueDate, 'Add Item date');
+    console.log(values.dueDate, "formik dueDate");
+    console.log(valueTime, "Add Item date");
+    const fullDate = fullDateISO(values.dueDate, valueTime);
     dispatch(
       createTasks({
         id: "",
         title: values.title,
         description: values.description,
         shortDescription: values.shortDescription,
-        dueDate: values.dueDate,
+        dueDate: fullDate,
         duration: values.duration,
         status: "UPCOMING",
         date: dateValue,
+        // fullDate: fullDate,
       })
     );
     setIsShow(false);
@@ -78,18 +82,20 @@ const AddEditForm = ({
 
   const editTaskHandler = (values: FormikTaskValues) => {
     if (tasks && task) {
-      console.log(values.dueDate, 'date before send axios');
+      // console.log(values.dueDate, "date before send axios");
+      const fullDate = fullDateISO(values.dueDate, valueTime);
       dispatch(
         updateTasks({
           id: values.id,
           title: values.title,
           description: values.description,
           shortDescription: values.shortDescription,
-          dueDate: values.dueDate,
+          dueDate: fullDate,
           duration: values.duration,
           // status: "UPCOMING",
           status: valueStatus,
           date: dateValue,
+          // fullDate: fullDate,
         })
       );
       setIsShow(false);
@@ -108,6 +114,7 @@ const AddEditForm = ({
         dueDate: new Date(task.dueDate),
         duration: task.duration,
         status: task.status,
+        dueTime: new Date(task.dueDate),
       };
     }
     return {
@@ -118,6 +125,7 @@ const AddEditForm = ({
       dueDate: dateValue,
       duration: 15,
       status: "",
+      dueTime: dateValue,
     };
   };
 
@@ -197,8 +205,14 @@ const AddEditForm = ({
                 <Radio value="UPCOMING" name="status" label="UPCOMING" />
                 <Radio value="CANCELED" name="status" label="CANCELED" />
               </Radio.Group>
-             
             )}
+            <TimeInput
+              icon={<IconClock size={16} />}
+              defaultValue={values.dueDate}
+              value={valueTime}
+              onChange={setValueTime}
+              label="Event time"
+            />
           </S.Form>
         </ModalWindow>
       )}
