@@ -6,6 +6,7 @@ import Button from "../../../sharedComponents/Button/Button";
 import Circle from "../../../sharedComponents/CircleTitle/CircleTitle";
 import * as S from "./TaskItem.styles";
 import AddEditForm from "../../../sharedComponents/FormElements/AddEditTaskForm";
+import { getPathContributingMatches } from "@remix-run/router/dist/utils";
 
 interface TaskItemProps {
   task: Task;
@@ -30,7 +31,12 @@ const TaskItem = ({
       <S.ListItemContent>
         <S.ListName>{title}</S.ListName>
         <S.ListDescription>{description}</S.ListDescription>
-        <S.ListDate>{ (new Date(dueDate)).toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'})}</S.ListDate>
+        <S.ListDate>
+          {new Date(dueDate).toLocaleDateString("he-IL", {
+            timeZone: "Asia/Jerusalem",
+          })}{" "}
+          {`${new Date(dueDate).getHours()}:${new Date(dueDate).getMinutes()}`}
+        </S.ListDate>
         <p>{status}</p>
       </S.ListItemContent>
       <Button size="small" onClick={() => onDelete(id)}>
@@ -46,7 +52,7 @@ const TaskItem = ({
         setIsShow={setVisibleEditForm}
         task={task}
         status={status}
-        dateValue = {dateValue}
+        dateValue={dateValue}
       />
     </S.ListItem>
   );

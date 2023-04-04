@@ -36,7 +36,8 @@ export const fetchTasksDates = createAsyncThunk('tasks/dates', async() => {
 export const fetchTasksByDate = createAsyncThunk('tasks/by-day', async(date: Date, thunkAPI) => {
   try {
     const converDate = formatDate(date);
-    const response = await axiosApi.get(`tasks/tasks-by-day?date=${converDate}`);
+    const timeZone = new Date(date).getTimezoneOffset();  
+    const response = await axiosApi.get(`tasks/tasks-by-day?date=${converDate}&TZOffset=${timeZone}`);
     return response.data.tasks;
   } catch (err: any | undefined) {
     return err.masssage;
