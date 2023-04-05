@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useMantineTheme, Indicator } from "@mantine/core";
+import { Indicator } from "@mantine/core";
 import { DatePicker, Calendar, Month, getMonthDays } from "@mantine/dates";
 import { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,6 @@ interface CustomCalendarProps {
 }
 
 const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
-  const theme = useMantineTheme();
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const taskDates = useSelector((state: RootState) => state.taskSlice.dates);
 
@@ -40,13 +39,12 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
   return (
     <>
       <Calendar
-        onChange={(date) => {
-          date !== null && setDateValue(date);
-        }}
-        initialMonth={new Date()}
-        value={dateValue}
-        allowLevelChange={false}
-        labelFormat="MMMM, YYYY"
+        getDayProps={(date) => ({
+          onClick: () => date !== null && setDateValue(date),
+        })}
+        monthLabelFormat={"MMMM, YYYY"}
+        defaultDate={dateValue}
+        // allowLevelChange={false}
         // size="xl"
         size={largeScreen ? "xl" : "md"}
         renderDay={(date) => {
@@ -63,11 +61,7 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
             );
           }
 
-          return (
-            <Indicator size={6} color="red" offset={8} disabled={day != 16}>
-              <div>{day}</div>
-            </Indicator>
-          );
+          return <div>{day}</div>;
         }}
       />
     </>

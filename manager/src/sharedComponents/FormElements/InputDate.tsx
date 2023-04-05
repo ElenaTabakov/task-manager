@@ -9,11 +9,11 @@ const InputDate = () => {
   return (
     <DatePicker
       placeholder="Pick date"
-      label="Event date"
-      withAsterisk
+      // label="Event date"
+      // withAsterisk
       defaultValue={values.dueDate}
       onChange={(date: Date) => setFieldValue("dueDate", date)}
-      icon={<IconCalendar size={16} />}
+      // icon={<IconCalendar size={16} />}
     />
   );
 };

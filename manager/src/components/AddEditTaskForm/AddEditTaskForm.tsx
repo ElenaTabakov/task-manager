@@ -184,10 +184,11 @@ const AddEditForm = ({
             )}
             <TimeInput
               icon={<IconClock size={16} />}
-              defaultValue={values.dueDate}
-              value={valueTime}
-              onChange={setValueTime}
               label="Event time"
+              withAsterisk
+              // defaultValue={values.dueDate}
+              // value={valueTime}
+              // onChange={setValueTime}
             />
           </S.Form>
         </ModalWindow>

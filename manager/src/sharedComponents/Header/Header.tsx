@@ -8,10 +8,10 @@ import { Grid, Switch, Group, useMantineTheme } from "@mantine/core";
 import { IconSun, IconMoonStars } from "@tabler/icons";
 
 export interface HeaderProps {
-  setTheme : React.Dispatch<React.SetStateAction<boolean>>;
+  setTheme: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header = ({setTheme} : HeaderProps) => {
+const Header = ({ setTheme }: HeaderProps) => {
   const { isAuth } = useAuth();
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -19,30 +19,35 @@ const Header = ({setTheme} : HeaderProps) => {
   };
   return (
     <>
-    <Wrapper>
-      <Grid  align="center">
-        <Grid.Col span={9}  >
-          
-          <Link to="/">Home</Link>
-          <Link to="/tasks">Tasks</Link>
-          {isAuth && <a href="#" onClick={handleLogout}> Logout</a> }
-          
-         
-        </Grid.Col>
-        <Grid.Col span={3}>
-          <Group position="right">
-            <Switch
-              size="md" 
-              color="dark"          
-              onLabel={<IconSun size={22} stroke={2.5} color={"yellow"} />}
-              offLabel={<IconMoonStars size={22} stroke={2.5} color={"darkblue"} />}
-              onChange={() => {setTheme((prev) => !prev)}}
-            />
-          </Group>
-        </Grid.Col>
-      </Grid>
-    </Wrapper>
-   
+      <Wrapper>
+        <Grid align="center">
+          <Grid.Col span={9}>
+            <Link to="/">Home</Link>
+            <Link to="/tasks">Tasks</Link>
+            {isAuth && (
+              <a href="#" onClick={handleLogout}>
+                {" "}
+                Logout
+              </a>
+            )}
+          </Grid.Col>
+          <Grid.Col span={3}>
+            <Group position="right">
+              <Switch
+                size="md"
+                color="dark"
+                onLabel={<IconSun size={22} stroke={2.5} color={"yellow"} />}
+                offLabel={
+                  <IconMoonStars size={22} stroke={2.5} color={"darkblue"} />
+                }
+                onChange={() => {
+                  setTheme((prev) => !prev);
+                }}
+              />
+            </Group>
+          </Grid.Col>
+        </Grid>
+      </Wrapper>
     </>
   );
 };
