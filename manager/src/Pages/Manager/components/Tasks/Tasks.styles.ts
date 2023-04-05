@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const TasksContainer = styled.div`
   margin: 2rem auto;
@@ -18,14 +18,13 @@ export const ListUl = styled.ul`
 `;
 
 export const LoadingOverlayWrapper = styled.div`
-  width: 100%;
+  /* width: 100%;
   height: 100%;
   position: fixed;
   z-index: 1;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* background: rgba(255,255,255,0.1); */
+  justify-content: center; */
 `;

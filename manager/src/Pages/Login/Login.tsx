@@ -1,15 +1,13 @@
 import { useEffect } from "react";
-import LoginForm from "../sharedComponents/FormElements/LoginForm";
-import * as S from "../screens/Pages.styles";
-import { Link, RouterProvider } from "react-router-dom";
-import { useAuth } from "../hooks/use-auth";
+import LoginForm from "./components/LoginForm";
+import * as S from "../../sharedStyles/global.styles";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/use-auth";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { Wrapper } from "../styles/theme";
+import { Wrapper } from "../../styles/theme";
 
 const Login = () => {
-  const { isAuth} = useAuth();
+  const { isAuth } = useAuth();
   const navigate = useNavigate();
   // const user = useSelector((state: RootState) => state.userSlice.users);
   //   useEffect(() => {
@@ -20,10 +18,10 @@ const Login = () => {
 
   useEffect(() => {
     console.log(isAuth);
-    if (isAuth == true) {
+    if (isAuth === true) {
       navigate("/tasks");
     }
-  }, [isAuth]);
+  }, [isAuth, navigate]);
 
   return (
     <S.PageContainer>

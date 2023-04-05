@@ -1,14 +1,14 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import * as S from "./screens/Pages.styles";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import * as S from "./sharedStyles/global.styles";
 import Header from "./sharedComponents/Header/Header";
 import * as St from "./styles/theme";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 import { GlobalStyles } from "./styles/global";
 import { lightTheme, darkTheme } from "./styles/theme";
 import { useState } from "react";
-import Login from "./routes/login.route";
-import TasksList from "./routes/tasks.route";
-import { Register } from "./routes/register.route";
+import Login from "./Pages/Login/Login";
+import TasksList from "./Pages/Manager/Manager";
+import { Register } from "./Pages/Register/Register";
 
 function App() {
   const [theme, setTheme] = useState(true);
@@ -28,7 +28,7 @@ function App() {
               <Route path="tasks" element={<TasksList setTheme={setTheme} />} />
               <Route path="register" element={<Register />} />
             </Routes>
-          </BrowserRouter>        
+          </BrowserRouter>
         </S.PageContainer>
       </St.Main>
       <GlobalStyles />

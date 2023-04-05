@@ -1,38 +1,21 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { RootState } from "../../store/store";
 import { useSelector, useDispatch } from "react-redux";
-import * as S from "./Form.styled";
-import Input from "./Input/Input";
-import { Task } from "../../screens/Tasks/Tasks";
-import ModalWindow from "../ModalWindow/ModalWindow";
-// import { addTask, editTask } from "../../store/slices/tasksSlice";
-import "react-datepicker/dist/react-datepicker.css";
-import { useAuth } from "../../hooks/use-auth";
-import InputDate from "./InputDate";
-import { Field, Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
-import {
-  fetchTasksByUserId,
-  createTasks,
-  updateTasks,
-  deleteTasks,
-} from "../../store/slices/tasksSlice";
-import { AnyAction, ThunkAction, ThunkDispatch } from "@reduxjs/toolkit";
+import * as S from "../../sharedComponents/FormElements/Form.styles";
+import Input from "../../sharedComponents/FormElements/Input/Input";
+import ModalWindow from "../../sharedComponents/ModalWindow/ModalWindow";
+import "react-datepicker/dist/react-datepicker.css";
+import InputDate from "../../sharedComponents/FormElements/InputDate";
+import { Formik, FormikHelpers } from "formik";
+import { createTasks, updateTasks } from "../../store/slices/tasksSlice";
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { Radio } from "@mantine/core";
 import { TimeInput } from "@mantine/dates";
 import { IconClock } from "@tabler/icons";
-import { fullDateISO } from "../../store/utils";
-
-export interface FormikTaskValues {
-  id: string;
-  title: string;
-  description: string;
-  shortDescription: string;
-  dueDate: Date;
-  duration: number;
-  status: string;
-  dueTime: Date;
-}
+// import { fullDateISO } from "../../store/utils";
+import { Task } from "../../Pages/Manager/components/Tasks/components/Task/Task.types";
+import { FormikTaskValues } from "./AddEditTaskForm.types";
 
 interface FormProps {
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -62,7 +45,7 @@ const AddEditForm = ({
   ) => {
     console.log(values.dueDate, "formik dueDate");
     console.log(valueTime, "Add Item date");
-    const fullDate = fullDateISO(values.dueDate, valueTime);
+    // const fullDate = fullDateISO(values.dueDate, valueTime);
     dispatch(
       createTasks({
         id: "",
@@ -84,7 +67,7 @@ const AddEditForm = ({
   const editTaskHandler = (values: FormikTaskValues) => {
     if (tasks && task) {
       // console.log(values.dueDate, "date before send axios");
-      const fullDate = fullDateISO(values.dueDate, valueTime);
+      // const fullDate = fullDateISO(values.dueDate, valueTime);
       dispatch(
         updateTasks({
           id: values.id,
@@ -92,7 +75,7 @@ const AddEditForm = ({
           description: values.description,
           shortDescription: values.shortDescription,
           // dueDate: fullDate,
-          dueDate: values.dueDate, 
+          dueDate: values.dueDate,
           duration: values.duration,
           // status: "UPCOMING",
           status: valueStatus,
@@ -148,16 +131,7 @@ const AddEditForm = ({
       validationSchema={validationSchema}
       onSubmit={isEdit ? editTaskHandler : handleAddItem}
     >
-      {({
-        values,
-        errors,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        touched,
-        isValid,
-        dirty,
-      }) => (
+      {({ values, handleSubmit }) => (
         <ModalWindow
           title={isEdit ? "Edit Task" : "Add New Task"}
           visible={isShow}
@@ -223,6 +197,6 @@ const AddEditForm = ({
 };
 
 export default AddEditForm;
-function submitForm(values: FormikTaskValues, submitForm: any) {
-  throw new Error("Function not implemented.");
-}
+// function submitForm(values: FormikTaskValues, submitForm: any) {
+//   throw new Error("Function not implemented.");
+// }

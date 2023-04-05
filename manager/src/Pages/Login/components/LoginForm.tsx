@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store/store";
-import Button from "../Button/Button";
-import * as S from "./Form.styled";
-import Input from "./Input/Input";
+import { RootState } from "../../../store/store";
+import Button from "../../../sharedComponents/Button/Button";
+import * as S from "../../../sharedComponents/FormElements/Form.styles";
+import Input from "../../../sharedComponents/FormElements/Input/Input";
 // import { setUser} from "../../store/slices/usersSlice";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
-import * as yup from 'yup';
+import * as yup from "yup";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { loginUser } from "../../store/slices/usersSlice";
+import { loginUser } from "../../../store/slices/usersSlice";
 
 interface LoginFormProps {
   loginBtnText: string;
@@ -30,12 +30,12 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
       setErrorLogin(false);
       // console.log('Email or Password is incorrect USEEFFECT')
     }
-  }, [isAuth]);
+  }, [isAuth, navigate, setErrorLogin]);
 
   const validationSchema = yup.object().shape({
-    email: yup.string().email('Invalid email').required('Required'),
-    password: yup.string().required('Reuired')
-  })
+    email: yup.string().email("Invalid email").required("Required"),
+    password: yup.string().required("Reuired"),
+  });
   interface LoginFormValues {
     email: string;
     password: string;
@@ -47,11 +47,9 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
         password: "",
       }}
       validateOnBlur
-      onSubmit={( values : LoginFormValues) => {
-        dispatch(loginUser({email: values.email, password: values.password}));
-      
+      onSubmit={(values: LoginFormValues) => {
+        dispatch(loginUser({ email: values.email, password: values.password }));
       }}
-
       validationSchema={validationSchema}
     >
       {({
@@ -63,11 +61,10 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
         touched,
         isValid,
         dirty,
-
       }) => (
-        <S.Form onSubmit={handleSubmit}> 
+        <S.Form onSubmit={handleSubmit}>
           <Input
-            label = 'Email'
+            label="Email"
             type="text"
             placeholder="Email"
             name="email"
@@ -76,14 +73,14 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
             // value={values.email}
           ></Input>
           <Input
-            label = 'Password'
+            label="Password"
             type="password"
             placeholder="Password"
             name="password"
           ></Input>
           <Button
             type="submit"
-            size="medium"    
+            size="medium"
             disabled={!values.email || !values.password}
           >
             {loginBtnText}

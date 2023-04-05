@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ListItem = styled.li`
   display: flex;
@@ -7,34 +7,32 @@ export const ListItem = styled.li`
   border: 1px solid #ccc;
   border-radius: 10px;
   margin-bottom: 15px;
-  flex-wrap:wrap;
-  &.status-CANCELED{
+  flex-wrap: wrap;
+  &.status-CANCELED {
     border-color: red;
   }
-  &.status-UPCOMING{
+  &.status-UPCOMING {
     border-color: ${({ theme }) => theme.secondary};
   }
-`
+`;
 export const ListItemContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
- 
-`
+`;
 
 export const ListName = styled.h2`
   font-size: 1.5rem;
   font-weight: bold;
-  margin-top:0;
-`
+  margin-top: 0;
+`;
 export const ListDescription = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-`
+`;
 export const ListDate = styled.span`
-  color:#b1b1b1;
+  color: #b1b1b1;
   font-style: italic;
-`
-
+`;

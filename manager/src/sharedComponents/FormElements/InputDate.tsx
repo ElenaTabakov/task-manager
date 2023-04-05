@@ -1,7 +1,7 @@
 import { useFormikContext } from "formik";
-import { FormikTaskValues } from "./AddEditTaskForm";
+import { FormikTaskValues } from "../../components/AddEditTaskForm/AddEditTaskForm.types";
 import { DatePicker } from "@mantine/dates";
-import { IconCalendar } from '@tabler/icons';
+import { IconCalendar } from "@tabler/icons";
 
 const InputDate = () => {
   const { values, setFieldValue } = useFormikContext<FormikTaskValues>();

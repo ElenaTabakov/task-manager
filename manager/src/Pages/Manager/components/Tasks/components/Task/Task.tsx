@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Task } from "../Tasks";
-import { RootState } from "../../../store/store";
-import { useSelector, useDispatch } from "react-redux";
-import Button from "../../../sharedComponents/Button/Button";
-import Circle from "../../../sharedComponents/CircleTitle/CircleTitle";
-import * as S from "./TaskItem.styles";
-import AddEditForm from "../../../sharedComponents/FormElements/AddEditTaskForm";
-import { getPathContributingMatches } from "@remix-run/router/dist/utils";
+// import { RootState } from "../../../../../../store/store";
+// import { useSelector } from "react-redux";
+import Button from "../../../../../../sharedComponents/Button/Button";
+import Circle from "../../../../../../sharedComponents/CircleTitle/CircleTitle";
+import * as S from "./Task.styles";
+import AddEditForm from "../../../../../../components/AddEditTaskForm/AddEditTaskForm";
+import { Task } from "./Task.types";
 
 interface TaskItemProps {
   task: Task;
@@ -23,7 +22,7 @@ const TaskItem = ({
   onDelete,
 }: TaskItemProps) => {
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
-  const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
+  // const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
 
   return (
     <S.ListItem id={id} className={`${className} status-${status}`}>

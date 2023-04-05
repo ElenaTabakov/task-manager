@@ -1,25 +1,24 @@
 import { Formik } from "formik";
-import React , { useEffect , useState} from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Button from "../Button/Button";
-import * as S from "./Form.styled";
-import Input from "./Input/Input";
+import Button from "../../../sharedComponents/Button/Button";
+import * as S from "../../../sharedComponents/FormElements/Form.styles";
+import Input from "../../../sharedComponents/FormElements/Input/Input";
 import * as yup from "yup";
-import { registerUser } from "../../store/slices/usersSlice";
+import { registerUser } from "../../../store/slices/usersSlice";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { RootState } from "../../store/store";
+import { RootState } from "../../../store/store";
 import { useNavigate } from "react-router-dom";
 
-
-
 interface RegisterFormProps {
-    registerBtnText: string;
+  registerBtnText: string;
 }
 
-const RegisterForm = ({registerBtnText} : RegisterFormProps) => {
-
+const RegisterForm = ({ registerBtnText }: RegisterFormProps) => {
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
-  const statusRegister = useSelector((state: RootState) => state.userSlice.statusRegister);
+  const statusRegister = useSelector(
+    (state: RootState) => state.userSlice.statusRegister
+  );
   const navigate = useNavigate();
 
   interface RegisterFormValues {
@@ -29,22 +28,31 @@ const RegisterForm = ({registerBtnText} : RegisterFormProps) => {
   }
   const validationSchema = yup.object().shape({
     name: yup.string().min(3, "Too short name").required("Name is required"),
-    email: yup.string().email('Invilid email').required('Email is required'),
-    password: yup.string().min(4, 'Min 4 symbols').required('Password is required')
+    email: yup.string().email("Invilid email").required("Email is required"),
+    password: yup
+      .string()
+      .min(4, "Min 4 symbols")
+      .required("Password is required"),
   });
 
   useEffect(() => {
-    if(statusRegister === 'succeeded') {
-        navigate('/login');
+    if (statusRegister === "succeeded") {
+      navigate("/login");
     }
-}, [statusRegister] )
+  }, [statusRegister, navigate]);
   return (
     <Formik
       initialValues={{ email: "", password: "", name: "" }}
       validateOnBlur
-      onSubmit={(values: RegisterFormValues) => {    
-         dispatch(registerUser({email: values.email, name: values.name, password: values.password}))  
-         console.log( values.email, values.name, values.password) 
+      onSubmit={(values: RegisterFormValues) => {
+        dispatch(
+          registerUser({
+            email: values.email,
+            name: values.name,
+            password: values.password,
+          })
+        );
+        console.log(values.email, values.name, values.password);
       }}
       validationSchema={validationSchema}
     >
@@ -59,7 +67,7 @@ const RegisterForm = ({registerBtnText} : RegisterFormProps) => {
       }) => (
         <S.Form onSubmit={handleSubmit}>
           <Input
-            label = 'Name'
+            label="Name"
             type="text"
             placeholder="Name"
             id="name"
@@ -69,7 +77,7 @@ const RegisterForm = ({registerBtnText} : RegisterFormProps) => {
             // value={values.name}
           ></Input>
           <Input
-            label = 'Email'
+            label="Email"
             autoComplete="off"
             type="email"
             id="email"
@@ -80,7 +88,7 @@ const RegisterForm = ({registerBtnText} : RegisterFormProps) => {
             // value={values.email}
           ></Input>
           <Input
-            label = 'Password'
+            label="Password"
             type="password"
             id="password"
             placeholder="Password"

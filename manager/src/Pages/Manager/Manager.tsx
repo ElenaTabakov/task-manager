@@ -1,16 +1,16 @@
-import Tasks from "../screens/Tasks/Tasks";
+import Tasks from "./components/Tasks/Tasks";
 import { Navigate } from "react-router-dom";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import * as S from "../screens/Pages.styles";
-import { useAuth } from "../hooks/use-auth";
+import * as S from "../../sharedStyles/global.styles";
+import { useAuth } from "../../hooks/use-auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { logoutUser, User } from "../store/slices/usersSlice";
-import CustomCalendar from "../sharedComponents/Calendar/CustomCalendar";
-import { HeaderProps } from "../sharedComponents/Header/Header";
+import { logoutUser, User } from "../../store/slices/usersSlice";
+import CustomCalendar from "../../sharedComponents/Calendar/CustomCalendar";
+import { HeaderProps } from "../../sharedComponents/Header/Header";
 import { Grid, ScrollArea } from "@mantine/core";
-import { Wrapper } from "../styles/theme";
+import { Wrapper } from "../../styles/theme";
 
 export default function TasksList({ setTheme }: HeaderProps) {
   const userEmail = useSelector(

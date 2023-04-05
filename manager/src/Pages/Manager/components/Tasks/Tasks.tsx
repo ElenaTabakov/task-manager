@@ -1,31 +1,22 @@
 import { useState, useEffect } from "react";
-import { RootState } from "../../store/store";
+import { RootState } from "../../../../store/store";
 import { useSelector, useDispatch } from "react-redux";
-import TaskItem from "./TaskItem/TaskItem";
+import TaskItem from "./components/Task/Task";
 import * as S from "./Tasks.styles";
-import AddEditForm from "../../sharedComponents/FormElements/AddEditTaskForm";
-import Button from "../../sharedComponents/Button/Button";
+import AddEditForm from "../../../../components/AddEditTaskForm/AddEditTaskForm";
+import Button from "../../../../sharedComponents/Button/Button";
 // import { deleteTask } from "../../store/slices/tasksSlice";
-import SearchForm from "../../sharedComponents/SearchForm";
-import { Action, AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import SearchForm from "../../../../sharedComponents/SearchForm";
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import {
-  fetchTasksByUserId,
   deleteTasks,
   fetchTasksByDate,
-} from "../../store/slices/tasksSlice";
+} from "../../../../store/slices/tasksSlice";
 import { Loader } from "@mantine/core";
+import { Task } from "./components/Task/Task.types";
 
 interface TasksProps {
   dateValue: Date;
-}
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  shortDescription: string;
-  dueDate: Date;
-  duration: number;
-  status: string;
 }
 
 const Tasks = ({ dateValue }: TasksProps) => {
@@ -43,21 +34,21 @@ const Tasks = ({ dateValue }: TasksProps) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    if (statusFetchByDate == "loading") {
+    if (statusFetchByDate === "loading") {
       setVisible(true);
     } else {
       setVisible(false);
     }
-  }, [statusFetchByDate]);
+  }, [statusFetchByDate, setVisible]);
 
-  useEffect(() => {
-    dispatch(fetchTasksByDate(dateValue));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchTasksByDate(dateValue));
+  // }, []);
 
   useEffect(() => {
     dispatch(fetchTasksByDate(dateValue));
     console.log(tasks, " dispatch");
-  }, [dateValue]);
+  }, [dateValue, fetchTasksByDate, dispatch]);
 
   useEffect(() => {
     setFilteredTasks(tasks);
@@ -83,7 +74,7 @@ const Tasks = ({ dateValue }: TasksProps) => {
   const handleToggleSortTasks = () => {
     if (isAscSortButton) {
       const sortedTasks = [...filteredTasks].sort((a, b) => {
-        return a.title.toLowerCase()  > b.title.toLowerCase() ? 1 : -1;
+        return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;
       });
       setFilteredTasks(sortedTasks);
     } else {
@@ -100,7 +91,7 @@ const Tasks = ({ dateValue }: TasksProps) => {
     <>
       {visible && (
         <S.LoadingOverlayWrapper>
-          <Loader variant="bars"   />
+          <Loader variant="bars" />
         </S.LoadingOverlayWrapper>
       )}
 
@@ -130,7 +121,7 @@ const Tasks = ({ dateValue }: TasksProps) => {
           isShow={isShow}
           isEdit={false}
           dateValue={dateValue}
-          status='UPCOMING'
+          status="UPCOMING"
         />
       )}
     </>
