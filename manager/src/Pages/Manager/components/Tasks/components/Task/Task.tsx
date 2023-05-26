@@ -22,14 +22,38 @@ const TaskItem = ({
   onDelete,
 }: TaskItemProps) => {
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
+  const [descriptionHide, setDescriptionHide] = useState<boolean>(true);
   // const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
 
   return (
     <S.ListItem id={id} className={`${className} status-${status}`}>
       <Circle circleContent={title} />
       <S.ListItemContent>
-        <S.ListName>{title}</S.ListName>
-        <S.ListDescription>{description}</S.ListDescription>
+        <S.Task_header>
+          <S.ListName>{title}</S.ListName>
+          <div className="task_header_btns">
+            <Button size="small" onClick={() => onDelete(id)} title="Delete">
+              x
+            </Button>
+            <Button
+              size="small"
+              onClick={() => setVisibleEditForm(!visibleEdirForm)}
+              title="Edit task"
+            >
+              {" "}
+              {visibleEdirForm ? "Close Edit Form" : "Edit Task"}{" "}
+            </Button>
+          </div>
+        </S.Task_header>
+
+        <S.ShortDescription className={descriptionHide ? 'active' : 'hide'}>
+          {shortDescription}
+          <a href="#" onClick={()=>setDescriptionHide(false)}>more...</a>
+        </S.ShortDescription>
+        <S.ListDescription className={descriptionHide ? 'hide' : 'active'}>
+          {description}
+          <a href="#" onClick={()=>setDescriptionHide(true)}>less...</a>
+        </S.ListDescription>
         <S.ListDate>
           {new Date(dueDate).toLocaleDateString("he-IL", {
             timeZone: "Asia/Jerusalem",
@@ -38,13 +62,7 @@ const TaskItem = ({
         </S.ListDate>
         <p>{status}</p>
       </S.ListItemContent>
-      <Button size="small" onClick={() => onDelete(id)}>
-        x
-      </Button>
-      <Button size="small" onClick={() => setVisibleEditForm(!visibleEdirForm)}>
-        {" "}
-        {visibleEdirForm ? "Close Edit Form" : "Edit Task"}{" "}
-      </Button>
+
       <AddEditForm
         isEdit
         isShow={visibleEdirForm}

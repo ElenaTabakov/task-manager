@@ -7,6 +7,7 @@ export const GlobalStyles = createGlobalStyle<{theme: LightTheme | DarkTheme }>`
 body {
   font-family: Tahoma, Helvetica, Arial, Roboto, sans-serif;
   transition: all 0.50s linear; 
+  color: ${({theme}) => theme.text};
   }
 h2{
     margin: 0;

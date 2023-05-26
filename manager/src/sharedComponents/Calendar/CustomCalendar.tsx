@@ -55,8 +55,8 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
           const currD = new Date().toLocaleDateString();
           if (convertDates?.includes(dayT)) {
             return (
-              <Indicator size={largeScreen ? 20 : 10} color="green" offset={8}>
-                <div>{day}</div>
+              <Indicator size={largeScreen ? 15 : 10} color="yellow" offset={8}>
+                <div className ="active_day">{day}</div>
               </Indicator>
             );
           }

@@ -9,9 +9,9 @@ export const formatDate = (date: Date) => {
 };
 
 export const fullDateISO = (dateDay: Date, dateTime:Date) => {
-  const hours = dateTime.getHours();
+  const hours = dateDay.getHours();
   const hoursF = hours < 10 ? `0${hours}` : hours;
-  const minutes = dateTime.getMinutes();
+  const minutes = dateDay.getMinutes();
   const minutesF = minutes < 10 ? `0${minutes}` : minutes;
   const month = dateDay.getMonth();
   const monthF = month < 10 ? `0${month + 1}` : month;

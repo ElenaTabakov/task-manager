@@ -6,6 +6,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   disabled?: boolean;
   margin?: S.ButtonMargin;
+  bgColor?:  S.ButtonBgColor ;
+  padding?: string ;
 }
 
 const Button = ({
@@ -14,6 +16,8 @@ const Button = ({
   className,
   disabled,
   margin,
+  bgColor,
+  padding,
   ...props
 }: ButtonProps) => {
   return (
@@ -23,6 +27,7 @@ const Button = ({
       disabled={disabled}
       margin ={margin || 'right'}
       type = {'button' || 'reset' || 'submit'}
+      bgColor = {bgColor || 'primary'}
       {...props}
     >
       {children}

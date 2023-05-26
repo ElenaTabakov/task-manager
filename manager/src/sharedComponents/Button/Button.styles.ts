@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 export type ButtonSize = "small" | "medium" | "large";
+export type ButtonBgColor = 'primary' | 'secondary';
 
 const small = css`
   padding: 5px 10px;
@@ -9,7 +10,7 @@ const small = css`
 `;
 const medium = css`
   padding: 5px 10px;
-  background: #21c6c6;
+  /* background: ${({ theme }) => theme.primary}; */
   font-size: 1.5rem;
 `;
 const large = css`
@@ -20,13 +21,19 @@ const large = css`
 export type ButtonMargin = "right" | "left";
 
 const right = css`
-  margin-right: 20px;
+  margin-right: 15px;
 `;
 const left = css`
-  margin-left: 20px;
+  margin-left: 15px;
+`;
+const secondary = css`
+  background: ${({theme}) => theme.secondary};
+`;
+const primary= css`
+  background: ${({theme}) => theme.primary};
 `;
 
-export const Button = styled.button<{ size: ButtonSize, margin: ButtonMargin }>`
+export const Button = styled.button<{ size: ButtonSize, margin: ButtonMargin, bgColor: ButtonBgColor }>`
   ${({ size }) => {
     if (size === "large") {
       return large;
@@ -47,6 +54,16 @@ export const Button = styled.button<{ size: ButtonSize, margin: ButtonMargin }>`
       return right;
     }
   }}
+  ${({ bgColor }) => {
+    if (bgColor === "secondary") {
+      return secondary;
+    }
+    if (bgColor === "primary") {
+      return primary;
+    }
+  }}
+  
+ 
   border:none;
   cursor: pointer;
   border-radius: 10px;

@@ -11,11 +11,12 @@ import { Formik, FormikHelpers } from "formik";
 import { createTasks, updateTasks } from "../../store/slices/tasksSlice";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { Radio } from "@mantine/core";
-import { TimeInput } from "@mantine/dates";
+import { TimeInput, DateTimePicker } from "@mantine/dates";
 import { IconClock } from "@tabler/icons";
 // import { fullDateISO } from "../../store/utils";
 import { Task } from "../../Pages/Manager/components/Tasks/components/Task/Task.types";
 import { FormikTaskValues } from "./AddEditTaskForm.types";
+
 
 interface FormProps {
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,14 +38,15 @@ const AddEditForm = ({
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const [valueStatus, setValueStatus] = useState(status);
-  const [valueTime, setValueTime] = useState(dateValue);
+  // const [valueTime, setValueTime] = useState(dateValue);
 
+  // console.log(valueTime);
   const handleAddItem = (
     values: FormikTaskValues,
     helpers: FormikHelpers<FormikTaskValues>
   ) => {
     console.log(values.dueDate, "formik dueDate");
-    console.log(valueTime, "Add Item date");
+    // console.log(valueTime, "Add Item date");
     // const fullDate = fullDateISO(values.dueDate, valueTime);
     dispatch(
       createTasks({
@@ -66,21 +68,17 @@ const AddEditForm = ({
 
   const editTaskHandler = (values: FormikTaskValues) => {
     if (tasks && task) {
-      // console.log(values.dueDate, "date before send axios");
-      // const fullDate = fullDateISO(values.dueDate, valueTime);
+
       dispatch(
         updateTasks({
           id: values.id,
           title: values.title,
           description: values.description,
           shortDescription: values.shortDescription,
-          // dueDate: fullDate,
           dueDate: values.dueDate,
           duration: values.duration,
-          // status: "UPCOMING",
           status: valueStatus,
           date: dateValue,
-          // fullDate: fullDate,
         })
       );
       setIsShow(false);
@@ -182,14 +180,14 @@ const AddEditForm = ({
                 <Radio value="CANCELED" name="status" label="CANCELED" />
               </Radio.Group>
             )}
-            <TimeInput
+            {/* <TimeInput
               icon={<IconClock size={16} />}
               label="Event time"
               withAsterisk
               // defaultValue={values.dueDate}
               // value={valueTime}
               // onChange={setValueTime}
-            />
+            /> */}
           </S.Form>
         </ModalWindow>
       )}

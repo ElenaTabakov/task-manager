@@ -1,14 +1,23 @@
 import { useFormikContext } from "formik";
 import { FormikTaskValues } from "../../components/AddEditTaskForm/AddEditTaskForm.types";
-import { DatePicker } from "@mantine/dates";
+import { DatePicker, DateTimePicker } from "@mantine/dates";
 import { IconCalendar } from "@tabler/icons";
 
 const InputDate = () => {
   const { values, setFieldValue } = useFormikContext<FormikTaskValues>();
 
   return (
-    <DatePicker
+
+  //   <DateTimePicker
+  //   dropdownType="modal"
+  //   label="Pick date and time"
+  //   placeholder="Pick date and time"
+  //   maw={400}
+  //   mx="auto"
+  // />
+    <DateTimePicker
       placeholder="Pick date"
+      dropdownType="modal"
       // label="Event date"
       // withAsterisk
       defaultValue={values.dueDate}

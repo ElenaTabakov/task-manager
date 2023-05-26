@@ -14,6 +14,7 @@ import {
 } from "../../../../store/slices/tasksSlice";
 import { Loader } from "@mantine/core";
 import { Task } from "./components/Task/Task.types";
+import { LightTheme,DarkTheme, lightTheme } from "../../../../styles/theme";
 
 interface TasksProps {
   dateValue: Date;
@@ -96,7 +97,7 @@ const Tasks = ({ dateValue }: TasksProps) => {
       )}
 
       <SearchForm handleOnChangeSearch={handleOnChangeSearch} />
-      <Button type="button" onClick={handleToggleSortTasks} size="small">
+      <Button type="button" onClick={handleToggleSortTasks} bgColor={'secondary'}>
         {isAscSortButton ? "Sort A-Z" : "Sort Z-A"}
       </Button>
       <Button onClick={() => setIsShow(true)}>Add Task</Button>
