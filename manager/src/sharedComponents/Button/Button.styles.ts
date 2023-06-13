@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export type ButtonSize = "small" | "medium" | "large";
-export type ButtonBgColor = 'primary' | 'secondary';
+export type ButtonBgColor = 'primary' | 'secondary' | 'pink' | 'yellow' | 'purple';
 
 const small = css`
   padding: 5px 10px;
@@ -32,6 +32,15 @@ const secondary = css`
 const primary= css`
   background: ${({theme}) => theme.primary};
 `;
+const pink= css`
+  background: ${({theme}) => theme.pink};
+`;
+const yellow = css`
+  background: ${({theme}) => theme.yellow};
+`;
+const purple = css`
+  background: ${({theme}) => theme.purple};
+`;
 
 export const Button = styled.button<{ size: ButtonSize, margin: ButtonMargin, bgColor: ButtonBgColor }>`
   ${({ size }) => {
@@ -46,14 +55,7 @@ export const Button = styled.button<{ size: ButtonSize, margin: ButtonMargin, bg
     }
     return small;
   }}
-  ${({ margin }) => {
-    if (margin === "left") {
-      return left;
-    }
-    if (margin === "right") {
-      return right;
-    }
-  }}
+
   ${({ bgColor }) => {
     if (bgColor === "secondary") {
       return secondary;
@@ -61,13 +63,22 @@ export const Button = styled.button<{ size: ButtonSize, margin: ButtonMargin, bg
     if (bgColor === "primary") {
       return primary;
     }
+    if (bgColor === "pink") {
+      return pink;
+    }
+    if (bgColor === "yellow") {
+      return yellow;
+    }
+    if (bgColor === "purple") {
+      return purple;
+    }
   }}
   
  
   border:none;
   cursor: pointer;
   border-radius: 10px;
-  color: #fff;
+  color: ${({theme}) => theme.body};
   transition: ease-in-out 0.3s;
   &:hover {
     background: #75bc67;
@@ -77,6 +88,15 @@ export const Button = styled.button<{ size: ButtonSize, margin: ButtonMargin, bg
     cursor: auto;
     background: #ccc;
   }
+  margin: 0.5rem 0;
+  ${({ margin }) => {
+    if (margin === "left") {
+      return left;
+    }
+    if (margin === "right") {
+      return right;
+    }
+  }}
 `;
 
 export const Cube = styled.div<{

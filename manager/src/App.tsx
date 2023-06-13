@@ -9,6 +9,7 @@ import { useState } from "react";
 import Login from "./Pages/Login/Login";
 import TasksList from "./Pages/Manager/Manager";
 import { Register } from "./Pages/Register/Register";
+import OnLogout from "./store/OnLogout";
 
 function App() {
   const [theme, setTheme] = useState(true);
@@ -21,6 +22,7 @@ function App() {
       <St.Main>
         <S.PageContainer>
           <BrowserRouter>
+          <OnLogout/>
             <Header setTheme={changeThemeHandler} />
             <Routes>
               <Route path="/" element={<Login />} />

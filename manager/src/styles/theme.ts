@@ -9,9 +9,12 @@ export const lightTheme = {
   text: '#363537',
   toggleBorder: '#999',
   background: '#363537',
-  primary: "#f86e6e",
+  primary: "#ff7d91",
   secondary: '#676bf1',
-  link: '#676bf1',
+  pink: '#E25CD2',
+  yellow: '#FFC75B',
+  link: '#FF9273',
+  purple:'#B1A9DF'
 }
 export const darkTheme = {
   body: '#363537',
@@ -21,6 +24,9 @@ export const darkTheme = {
   primary: "#22a5a5",
   secondary: '#384444',
   link: '#21c6c6',
+  pink: '#95B1B0',
+  yellow: '#C78567',
+  purple:'#B1A9DF'
 }
 
 export interface WrapperProps  {

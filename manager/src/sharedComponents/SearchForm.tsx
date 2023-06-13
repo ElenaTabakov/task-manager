@@ -1,6 +1,9 @@
 import { Input } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import React from "react";
+import { SearchInput } from "../Pages/Manager/components/Tasks/Tasks.styles";
+
+
 
 const SearchForm = ({
   handleOnChangeSearch,
@@ -12,6 +15,7 @@ const SearchForm = ({
       icon={<IconSearch />}
       placeholder="Search"
       onChange={(e: string | any) => handleOnChangeSearch(e)}
+      
     />
   );
 };

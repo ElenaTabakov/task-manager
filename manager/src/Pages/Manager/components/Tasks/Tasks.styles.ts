@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Input } from "@mantine/core";
 
 export const TasksContainer = styled.div`
   margin: 2rem auto;
@@ -13,8 +14,9 @@ export const ListWrapper = styled.section`
 
 export const ListUl = styled.ul`
   list-style: none;
-  padding: 0;
   width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
 `;
 
 export const LoadingOverlayWrapper = styled.div`
@@ -27,4 +29,13 @@ export const LoadingOverlayWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center; */
+`;
+
+export const SearchInput = styled(Input)`
+  margin: 0 0 2rem;
+`;
+
+export const TasksHeader = styled.div`
+  padding: 0 1rem;
+  box-sizing: border-box;
 `;

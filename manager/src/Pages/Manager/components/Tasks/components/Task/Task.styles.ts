@@ -8,12 +8,15 @@ export const ListItem = styled.li`
   border-radius: 10px;
   margin-bottom: 15px;
   flex-wrap: wrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-sizing: border-box;
   &.status-CANCELED {
     border-color: red;
   }
   &.status-UPCOMING {
     border-color: ${({ theme }) => theme.secondary};
   }
+
 `;
 export const ListItemContent = styled.div`
   display: flex;
