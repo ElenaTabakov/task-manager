@@ -31,13 +31,13 @@ export const ListName = styled.h2`
   font-weight: bold;
   margin-top: 0;
   padding: 0 0 1rem;
-  color: ${({theme}) => theme.text};
+  color: ${({ theme }) => theme.text};
 `;
 export const ListDescription = styled.div`
-  height:0;
+  /* height: 0; */
   transition: ease-in-out 0.3s;
   overflow: hidden;
-  &.active{
+  &.active {
     height: auto;
   }
 `;
@@ -46,22 +46,30 @@ export const ShortDescription = styled.div`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height:auto;
+  height: auto;
   transition: ease-in-out 0.3s;
-  &.hide{
+  /* &.hide {
     height: 0;
-  }
+  } */
 `;
 export const ListDate = styled.span`
   color: #b1b1b1;
   font-style: italic;
-  margin-top:15px ;
+  margin-top: 15px;
 `;
 export const Task_header = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  & button{
+  & button {
     margin: 0 0 0 10px;
   }
+`;
+
+export const DescriptionWrapper = styled.div<{height : number}>`
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 100%;
+  height: ${({height}) => height}px;
+  transition: ease-in-out 0.3s;
 `;
