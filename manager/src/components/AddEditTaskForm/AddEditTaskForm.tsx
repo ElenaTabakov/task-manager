@@ -16,6 +16,8 @@ import { IconClock } from "@tabler/icons";
 // import { fullDateISO } from "../../store/utils";
 import { Task } from "../../Pages/Manager/components/Tasks/components/Task/Task.types";
 import { FormikTaskValues } from "./AddEditTaskForm.types";
+import { Textarea } from '@mantine/core'
+
 
 
 interface FormProps {
@@ -115,7 +117,7 @@ const AddEditForm = ({
   const validationSchema = yup.object().shape({
     id: yup.string(),
     title: yup.string().required("Requred").min(3, "Too short"),
-    description: yup.string().required("Requred").min(3, "Too short"),
+    description: yup.string().min(3, "Too short"),
     shortDescription: yup.string().required("Requred").min(3, "Too short"),
     duration: yup.number().min(15, "Duration must be at least 15 minutes"),
     dueDate: yup.date(),
@@ -129,7 +131,7 @@ const AddEditForm = ({
       validationSchema={validationSchema}
       onSubmit={isEdit ? editTaskHandler : handleAddItem}
     >
-      {({ values, handleSubmit }) => (
+      {({ values, handleSubmit,handleChange,handleBlur }) => (
         <ModalWindow
           title={isEdit ? "Edit Task" : "Add New Task"}
           visible={isShow}
@@ -147,17 +149,27 @@ const AddEditForm = ({
               placeholder="Task Title"
             />
             <Input
-              label="Task Description"
-              type="text"
-              name="description"
-              placeholder="Task Description"
-            />
-            <Input
               label="Short Description"
               type="text"
               name="shortDescription"
               placeholder="Short Description"
             />
+            <S.TextArea
+              label="Task Description"
+              name="description"
+              id="description"
+              placeholder="Task Description"
+              minRows={5}
+              value={values.description}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+              {/* <Input 
+              label="Task Description"
+              name="description"
+              placeholder="Task Description"
+              // minRows={5}
+            /> */}
             <Input
               label="Duration"
               type="number"

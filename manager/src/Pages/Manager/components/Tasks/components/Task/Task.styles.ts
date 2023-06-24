@@ -12,6 +12,7 @@ export const ListItem = styled.li`
   box-sizing: border-box;
   &.status-CANCELED {
     border-color: red;
+    & CircleT
   }
   &.status-UPCOMING {
     border-color: ${({ theme }) => theme.secondary};
@@ -30,6 +31,7 @@ export const ListName = styled.h2`
   font-weight: bold;
   margin-top: 0;
   padding: 0 0 1rem;
+  color: ${({theme}) => theme.text};
 `;
 export const ListDescription = styled.div`
   height:0;

@@ -1,6 +1,5 @@
-import { useState } from "react";
-// import { RootState } from "../../../../../../store/store";
-// import { useSelector } from "react-redux";
+import { useState , useRef } from "react";
+import {IconTrashX} from "@tabler/icons";
 import Button from "../../../../../../sharedComponents/Button/Button";
 import Circle from "../../../../../../sharedComponents/CircleTitle/CircleTitle";
 import * as S from "./Task.styles";
@@ -24,24 +23,29 @@ const TaskItem = ({
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
   const [descriptionHide, setDescriptionHide] = useState<boolean>(true);
   // const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
+  const descRef = useRef<HTMLDivElement | null> (null);
+  console.log(descRef.current?.clientHeight);
 
   return (
     <S.ListItem id={id} className={`${className} status-${status}`}>
-      <Circle circleContent={title} />
+      <Circle circleContent={title} className={status}/>
       <S.ListItemContent>
         <S.Task_header>
           <S.ListName>{title}</S.ListName>
           <div className="task_header_btns">
-            <Button size="small" onClick={() => onDelete(id)} title="Delete">
-              x
-            </Button>
+            
             <Button
               size="small"
               onClick={() => setVisibleEditForm(!visibleEdirForm)}
               title="Edit task"
+              bgColor='purple'
             >
+              
               {" "}
               {visibleEdirForm ? "Close Edit Form" : "Edit Task"}{" "}
+            </Button>
+            <Button size="small" onClick={() => onDelete(id)} title="Delete">
+             <IconTrashX size="16"/>
             </Button>
           </div>
         </S.Task_header>
@@ -50,7 +54,7 @@ const TaskItem = ({
           {shortDescription}
           <a href="#" onClick={()=>setDescriptionHide(false)}>more...</a>
         </S.ShortDescription>
-        <S.ListDescription className={descriptionHide ? 'hide' : 'active'}>
+        <S.ListDescription className={descriptionHide ? 'hide' : 'active'} ref={descRef}>
           {description}
           <a href="#" onClick={()=>setDescriptionHide(true)}>less...</a>
         </S.ListDescription>

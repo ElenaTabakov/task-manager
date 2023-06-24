@@ -14,6 +14,7 @@ export const Input = styled.input`
   padding: 10px;
   margin-bottom: 10px;
   background-color: ${({ theme }) => theme.body};
+  border-color:${({theme}) => theme.toggleBorder};
 
   &:active,
   &:focus {

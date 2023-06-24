@@ -4,6 +4,7 @@ import * as S from "./CircleTitle.styles";
 
 interface CircleTitleProps {
   circleContent: string ;
+  className?: string;
 }
 
 const tW = (text: string) => {  
@@ -20,9 +21,9 @@ const tW = (text: string) => {
     return (text.split(' ').map(word => word[0]));
 }
 
-const Circle = ({ circleContent}: CircleTitleProps) => {
+const Circle = ({ circleContent, className}: CircleTitleProps) => {
   return (
-    <S.CircleTitle>{tW(circleContent)}</S.CircleTitle>
+    <S.CircleTitle className={className}>{tW(circleContent)}</S.CircleTitle>
   );
 };
 
