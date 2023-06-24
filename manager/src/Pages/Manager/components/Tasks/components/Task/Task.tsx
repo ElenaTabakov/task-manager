@@ -49,9 +49,9 @@ const TaskItem = ({
         </S.Task_header>
         <S.ShortDescription className={descriptionHide ? "active" : "hide"}>
             {shortDescription}
-            <a href="#" onClick={() => setDescriptionHide(false)}>
+            {descriptionHide &&  <a href="#" onClick={() => setDescriptionHide(false)}>
               more...
-            </a>
+            </a> }
           </S.ShortDescription>
         <S.DescriptionWrapper height = {descriptionHide ? 0 : descRef.current?.clientHeight || 0 }>
           <S.ListDescription
