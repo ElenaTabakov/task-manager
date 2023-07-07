@@ -39,3 +39,7 @@ export const TasksHeader = styled.div`
   padding: 0 1rem;
   box-sizing: border-box;
 `;
+export const SideBarWrapper = styled.div`
+  border-left:1px solid ${({theme}) => theme.toggleBorder};
+  transition: ease-in-out 0.4s;
+`

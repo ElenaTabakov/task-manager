@@ -11,6 +11,7 @@ interface TaskItemProps {
   className?: string;
   dateValue: Date;
   onDelete: (id: string) => void;
+  showSideTask: (task : Task) => void;
 }
 
 const TaskItem = ({
@@ -19,15 +20,23 @@ const TaskItem = ({
   className,
   dateValue,
   onDelete,
+  showSideTask
 }: TaskItemProps) => {
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
   const [descriptionHide, setDescriptionHide] = useState<boolean>(true);
+  const [activeTask, setActiveTask] = useState<Task | null>(null);
   // const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const descRef = useRef<HTMLDivElement | null>(null);
   console.log(descRef.current?.clientHeight);
 
+  const handleOpenSideTask = (task : Task) => {
+    setDescriptionHide(false);
+    showSideTask(task);
+    setActiveTask(task);
+  }
+
   return (
-    <S.ListItem id={id} className={`${className} status-${status}`}>
+    <S.ListItem id={id} className={`${className} status-${status} ${(activeTask) ? 'active_task' : ''}`}>
       <Circle circleContent={title} className={status} />
       <S.ListItemContent>
         <S.Task_header>
@@ -48,16 +57,18 @@ const TaskItem = ({
           </div>
         </S.Task_header>
         <S.ShortDescription className={descriptionHide ? "active" : "hide"}>
-            {shortDescription}
-            {descriptionHide &&  <a href="#" onClick={() => setDescriptionHide(false)}>
+          {shortDescription}
+          {descriptionHide && (
+            // <a href="#" onClick={() => setDescriptionHide(false)}>
+            <a  href="#" onClick={() => handleOpenSideTask(task) }>
               more...
-            </a> }
-          </S.ShortDescription>
-        <S.DescriptionWrapper height = {descriptionHide ? 0 : descRef.current?.clientHeight || 0 }>
-          <S.ListDescription
-            // className={descriptionHide ? "hide" : "active"}
-            ref={descRef}
-          >
+            </a>
+          )}
+        </S.ShortDescription>
+        <S.DescriptionWrapper
+          height={descriptionHide ? 0 : descRef.current?.clientHeight || 0}
+        >
+          <S.ListDescription ref={descRef}>
             {description}
             <a href="#" onClick={() => setDescriptionHide(true)}>
               less...
