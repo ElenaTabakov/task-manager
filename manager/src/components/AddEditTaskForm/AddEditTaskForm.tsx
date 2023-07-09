@@ -42,7 +42,7 @@ const AddEditForm = ({
   const [valueStatus, setValueStatus] = useState(status);
   // const [valueTime, setValueTime] = useState(dateValue);
 
-  // console.log(valueTime);
+  console.log(task , 'вот это что?');
   const handleAddItem = (
     values: FormikTaskValues,
     helpers: FormikHelpers<FormikTaskValues>

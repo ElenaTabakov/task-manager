@@ -12,11 +12,11 @@ const tW = (text: string) => {
     const textLength = text.split(' ');
     // console.log(textLength);
     if (textLength.length === 1 ){
-        return textLength[0][0];
+        return textLength[0][0].toUpperCase();
     }
     if (textLength.length > 1 ){
         // const lastWord = ;
-        return (textLength[0][0] + textLength[textLength.length - 1][0]);
+        return (textLength[0][0].toUpperCase() + textLength[textLength.length - 1][0].toUpperCase());
     }
     return (text.split(' ').map(word => word[0]));
 }

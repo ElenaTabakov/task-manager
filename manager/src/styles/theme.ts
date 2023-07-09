@@ -22,7 +22,7 @@ export const darkTheme = {
   toggleBorder: '#f1f1f1',
   background: '#999',
   primary: "#22a5a5",
-  secondary: '#384444',
+  secondary: '#386E90',
   link: '#21c6c6',
   pink: '#95B1B0',
   yellow: '#C78567',

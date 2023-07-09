@@ -7,6 +7,7 @@ import { fetchTasksDates } from "../../store/slices/tasksSlice";
 import { ThunkActionDispatch, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
 import { useMediaQuery } from "@mantine/hooks";
+import {ActiveDay} from "./CustomCalendar.styles"
 
 interface CustomCalendarProps {
   setDateValue: React.Dispatch<React.SetStateAction<Date>>;
@@ -55,9 +56,13 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
           const currD = new Date().toLocaleDateString();
           if (convertDates?.includes(dayT)) {
             return (
-              <Indicator size={largeScreen ? 15 : 10} color="yellow" offset={8}>
-                <div className ="active_day">{day}</div>
-              </Indicator>
+              // <Indicator size={largeScreen ? 15 : 10} color="yellow" offset={8}>
+              <ActiveDay>
+                {day}
+                <div className="bg_active_day"></div>
+              </ActiveDay>
+
+              // </Indicator>
             );
           }
 

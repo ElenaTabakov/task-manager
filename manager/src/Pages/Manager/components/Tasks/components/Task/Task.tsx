@@ -11,7 +11,9 @@ interface TaskItemProps {
   className?: string;
   dateValue: Date;
   onDelete: (id: string) => void;
-  showSideTask: (task : Task) => void;
+  showSideTask: (task: Task) => void;
+  activeTask: boolean;
+  status: string;
 }
 
 const TaskItem = ({
@@ -20,79 +22,73 @@ const TaskItem = ({
   className,
   dateValue,
   onDelete,
-  showSideTask
+  showSideTask,
+  activeTask,
 }: TaskItemProps) => {
-  const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
+  // const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
   const [descriptionHide, setDescriptionHide] = useState<boolean>(true);
-  const [activeTask, setActiveTask] = useState<Task | null>(null);
+  // const [activeTask, setActiveTask] = useState<Task | null>(null);
   // const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const descRef = useRef<HTMLDivElement | null>(null);
   console.log(descRef.current?.clientHeight);
 
-  const handleOpenSideTask = (task : Task) => {
+  const handleOpenSideTask = (task: Task) => {
     setDescriptionHide(false);
     showSideTask(task);
-    setActiveTask(task);
-  }
+  };
 
   return (
-    <S.ListItem id={id} className={`${className} status-${status} ${(activeTask) ? 'active_task' : ''}`}>
-      <Circle circleContent={title} className={status} />
-      <S.ListItemContent>
-        <S.Task_header>
-          <S.ListName>{title}</S.ListName>
-          <div className="task_header_btns">
-            <Button
-              size="small"
-              onClick={() => setVisibleEditForm(!visibleEdirForm)}
-              title="Edit task"
-              bgColor="purple"
-            >
-              {" "}
-              {visibleEdirForm ? "Close Edit Form" : "Edit Task"}{" "}
-            </Button>
-            <Button size="small" onClick={() => onDelete(id)} title="Delete">
-              <IconTrashX size="16" />
-            </Button>
-          </div>
-        </S.Task_header>
-        <S.ShortDescription className={descriptionHide ? "active" : "hide"}>
-          {shortDescription}
-          {descriptionHide && (
-            // <a href="#" onClick={() => setDescriptionHide(false)}>
-            <a  href="#" onClick={() => handleOpenSideTask(task) }>
-              more...
-            </a>
-          )}
-        </S.ShortDescription>
-        <S.DescriptionWrapper
-          height={descriptionHide ? 0 : descRef.current?.clientHeight || 0}
-        >
-          <S.ListDescription ref={descRef}>
-            {description}
-            <a href="#" onClick={() => setDescriptionHide(true)}>
-              less...
-            </a>
-          </S.ListDescription>
-        </S.DescriptionWrapper>
-        <S.ListDate>
-          {new Date(dueDate).toLocaleDateString("he-IL", {
-            timeZone: "Asia/Jerusalem",
-          })}{" "}
-          {`${new Date(dueDate).getHours()}:${new Date(dueDate).getMinutes()}`}
-        </S.ListDate>
-        <p>{status}</p>
-      </S.ListItemContent>
-
-      <AddEditForm
-        isEdit
-        isShow={visibleEdirForm}
-        setIsShow={setVisibleEditForm}
-        task={task}
+    <S.ListWrapper>
+      <S.DateListWrapper>
+      {`${('0' + new Date(dueDate).getHours()).slice(-2)}:${('0' + new Date(
+              dueDate
+            ).getMinutes()).slice(-2)}`}
+      </S.DateListWrapper>
+      <S.ListItem
+        activeTask={activeTask}
+        id={id}
+        className={`${className ? className : ""} status-${status} `}
         status={status}
-        dateValue={dateValue}
-      />
-    </S.ListItem>
+      >
+        <Circle circleContent={title} className={status} />
+        <S.ListItemContent>
+          <S.Task_header>
+            <S.ListName>{title}</S.ListName>            
+          </S.Task_header>
+          <S.ShortDescription className={descriptionHide ? "active" : "hide"}>
+            {shortDescription}
+            <a href="#" onClick={() => handleOpenSideTask(task)}>
+                more...
+              </a>
+               {/* {descriptionHide && (
+              // <a href="#" onClick={() => setDescriptionHide(false)}>
+             
+           )} */}
+          </S.ShortDescription>
+          {/* <S.DescriptionWrapper
+            height={descriptionHide ? 0 : descRef.current?.clientHeight || 0}
+          >
+            <S.ListDescription ref={descRef}>
+              {description}
+              <a href="#" onClick={() => setDescriptionHide(true)}>
+                less...
+              </a>
+            </S.ListDescription>
+          </S.DescriptionWrapper> */}
+          <S.ListDate>
+            {new Date(dueDate).toLocaleDateString("he-IL", {
+              timeZone: "Asia/Jerusalem",
+            })}{" "}
+            {`${new Date(dueDate).getHours()}:${new Date(
+              dueDate
+            ).getMinutes()}`}
+          </S.ListDate>
+          <p>{status}</p>
+        </S.ListItemContent>
+
+      
+      </S.ListItem>
+    </S.ListWrapper>
   );
 };
 

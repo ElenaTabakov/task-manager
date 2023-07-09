@@ -45,16 +45,16 @@ export default function TasksList({ setTheme }: HeaderProps) {
   return (
     <S.PageContainer>
       {isAuth ? (
-        <Wrapper marginTop={15}>
+        <Wrapper marginTop={15} >
           <h2 className="main-title">Hello {user.name} </h2>
-          <Grid>
-            <S.ColBorder md={12} lg={5} className={"borderRight"}>
+          <Grid gutterMd="xl">
+            <S.ColBorder md={12} lg={4} className={"borderRight"}>
               <CustomCalendar
                 setDateValue={setDateValue}
                 dateValue={dateValue}
               />
             </S.ColBorder>
-            <Grid.Col md={12} lg={7} className={"rightSide"}>
+            <Grid.Col md={12} lg={8} className={"rightSide"} >
               <h3>{`${dateValue.getDate()} ${dateValue.toLocaleString(
                 "default",
                 { month: "long" }

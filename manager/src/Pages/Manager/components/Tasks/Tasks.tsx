@@ -15,12 +15,14 @@ import {
 import { Loader } from "@mantine/core";
 import { Task } from "./components/Task/Task.types";
 import { LightTheme, DarkTheme, lightTheme } from "../../../../styles/theme";
+import { ClassNames } from "@emotion/react";
+import SideBarTask from "./components/Task/SideBarTask";
 
 interface TasksProps {
   dateValue: Date;
 }
 
-const Tasks = ({ dateValue}: TasksProps) => {
+const Tasks = ({ dateValue }: TasksProps) => {
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const statusFetchByDate = useSelector(
@@ -33,7 +35,7 @@ const Tasks = ({ dateValue}: TasksProps) => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
   const [visible, setVisible] = useState<boolean>(false);
-   const [showSideTaskItem, setShowSideTaskItem] = useState<Task | null>(null);
+  const [showSideTaskItem, setShowSideTaskItem] = useState<Task | null>(null);
 
   useEffect(() => {
     if (statusFetchByDate === "loading") {
@@ -101,11 +103,13 @@ const Tasks = ({ dateValue}: TasksProps) => {
         <Button
           type="button"
           onClick={handleToggleSortTasks}
-          bgColor={'yellow'}
+          bgColor={"yellow"}
         >
           {isAscSortButton ? "Sort A-Z" : "Sort Z-A"}
         </Button>
-        <Button onClick={() => setIsShow(true)} bgColor={'purple'}>Add Task</Button>
+        <Button onClick={() => setIsShow(true)} bgColor={"purple"}>
+          Add Task
+        </Button>
       </S.TasksHeader>
       <S.ListWrapper>
         <S.ListUl>
@@ -116,13 +120,24 @@ const Tasks = ({ dateValue}: TasksProps) => {
                 task={task}
                 onDelete={() => handleDeleteTask(task.id)}
                 dateValue={dateValue}
-                showSideTask = {() => setShowSideTaskItem(task)}
+                showSideTask={() => setShowSideTaskItem(task)}
+                activeTask={task.id == showSideTaskItem?.id ? true : false}
+                status={task.status}
               />
             );
           })}
         </S.ListUl>
+        <S.SideBarWrapper>
+          {showSideTaskItem && (
+            <SideBarTask
+              task={showSideTaskItem}
+              dateValue={dateValue}
+              onDelete={() => handleDeleteTask(showSideTaskItem.id)}
+            />
+          )}
+        </S.SideBarWrapper>
       </S.ListWrapper>
-      <S.SideBarWrapper>{showSideTaskItem && showSideTaskItem.id}</S.SideBarWrapper>
+
       {isShow && (
         <AddEditForm
           setIsShow={setIsShow}
