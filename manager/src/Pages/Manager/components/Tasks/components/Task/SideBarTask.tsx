@@ -2,6 +2,7 @@ import { IconTrashX } from "@tabler/icons";
 import React, { useState } from "react";
 import AddEditForm from "../../../../../../components/AddEditTaskForm/AddEditTaskForm";
 import Button from "../../../../../../sharedComponents/Button/Button";
+import { SideBarWrapper } from "./SideBarTask.styles";
 import { Task } from "./Task.types";
 
 interface SideBarTaskProps {
@@ -14,7 +15,7 @@ const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
   console.log(task)
   return (
-    <div>
+    <SideBarWrapper>
       <h2>{task.title}</h2>
       <div>{task.description}</div>
       <div className="task_header_btns">
@@ -39,7 +40,7 @@ const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
         status={task.status}
         dateValue={dateValue}
       />
-    </div>
+    </SideBarWrapper>
   );
 };
 

@@ -41,8 +41,8 @@ const AddEditForm = ({
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const [valueStatus, setValueStatus] = useState(status);
   // const [valueTime, setValueTime] = useState(dateValue);
-
-  console.log(task , 'вот это что?');
+  // console.log(task , 'вот это что?');
+  
   const handleAddItem = (
     values: FormikTaskValues,
     helpers: FormikHelpers<FormikTaskValues>

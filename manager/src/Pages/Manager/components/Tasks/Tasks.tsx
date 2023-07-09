@@ -97,7 +97,7 @@ const Tasks = ({ dateValue }: TasksProps) => {
         <S.LoadingOverlayWrapper>
           <Loader variant="bars" />
         </S.LoadingOverlayWrapper>
-      )}
+      )} 
       <S.TasksHeader>
         <SearchForm handleOnChangeSearch={handleOnChangeSearch} />
         <Button

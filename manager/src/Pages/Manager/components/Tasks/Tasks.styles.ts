@@ -15,13 +15,17 @@ export const ListWrapper = styled.section`
 
 export const ListUl = styled.ul`
   list-style: none;
-  max-width: 50%;
-  padding: 1rem; 
+  max-width: 55%;
+  padding: 1rem;
   box-sizing: border-box;
-  flex: 0 0 50%;
+  flex: 0 0 55%;
 `;
 
 export const LoadingOverlayWrapper = styled.div`
+  position: absolute;
+  top: 6vh;
+  left: 48%;
+  z-index: 2;
   /* width: 100%;
   height: 100%;
   position: fixed;
@@ -42,7 +46,6 @@ export const TasksHeader = styled.div`
   box-sizing: border-box;
 `;
 export const SideBarWrapper = styled.div`
-  border-left:1px solid ${({theme}) => theme.toggleBorder};
+  border-left: 1px solid ${({ theme }) => theme.toggleBorder};
   transition: ease-in-out 0.4s;
-
-`
+`;
