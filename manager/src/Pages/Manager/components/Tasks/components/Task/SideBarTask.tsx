@@ -13,7 +13,7 @@ interface SideBarTaskProps {
 
 const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
-  console.log(task)
+  console.log(task);
   return (
     <SideBarWrapper>
       <h2>{task.title}</h2>
@@ -32,14 +32,16 @@ const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
           <IconTrashX size="16" />
         </Button>
       </div>
-      <AddEditForm
-        isEdit
-        isShow={visibleEdirForm}
-        setIsShow={setVisibleEditForm}
-        task={task}
-        status={task.status}
-        dateValue={dateValue}
-      />
+      {visibleEdirForm && (
+        <AddEditForm
+          isEdit
+          isShow={visibleEdirForm}
+          setIsShow={setVisibleEditForm}
+          task={task}
+          status={task.status}
+          dateValue={dateValue}
+        />
+      )}
     </SideBarWrapper>
   );
 };
