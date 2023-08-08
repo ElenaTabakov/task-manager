@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Indicator } from "@mantine/core";
 import { DatePicker, Calendar, Month, getMonthDays } from "@mantine/dates";
 import { RootState } from "../../store/store";
@@ -7,7 +7,8 @@ import { fetchTasksDates } from "../../store/slices/tasksSlice";
 import { ThunkActionDispatch, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
 import { useMediaQuery } from "@mantine/hooks";
-import {ActiveDay} from "./CustomCalendar.styles"
+import {ActiveDay} from "./CustomCalendar.styles";
+import TaskContext from '../../store/TaskContext'
 
 interface CustomCalendarProps {
   setDateValue: React.Dispatch<React.SetStateAction<Date>>;
@@ -17,6 +18,7 @@ interface CustomCalendarProps {
 const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const taskDates = useSelector((state: RootState) => state.taskSlice.dates);
+  const {setSelectedTask} = useContext(TaskContext);
 
   const convertDatesBefore = taskDates?.map((date) =>
     new Date(date).toLocaleDateString("he-IL", { timeZone: "Asia/Jerusalem" })
@@ -35,13 +37,18 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
     dispatch(fetchTasksDates());
   }, []);
 
+  const dateChangeHandle = (date : Date) => {
+    setDateValue(date)
+    setSelectedTask(null)
+  }
+
   const largeScreen = useMediaQuery("(min-width: 900px)");
 
   return (
     <>
       <Calendar
         getDayProps={(date) => ({
-          onClick: () => date !== null && setDateValue(date),
+          onClick: () => date !== null && dateChangeHandle(date),
         })}
         monthLabelFormat={"MMMM, YYYY"}
         defaultDate={dateValue}

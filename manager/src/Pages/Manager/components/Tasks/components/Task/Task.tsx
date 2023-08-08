@@ -1,10 +1,11 @@
-import { useState, useRef } from "react";
+import { useState, useRef,useContext } from "react";
 import { IconTrashX } from "@tabler/icons";
 import Button from "../../../../../../sharedComponents/Button/Button";
 import Circle from "../../../../../../sharedComponents/CircleTitle/CircleTitle";
 import * as S from "./Task.styles";
 import AddEditForm from "../../../../../../components/AddEditTaskForm/AddEditTaskForm";
 import { Task } from "./Task.types";
+import TaskContext from "../../../../../../store/TaskContext";
 
 interface TaskItemProps {
   task: Task;
@@ -15,6 +16,7 @@ interface TaskItemProps {
   activeTask: boolean;
   status: string;
 }
+
 
 const TaskItem = ({
   task: { id, title, description, shortDescription, dueDate, duration, status },
@@ -35,7 +37,10 @@ const TaskItem = ({
   const handleOpenSideTask = (task: Task) => {
     setDescriptionHide(false);
     showSideTask(task);
+    setSelectedTask(task);
   };
+
+  const {selectedTask,setSelectedTask} = useContext(TaskContext);
 
   return (
     <S.ListWrapper>
@@ -60,6 +65,7 @@ const TaskItem = ({
             <a href="#" onClick={() => handleOpenSideTask(task)}>
                 more...
               </a>
+              {selectedTask && selectedTask.title}
                {/* {descriptionHide && (
               // <a href="#" onClick={() => setDescriptionHide(false)}>
              
