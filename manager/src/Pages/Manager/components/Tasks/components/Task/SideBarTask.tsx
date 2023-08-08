@@ -16,15 +16,16 @@ interface SideBarTaskProps {
 const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
   const {selectedTask} = useContext(TaskContext);
-
   console.log(task);
+  if (selectedTask) {
   return (
+    
     <SideBarWrapper>
-      <h2>{selectedTask ? selectedTask.title : ''}</h2>
-      <div>{selectedTask ? selectedTask.description : ''}</div>
+      <h2>{selectedTask.title}</h2>
+      <div>{selectedTask.description}</div>
       <div className="task_header_btns">
         
-        {selectedTask &&
+        
         <Button
           size="small"
           onClick={() => setVisibleEditForm(!visibleEdirForm)}
@@ -34,25 +35,28 @@ const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
        
           {visibleEdirForm ? "Close Edit Form" : "Edit Task"}
         </Button>
-       }
-        {selectedTask &&
-        <Button size="small" onClick={() => onDelete(selectedTask ? selectedTask.id : '')} title="Delete">
+       
+        <Button size="small" onClick={() => onDelete(selectedTask.id)} title="Delete">
           <IconTrashX size="16" />
         </Button>
-       }
+      
       </div>
       {visibleEdirForm && (
         <AddEditForm
           isEdit
           isShow={visibleEdirForm}
           setIsShow={setVisibleEditForm}
-          task={selectedTask ? selectedTask : undefined }
-          status={selectedTask ? selectedTask.status : ''} 
+          task={selectedTask}
+          status={selectedTask.status} 
           dateValue={dateValue}
         />
       )}
     </SideBarWrapper>
+   
   );
+  } else {
+    return null;
+  }
 };
 
 export default SideBarTask;

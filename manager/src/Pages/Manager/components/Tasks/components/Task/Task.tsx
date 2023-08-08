@@ -27,10 +27,7 @@ const TaskItem = ({
   showSideTask,
   activeTask,
 }: TaskItemProps) => {
-  // const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
   const [descriptionHide, setDescriptionHide] = useState<boolean>(true);
-  // const [activeTask, setActiveTask] = useState<Task | null>(null);
-  // const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const descRef = useRef<HTMLDivElement | null>(null);
   console.log(descRef.current?.clientHeight);
 
@@ -50,7 +47,7 @@ const TaskItem = ({
             ).getMinutes()).slice(-2)}`}
       </S.DateListWrapper>
       <S.ListItem
-        activeTask={activeTask}
+        activeTask = {selectedTask ? activeTask : false}
         id={id}
         className={`${className ? className : ""} status-${status} `}
         status={status}
@@ -65,31 +62,16 @@ const TaskItem = ({
             <a href="#" onClick={() => handleOpenSideTask(task)}>
                 more...
               </a>
-              {selectedTask && selectedTask.title}
-               {/* {descriptionHide && (
-              // <a href="#" onClick={() => setDescriptionHide(false)}>
-             
-           )} */}
           </S.ShortDescription>
-          {/* <S.DescriptionWrapper
-            height={descriptionHide ? 0 : descRef.current?.clientHeight || 0}
-          >
-            <S.ListDescription ref={descRef}>
-              {description}
-              <a href="#" onClick={() => setDescriptionHide(true)}>
-                less...
-              </a>
-            </S.ListDescription>
-          </S.DescriptionWrapper> */}
           <S.ListDate>
             {new Date(dueDate).toLocaleDateString("he-IL", {
               timeZone: "Asia/Jerusalem",
             })}{" "}
-            {`${new Date(dueDate).getHours()}:${new Date(
+           {`${('0' + new Date(dueDate).getHours()).slice(-2)}:${('0' + new Date(
               dueDate
-            ).getMinutes()}`}
+            ).getMinutes()).slice(-2)}`}
           </S.ListDate>
-          <p>{status}</p>
+          <S.StatusWrapper>{status}</S.StatusWrapper>
         </S.ListItemContent>
 
       

@@ -18,4 +18,8 @@ export const TasksWrapper = styled(ScrollArea)`
     background: ${({ theme }) => theme.background};
   }
   box-sizing: border-box;
+  @media (max-width:768px){
+    width: 100%;
+    padding: 0;
+    }
 `;

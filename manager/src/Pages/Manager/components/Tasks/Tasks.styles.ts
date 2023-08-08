@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Input } from "@mantine/core";
+import { device } from "../../../../styles/theme";
 
 export const TasksContainer = styled.div`
   margin: 2rem auto;
@@ -11,6 +12,7 @@ export const ListWrapper = styled.section`
   width: 100%;
   box-sizing: border-box;
   display: flex;
+  flex-wrap: wrap;
 `;
 
 export const ListUl = styled.ul`
@@ -19,6 +21,10 @@ export const ListUl = styled.ul`
   padding: 1rem;
   box-sizing: border-box;
   flex: 0 0 55%;
+  @media (max-width: 768px) {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 `;
 
 export const LoadingOverlayWrapper = styled.div`
@@ -48,4 +54,13 @@ export const TasksHeader = styled.div`
 export const SideBarWrapper = styled.div`
   border-left: 1px solid ${({ theme }) => theme.toggleBorder};
   transition: ease-in-out 0.4s;
+  flex: 0 0 45%;
+  box-sizing: border-box;
+  //padding-left: 1rem;
+  @media (max-width: 768px) {
+    border-left: 0;
+    border-top: 1px solid ${({ theme }) => theme.toggleBorder};
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 `;

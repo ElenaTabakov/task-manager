@@ -18,14 +18,16 @@ export const ListItem = styled.div<{ activeTask: boolean; status: string }>`
   display: flex;
   flex: 1;
   align-items: flex-start;
-  padding: 15px;
+  padding: 1rem 1rem 1.3rem;
   border: 2px solid #ccc;
+  min-height:130px;
   border-radius: 10px;
-  transform: ${({ activeTask }) => (activeTask ? "scale(1.03)" : "unset")};
+  transform: ${({ activeTask }) => (activeTask ? "scale(1.1)" : "unset")};
   background: ${({ theme }) => theme.body};
   flex-wrap: wrap;
   z-index: ${({ activeTask }) => (activeTask ? 1 : 0)};
   position: relative;
+  overflow: hidden;
   box-shadow: ${({ activeTask }) =>
     activeTask
       ? "0 4px 12px 2px rgba(0,0,0,0.2)"
@@ -61,12 +63,7 @@ export const ListItem = styled.div<{ activeTask: boolean; status: string }>`
           color: ${({ theme }) => theme.text};
         `;
     }
-  }}/* &.status-CANCELED {
-    border-color: red;
-  }
-  &.status-UPCOMING {
-    border-color: ${({ theme }) => theme.secondary};
-  } */
+  }}
 `;
 export const ListItemContent = styled.div`
   display: flex;
@@ -76,14 +73,13 @@ export const ListItemContent = styled.div`
 `;
 
 export const ListName = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: bold;
   margin-top: 0;
-  padding: 0 0 1rem;
+  padding: 0 0 0.5rem;
   color: ${({ theme }) => theme.text};
 `;
 export const ListDescription = styled.div`
-  /* height: 0; */
   transition: ease-in-out 0.3s;
   overflow: hidden;
   &.active {
@@ -97,14 +93,15 @@ export const ShortDescription = styled.div`
   overflow: hidden;
   height: auto;
   transition: ease-in-out 0.3s;
-  /* &.hide {
-    height: 0;
-  } */
+  & a {
+    font-size: 1rem;
+  }
 `;
 export const ListDate = styled.span`
   color: #b1b1b1;
   font-style: italic;
-  margin-top: 15px;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
 `;
 export const Task_header = styled.div`
   width: 100%;
@@ -122,3 +119,15 @@ export const DescriptionWrapper = styled.div<{ height: number }>`
   height: ${({ height }) => height}px;
   transition: ease-in-out 0.3s;
 `;
+
+export const StatusWrapper = styled.span`{
+    position: absolute;
+    transform: rotate(45deg);
+    font-size: 0.8rem;
+    left: -1.5rem;
+    bottom: 1rem;
+    background: ${({theme}) => theme.purple};
+    padding: 5px 22px;
+    min-width: 66px;
+    text-align: center;
+}`
