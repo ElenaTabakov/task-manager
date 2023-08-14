@@ -60,9 +60,7 @@ export default function TasksList({ setTheme }: HeaderProps) {
                 { month: "long" }
               )} ${dateValue.getFullYear()}, ${days[dateValue.getDay()]}`}</h3>
               <S.TasksWrapper
-                // style={{  height: 200 }}
                 type="always"
-                // mx="auto"
               >
                 <Tasks dateValue={dateValue} />
               </S.TasksWrapper>

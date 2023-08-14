@@ -12,42 +12,50 @@ import { Register } from "./Pages/Register/Register";
 import OnLogout from "./store/OnLogout";
 import { Task } from "./Pages/Manager/components/Tasks/components/Task/Task.types";
 import TaskContext from "./store/TaskContext";
-
-
+import ProtectedRoute from "./sharedComponents/ProtectedRoute";
+import { useSelector } from "react-redux";
+import { userSlice } from "./store/slices/usersSlice";
+import { RootState } from "./store/store";
 
 function App() {
   const [theme, setTheme] = useState(true);
   const changeThemeHandler = () => {
     setTheme(!theme);
   };
- 
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  
 
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const { isAuth } = useSelector((state: RootState) => state.userSlice);
+  // const isLogged = userSlice.useSelector(isAuth);
 
   return (
     <ThemeProvider theme={theme === true ? lightTheme : darkTheme}>
-      <TaskContext.Provider value={{selectedTask,setSelectedTask}}>
-      <St.Main>
-        <S.PageContainer>
-          <BrowserRouter>
-          <OnLogout/>
-            <Header setTheme={changeThemeHandler} />
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="login" element={<Login />} />
-              <Route path="tasks" element={<TasksList setTheme={setTheme} />} />
-              <Route path="register" element={<Register />} />
-            </Routes>
-          </BrowserRouter>
-        </S.PageContainer>
-      </St.Main>
+      <TaskContext.Provider value={{ selectedTask, setSelectedTask }}>
+        <St.Main>
+          <S.PageContainer>
+            <BrowserRouter>
+              <OnLogout />
+              <Header setTheme={changeThemeHandler} />
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="login" element={<Login />} />
+
+                <Route
+                  path="tasks"
+                  element={
+                    <ProtectedRoute isLogged={isAuth}>
+                      <TasksList setTheme={setTheme} />
+                    </ProtectedRoute>
+                  }
+                ></Route>
+                <Route path="register" element={<Register />} />
+              </Routes>
+            </BrowserRouter>
+          </S.PageContainer>
+        </St.Main>
       </TaskContext.Provider>
       <GlobalStyles />
     </ThemeProvider>
   );
 }
-
-
 
 export default App;

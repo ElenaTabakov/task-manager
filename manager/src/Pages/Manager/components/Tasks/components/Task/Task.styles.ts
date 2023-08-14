@@ -129,7 +129,7 @@ export const StatusWrapper = styled.span`
     bottom: 0.5rem;
     background: #b1a9df;
     padding: 5px 8px;
-    min-width: 545px;
+    min-width: 55px;
     text-align: center;
     &:after {
       content: "";
