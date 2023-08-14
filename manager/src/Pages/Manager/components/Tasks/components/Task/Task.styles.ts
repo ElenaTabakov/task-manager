@@ -20,14 +20,14 @@ export const ListItem = styled.div<{ activeTask: boolean; status: string }>`
   align-items: flex-start;
   padding: 1rem 1rem 1.3rem;
   border: 2px solid #ccc;
-  min-height:130px;
+  min-height: 130px;
   border-radius: 10px;
   transform: ${({ activeTask }) => (activeTask ? "scale(1.1)" : "unset")};
   background: ${({ theme }) => theme.body};
   flex-wrap: wrap;
   z-index: ${({ activeTask }) => (activeTask ? 1 : 0)};
   position: relative;
-  overflow: hidden;
+ // overflow: hidden;
   box-shadow: ${({ activeTask }) =>
     activeTask
       ? "0 4px 12px 2px rgba(0,0,0,0.2)"
@@ -120,14 +120,28 @@ export const DescriptionWrapper = styled.div<{ height: number }>`
   transition: ease-in-out 0.3s;
 `;
 
-export const StatusWrapper = styled.span`{
+export const StatusWrapper = styled.span`
+   {
+    background: ${({ theme }) => theme.purple};
     position: absolute;
-    transform: rotate(45deg);
     font-size: 0.8rem;
-    left: -1.5rem;
-    bottom: 1rem;
-    background: ${({theme}) => theme.purple};
-    padding: 5px 22px;
-    min-width: 66px;
+    left: -1rem;
+    bottom: 0.5rem;
+    background: #b1a9df;
+    padding: 5px 8px;
+    min-width: 545px;
     text-align: center;
-}`
+    &:after {
+      content: "";
+      width: 0px;
+      height: 0px;
+      border-style: solid;
+      border-width: 6px 0px 0 19px;
+      border-color: #716b8d transparent transparent transparent;
+      transform: rotate(0deg);
+      position: absolute;
+      left: 0rem;
+      bottom: -0.4rem;
+    }
+  }
+`;

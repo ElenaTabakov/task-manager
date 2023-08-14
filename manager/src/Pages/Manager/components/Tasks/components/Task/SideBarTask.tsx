@@ -2,7 +2,7 @@ import { IconTrashX } from "@tabler/icons";
 import React, { useContext, useState } from "react";
 import AddEditForm from "../../../../../../components/AddEditTaskForm/AddEditTaskForm";
 import Button from "../../../../../../sharedComponents/Button/Button";
-import { SideBarWrapper } from "./SideBarTask.styles";
+import { SideBarWrapper, ButtonClose } from "./SideBarTask.styles";
 import { Task } from "./Task.types";
 import TaskContext from "../../../../../../store/TaskContext";
 
@@ -15,12 +15,13 @@ interface SideBarTaskProps {
 
 const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
-  const {selectedTask} = useContext(TaskContext);
+  const {selectedTask, setSelectedTask} = useContext(TaskContext);
   console.log(task);
   if (selectedTask) {
   return (
     
     <SideBarWrapper>
+      <ButtonClose title='close' onClick={() => setSelectedTask(null)}>+</ButtonClose>
       <h2>{selectedTask.title}</h2>
       <div>{selectedTask.description}</div>
       <div className="task_header_btns">
