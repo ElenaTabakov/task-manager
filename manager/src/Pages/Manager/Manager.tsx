@@ -26,11 +26,11 @@ export default function TasksList({ setTheme }: HeaderProps) {
 
   const [dateValue, setDateValue] = useState<Date>(new Date());
 
-  useEffect(() => {
-    if (isAuth === false) {
-      navigate("/login");
-    }
-  }, [isAuth]);
+  // useEffect(() => {
+  //   if (isAuth === false) {
+  //     navigate("/login");
+  //   }
+  // }, [isAuth]);
 
   const days = [
     "Sunday",
@@ -44,7 +44,7 @@ export default function TasksList({ setTheme }: HeaderProps) {
 
   return (
     <S.PageContainer>
-      {isAuth ? (
+      {/* {isAuth ? ( */}
         <Wrapper marginTop={15} >
           <h2 className="main-title">Hello {user.name} </h2>
           <Grid gutterMd="xl">
@@ -67,9 +67,9 @@ export default function TasksList({ setTheme }: HeaderProps) {
             </Grid.Col>
           </Grid>
         </Wrapper>
-      ) : (
+      {/* ) : (
         <Navigate to="/login" />
-      )}
+      )} */}
     </S.PageContainer>
   );
 }
