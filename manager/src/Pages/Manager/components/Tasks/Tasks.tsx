@@ -4,9 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import TaskItem from "./components/Task/Task";
 import * as S from "./Tasks.styles";
 import AddEditForm from "../../../../components/AddEditTaskForm/AddEditTaskForm";
-import Button from "../../../../sharedComponents/Button/Button";
-// import { deleteTask } from "../../store/slices/tasksSlice";
-import SearchForm from "../../../../sharedComponents/SearchForm";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import {
   deleteTasks,
@@ -14,9 +11,8 @@ import {
 } from "../../../../store/slices/tasksSlice";
 import { Loader } from "@mantine/core";
 import { Task } from "./components/Task/Task.types";
-import { LightTheme, DarkTheme, lightTheme } from "../../../../styles/theme";
-import { ClassNames } from "@emotion/react";
 import SideBarTask from "./components/Task/SideBarTask";
+import TasksHeader from "./TasksHeader";
 
 interface TasksProps {
   dateValue: Date;
@@ -28,14 +24,16 @@ const Tasks = ({ dateValue }: TasksProps) => {
   const statusFetchByDate = useSelector(
     (state: RootState) => state.taskSlice.statusFetchByDate
   );
-
-  const handleDeleteTask = (id: string) => {
-    dispatch(deleteTasks({ id, date: dateValue }));
-  };
   const [isShow, setIsShow] = useState<boolean>(false);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
   const [visible, setVisible] = useState<boolean>(false);
   const [showSideTaskItem, setShowSideTaskItem] = useState<Task | null>(null);
+  const [isAscSortButton, setIsAscButton] = useState<boolean>(true);
+
+  const handleDeleteTask = (id: string) => {
+    dispatch(deleteTasks({ id, date: dateValue }));
+  };
+
 
   useEffect(() => {
     if (statusFetchByDate === "loading") {
@@ -44,10 +42,6 @@ const Tasks = ({ dateValue }: TasksProps) => {
       setVisible(false);
     }
   }, [statusFetchByDate, setVisible]);
-
-  // useEffect(() => {
-  //   dispatch(fetchTasksByDate(dateValue));
-  // }, []);
 
   useEffect(() => {
     dispatch(fetchTasksByDate(dateValue));
@@ -73,7 +67,7 @@ const Tasks = ({ dateValue }: TasksProps) => {
     setFilteredTasks(tasksOnSearch);
   };
 
-  const [isAscSortButton, setIsAscButton] = useState<boolean>(true);
+
 
   const handleToggleSortTasks = () => {
     if (isAscSortButton) {
@@ -93,26 +87,20 @@ const Tasks = ({ dateValue }: TasksProps) => {
 
   return (
     <>
-      {visible && (
-        <S.LoadingOverlayWrapper>
-          <Loader variant="bars" />
-        </S.LoadingOverlayWrapper>
-      )} 
-      <S.TasksHeader>
-        <SearchForm handleOnChangeSearch={handleOnChangeSearch} />
-        <Button
-          type="button"
-          onClick={handleToggleSortTasks}
-          bgColor={"yellow"}
-        >
-          {isAscSortButton ? "Sort A-Z" : "Sort Z-A"}
-        </Button>
-        <Button onClick={() => setIsShow(true)} bgColor={"purple"}>
-          Add Task
-        </Button>
-      </S.TasksHeader>
+  
       <S.ListWrapper>
+        {visible && (
+          <S.LoadingOverlayWrapper>
+            <Loader variant="bars" />
+          </S.LoadingOverlayWrapper>
+        )}
         <S.ListUl>
+          <TasksHeader
+            setIsShow={setIsShow}
+            handleOnChangeSearch={handleOnChangeSearch}
+            handleToggleSortTasks={handleToggleSortTasks}
+            isAscSortButton={isAscSortButton}
+          />
           {filteredTasks?.map((task: Task) => {
             return (
               <TaskItem

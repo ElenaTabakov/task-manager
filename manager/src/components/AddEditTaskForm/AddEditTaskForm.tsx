@@ -16,8 +16,6 @@ import { IconClock } from "@tabler/icons";
 // import { fullDateISO } from "../../store/utils";
 import { Task } from "../../Pages/Manager/components/Tasks/components/Task/Task.types";
 import { FormikTaskValues } from "./AddEditTaskForm.types";
-import { Textarea } from '@mantine/core'
-
 
 
 interface FormProps {
@@ -40,28 +38,22 @@ const AddEditForm = ({
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const [valueStatus, setValueStatus] = useState(status);
-  // const [valueTime, setValueTime] = useState(dateValue);
-  // console.log(task , 'вот это что?');
   
   const handleAddItem = (
     values: FormikTaskValues,
     helpers: FormikHelpers<FormikTaskValues>
   ) => {
     console.log(values.dueDate, "formik dueDate");
-    // console.log(valueTime, "Add Item date");
-    // const fullDate = fullDateISO(values.dueDate, valueTime);
     dispatch(
       createTasks({
         id: "",
         title: values.title,
         description: values.description,
         shortDescription: values.shortDescription,
-        // dueDate: fullDate,
         dueDate: values.dueDate,
         duration: values.duration,
         status: "UPCOMING",
         date: dateValue,
-        // fullDate: fullDate,
       })
     );
     setIsShow(false);
@@ -164,12 +156,6 @@ const AddEditForm = ({
               onChange={handleChange}
               onBlur={handleBlur}
             />
-              {/* <Input 
-              label="Task Description"
-              name="description"
-              placeholder="Task Description"
-              // minRows={5}
-            /> */}
             <Input
               label="Duration"
               type="number"
@@ -192,14 +178,6 @@ const AddEditForm = ({
                 <Radio value="CANCELED" name="status" label="CANCELED" />
               </Radio.Group>
             )}
-            {/* <TimeInput
-              icon={<IconClock size={16} />}
-              label="Event time"
-              withAsterisk
-              // defaultValue={values.dueDate}
-              // value={valueTime}
-              // onChange={setValueTime}
-            /> */}
           </S.Form>
         </ModalWindow>
       )}
@@ -208,6 +186,4 @@ const AddEditForm = ({
 };
 
 export default AddEditForm;
-// function submitForm(values: FormikTaskValues, submitForm: any) {
-//   throw new Error("Function not implemented.");
-// }
+

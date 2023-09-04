@@ -1,5 +1,3 @@
-import { autoBatchEnhancer } from "@reduxjs/toolkit";
-import { IconScale } from "@tabler/icons";
 import styled, { css } from "styled-components";
 import { CircleTitle } from "../../../../../../sharedComponents/CircleTitle/CircleTitle.styles";
 
@@ -19,7 +17,6 @@ export const ListItem = styled.div<{ activeTask: boolean; status: string }>`
   flex: 1;
   align-items: flex-start;
   padding: 1rem 1rem 1.3rem;
-  border: 2px solid #ccc;
   min-height: 130px;
   border-radius: 10px;
   transform: ${({ activeTask }) => (activeTask ? "scale(1.1)" : "unset")};
@@ -27,13 +24,12 @@ export const ListItem = styled.div<{ activeTask: boolean; status: string }>`
   flex-wrap: wrap;
   z-index: ${({ activeTask }) => (activeTask ? 1 : 0)};
   position: relative;
- // overflow: hidden;
+  cursor: pointer;
   box-shadow: ${({ activeTask }) =>
     activeTask
       ? "0 4px 12px 2px rgba(0,0,0,0.2)"
       : "0 4px 12px rgba(0,0,0,0.2)"};
   box-sizing: border-box;
-  /* margin: ${({ activeTask }) => (activeTask ? "0 0 15px " : "0 0 15px")}; */
   transition: ease-in-out 0.4s;
   ${({ status }) => {
     switch (status) {
@@ -55,6 +51,14 @@ export const ListItem = styled.div<{ activeTask: boolean; status: string }>`
           & ${CircleTitle} {
             background-color: ${({ theme }) => theme.body};
             color: ${({ theme }) => theme.secondary};
+          }
+        `;
+      case "DONE":
+        return css`
+          background-color: ${({ theme }) => theme.mint};
+          color: ${({ theme }) => theme.body};
+          & ${ListName} {
+            color: ${({ theme }) => theme.body};
           }
         `;
       default:

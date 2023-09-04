@@ -1,7 +1,7 @@
 import { Input } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import React from "react";
-import { SearchInput } from "../Pages/Manager/components/Tasks/Tasks.styles";
+import { SearchInput } from "../Pages/Manager/components/Tasks/TasksHeader.styles";
 
 
 

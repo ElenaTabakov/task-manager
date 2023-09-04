@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import Tasks from "./components/Tasks/Tasks";
-import { Navigate } from "react-router-dom";
 import { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import * as S from "../../sharedStyles/global.styles";
 import { useAuth } from "../../hooks/use-auth";
-import { useNavigate } from "react-router-dom";
 import { logoutUser, User } from "../../store/slices/usersSlice";
 import CustomCalendar from "../../sharedComponents/Calendar/CustomCalendar";
 import { HeaderProps } from "../../sharedComponents/Header/Header";
 import { Grid, ScrollArea } from "@mantine/core";
 import { Wrapper } from "../../styles/theme";
+import * as St from './Manager.styles';
 
 export default function TasksList({ setTheme }: HeaderProps) {
   const userEmail = useSelector(
@@ -22,15 +21,7 @@ export default function TasksList({ setTheme }: HeaderProps) {
     dispatch(logoutUser());
   };
 
-  const navigate = useNavigate();
-
   const [dateValue, setDateValue] = useState<Date>(new Date());
-
-  // useEffect(() => {
-  //   if (isAuth === false) {
-  //     navigate("/login");
-  //   }
-  // }, [isAuth]);
 
   const days = [
     "Sunday",
@@ -44,9 +35,14 @@ export default function TasksList({ setTheme }: HeaderProps) {
 
   return (
     <S.PageContainer>
-      {/* {isAuth ? ( */}
         <Wrapper marginTop={15} >
-          <h2 className="main-title">Hello {user.name} </h2>
+          <St.ManagerHeader>
+              <span className="main-title">Hello {user.name} </span>
+              {`${dateValue.getDate()} ${dateValue.toLocaleString(
+                "default",
+                { month: "long" }
+              )} ${dateValue.getFullYear()}, ${days[dateValue.getDay()]}`}
+          </St.ManagerHeader>
           <Grid gutterMd="xl">
             <S.ColBorder md={12} lg={4} className={"borderRight"}>
               <CustomCalendar
@@ -55,10 +51,6 @@ export default function TasksList({ setTheme }: HeaderProps) {
               />
             </S.ColBorder>
             <Grid.Col md={12} lg={8} className={"rightSide"} >
-              <h3>{`${dateValue.getDate()} ${dateValue.toLocaleString(
-                "default",
-                { month: "long" }
-              )} ${dateValue.getFullYear()}, ${days[dateValue.getDay()]}`}</h3>
               <S.TasksWrapper
                 type="always"
               >
@@ -67,9 +59,6 @@ export default function TasksList({ setTheme }: HeaderProps) {
             </Grid.Col>
           </Grid>
         </Wrapper>
-      {/* ) : (
-        <Navigate to="/login" />
-      )} */}
     </S.PageContainer>
   );
 }

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Input } from "@mantine/core";
-import { device } from "../../../../styles/theme";
 
 export const TasksContainer = styled.div`
   margin: 2rem auto;
@@ -18,9 +17,10 @@ export const ListWrapper = styled.section`
 export const ListUl = styled.ul`
   list-style: none;
   max-width: 55%;
-  padding: 1rem;
+  padding: 0 1rem 1rem;
   box-sizing: border-box;
   flex: 0 0 55%;
+  margin-block-start: 0;
   @media (max-width: 768px) {
     flex: 0 0 100%;
     max-width: 100%;
@@ -43,14 +43,7 @@ export const LoadingOverlayWrapper = styled.div`
   justify-content: center; */
 `;
 
-export const SearchInput = styled(Input)`
-  margin: 0 0 2rem;
-`;
 
-export const TasksHeader = styled.div`
-  padding: 0 1rem;
-  box-sizing: border-box;
-`;
 export const SideBarWrapper = styled.div`
   border-left: 1px solid ${({ theme }) => theme.toggleBorder};
   transition: ease-in-out 0.4s;

@@ -1,4 +1,4 @@
-import { useState, useRef,useContext } from "react";
+import { useState, useRef,useContext, useEffect } from "react";
 import { IconTrashX } from "@tabler/icons";
 import Button from "../../../../../../sharedComponents/Button/Button";
 import Circle from "../../../../../../sharedComponents/CircleTitle/CircleTitle";
@@ -28,8 +28,7 @@ const TaskItem = ({
   activeTask,
 }: TaskItemProps) => {
   const [descriptionHide, setDescriptionHide] = useState<boolean>(true);
-  const descRef = useRef<HTMLDivElement | null>(null);
-  console.log(descRef.current?.clientHeight);
+  const {selectedTask,setSelectedTask} = useContext(TaskContext);
 
   const handleOpenSideTask = (task: Task) => {
     setDescriptionHide(false);
@@ -37,7 +36,6 @@ const TaskItem = ({
     setSelectedTask(task);
   };
 
-  const {selectedTask,setSelectedTask} = useContext(TaskContext);
 
   return (
     <S.ListWrapper>
@@ -51,18 +49,13 @@ const TaskItem = ({
         id={id}
         className={`${className ? className : ""} status-${status} `}
         status={status}
+        onClick={() => handleOpenSideTask(task)}
       >
         <Circle circleContent={title} className={status} />
         <S.ListItemContent>
           <S.Task_header>
             <S.ListName>{title}</S.ListName>            
-          </S.Task_header>
-          <S.ShortDescription className={descriptionHide ? "active" : "hide"}>
-            {shortDescription}
-            <a href="#" onClick={() => handleOpenSideTask(task)}>
-                more...
-              </a>
-          </S.ShortDescription>
+          </S.Task_header> 
           <S.ListDate>
             {new Date(dueDate).toLocaleDateString("he-IL", {
               timeZone: "Asia/Jerusalem",
@@ -73,8 +66,6 @@ const TaskItem = ({
           </S.ListDate>
           <S.StatusWrapper>{status}</S.StatusWrapper>
         </S.ListItemContent>
-
-      
       </S.ListItem>
     </S.ListWrapper>
   );

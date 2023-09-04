@@ -7,6 +7,5 @@ interface selectedTaskProps {
     setSelectedTask: (task : Task | null) => void
 }
  const TaskContext = createContext<selectedTaskProps>({selectedTask: null, setSelectedTask : () => {} });
+ 
  export default TaskContext
-
-// export default TaskContext

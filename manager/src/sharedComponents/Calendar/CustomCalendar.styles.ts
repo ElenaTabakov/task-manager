@@ -6,7 +6,7 @@ export const ActiveDay = styled.div `
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #aaf0d1;
+    background: ${({theme})=> theme.mint};
     margin: 0;
     border-radius: 14px;
     color: #fff;
