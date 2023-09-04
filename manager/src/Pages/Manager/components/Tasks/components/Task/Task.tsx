@@ -12,7 +12,7 @@ interface TaskItemProps {
   className?: string;
   dateValue: Date;
   onDelete: (id: string) => void;
-  showSideTask: (task: Task) => void;
+  showSideTaskItem: (task: Task) => void;
   activeTask: boolean;
   status: string;
 }
@@ -24,7 +24,7 @@ const TaskItem = ({
   className,
   dateValue,
   onDelete,
-  showSideTask,
+  showSideTaskItem,
   activeTask,
 }: TaskItemProps) => {
   const [descriptionHide, setDescriptionHide] = useState<boolean>(true);
@@ -32,7 +32,7 @@ const TaskItem = ({
 
   const handleOpenSideTask = (task: Task) => {
     setDescriptionHide(false);
-    showSideTask(task);
+    showSideTaskItem(task);
     setSelectedTask(task);
   };
 

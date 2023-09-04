@@ -108,7 +108,7 @@ const Tasks = ({ dateValue }: TasksProps) => {
                 task={task}
                 onDelete={() => handleDeleteTask(task.id)}
                 dateValue={dateValue}
-                showSideTask={() => setShowSideTaskItem(task)}
+                showSideTaskItem = {setShowSideTaskItem}
                 activeTask={task.id == showSideTaskItem?.id ? true : false}
                 status={task.status}
               />
