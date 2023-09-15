@@ -15,7 +15,7 @@ interface SideBarTaskProps {
 const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
   const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
   const { selectedTask, setSelectedTask } = useContext(TaskContext);
-  
+
   console.log(task);
   if (selectedTask) {
     return (
@@ -23,8 +23,6 @@ const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
         <ButtonClose title="close" onClick={() => setSelectedTask(null)}>
           +
         </ButtonClose>
-        <h2>{selectedTask.title}</h2>
-        <div>{selectedTask.description}</div>
         <div className="task_header_btns">
           <Button
             size="small"
@@ -43,6 +41,9 @@ const SideBarTask = ({ dateValue, onDelete, task }: SideBarTaskProps) => {
             <IconTrashX size="16" />
           </Button>
         </div>
+        <h2>{selectedTask.title}</h2>
+        <div>{selectedTask.description}</div>
+        
         {visibleEdirForm && (
           <AddEditForm
             isEdit

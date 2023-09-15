@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { CircleTitle } from "../../../../../../sharedComponents/CircleTitle/CircleTitle.styles";
+import { lightTheme } from "../../../../../../styles/theme";
 
 export const ListWrapper = styled.li`
   display: flex;
@@ -44,21 +45,25 @@ export const ListItem = styled.div<{ activeTask: boolean; status: string }>`
       case "UPCOMING":
         return css`
           background-color: ${({ theme }) => theme.secondary};
-          color: ${({ theme }) => theme.body};
+          color: ${({ theme }) => theme == lightTheme ? theme.body : '#fff'};
           & ${ListName} {
-            color: ${({ theme }) => theme.body};
+           
+            color: ${({ theme }) =>  theme == lightTheme ? theme.body : '#fff' };
           }
           & ${CircleTitle} {
             background-color: ${({ theme }) => theme.body};
-            color: ${({ theme }) => theme.secondary};
+            color: ${({ theme }) => theme == lightTheme ? theme.secondary : '#fff'} ;
           }
         `;
       case "DONE":
         return css`
           background-color: ${({ theme }) => theme.mint};
-          color: ${({ theme }) => theme.body};
+          color: ${({ theme }) => theme.text};
           & ${ListName} {
-            color: ${({ theme }) => theme.body};
+            color: ${({ theme }) => theme.text};
+          }
+          & ${CircleTitle}{
+            color: ${({ theme }) => theme.text};
           }
         `;
       default:
@@ -74,6 +79,8 @@ export const ListItemContent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   flex: 1;
+  flex-wrap: wrap;
+  flex: 0 0 calc(100% - 55px);
 `;
 
 export const ListName = styled.h2`
@@ -108,12 +115,12 @@ export const ListDate = styled.span`
   font-size: 0.8rem;
 `;
 export const Task_header = styled.div`
-  width: 100%;
+  /* width: 100%;
   display: flex;
   justify-content: space-between;
   & button {
     margin: 0 0 0 10px;
-  }
+  } */
 `;
 
 export const DescriptionWrapper = styled.div<{ height: number }>`
@@ -145,7 +152,18 @@ export const StatusWrapper = styled.span`
       transform: rotate(0deg);
       position: absolute;
       left: 0rem;
-      bottom: -0.4rem;
+      bottom: -0.37rem;
     }
   }
 `;
+
+export const TaskButtonsBottom = styled.div `
+  position: absolute;
+  right: 1rem;
+  bottom:1rem;
+  & button{
+    margin: 0px 0.3rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+  }
+`

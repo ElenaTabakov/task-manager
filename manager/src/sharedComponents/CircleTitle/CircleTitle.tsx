@@ -9,7 +9,7 @@ interface CircleTitleProps {
 
 const tW = (text: string) => {  
 
-    const textLength = text.split(' ');
+    const textLength = text.trim().split(' ');
     // console.log(textLength);
     if (textLength.length === 1 ){
         return textLength[0][0].toUpperCase();
@@ -21,7 +21,7 @@ const tW = (text: string) => {
     return (text.split(' ').map(word => word[0]));
 }
 
-const Circle = ({ circleContent, className}: CircleTitleProps) => {
+const Circle = ({ circleContent, className}: CircleTitleProps): JSX.Element => {
   return (
     <S.CircleTitle className={className}>{tW(circleContent)}</S.CircleTitle>
   );

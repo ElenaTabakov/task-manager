@@ -1,11 +1,11 @@
-import { useState, useRef,useContext, useEffect } from "react";
-import { IconTrashX } from "@tabler/icons";
-import Button from "../../../../../../sharedComponents/Button/Button";
+import { useState, useRef, useContext, useEffect } from "react";
 import Circle from "../../../../../../sharedComponents/CircleTitle/CircleTitle";
 import * as S from "./Task.styles";
-import AddEditForm from "../../../../../../components/AddEditTaskForm/AddEditTaskForm";
 import { Task } from "./Task.types";
 import TaskContext from "../../../../../../store/TaskContext";
+import Button from "../../../../../../sharedComponents/Button/Button";
+import { IconTrashX, IconEdit } from "@tabler/icons";
+import AddEditForm from "../../../../../../components/AddEditTaskForm/AddEditTaskForm";
 
 interface TaskItemProps {
   task: Task;
@@ -17,7 +17,6 @@ interface TaskItemProps {
   status: string;
 }
 
-
 const TaskItem = ({
   task: { id, title, description, shortDescription, dueDate, duration, status },
   task,
@@ -28,7 +27,8 @@ const TaskItem = ({
   activeTask,
 }: TaskItemProps) => {
   const [descriptionHide, setDescriptionHide] = useState<boolean>(true);
-  const {selectedTask,setSelectedTask} = useContext(TaskContext);
+  const { selectedTask, setSelectedTask } = useContext(TaskContext);
+  const [visibleEdirForm, setVisibleEditForm] = useState<boolean>(false);
 
   const handleOpenSideTask = (task: Task) => {
     setDescriptionHide(false);
@@ -36,16 +36,15 @@ const TaskItem = ({
     setSelectedTask(task);
   };
 
-
   return (
     <S.ListWrapper>
       <S.DateListWrapper>
-      {`${('0' + new Date(dueDate).getHours()).slice(-2)}:${('0' + new Date(
-              dueDate
-            ).getMinutes()).slice(-2)}`}
+        {`${("0" + new Date(dueDate).getHours()).slice(-2)}:${(
+          "0" + new Date(dueDate).getMinutes()
+        ).slice(-2)}`}
       </S.DateListWrapper>
       <S.ListItem
-        activeTask = {selectedTask ? activeTask : false}
+        activeTask={selectedTask ? activeTask : false}
         id={id}
         className={`${className ? className : ""} status-${status} `}
         status={status}
@@ -54,19 +53,46 @@ const TaskItem = ({
         <Circle circleContent={title} className={status} />
         <S.ListItemContent>
           <S.Task_header>
-            <S.ListName>{title}</S.ListName>            
-          </S.Task_header> 
+            <S.ListName>{title}</S.ListName>
+            <S.ShortDescription className="taskdesc">
+              {shortDescription}
+            </S.ShortDescription>
+          </S.Task_header>
           <S.ListDate>
             {new Date(dueDate).toLocaleDateString("he-IL", {
               timeZone: "Asia/Jerusalem",
             })}{" "}
-           {`${('0' + new Date(dueDate).getHours()).slice(-2)}:${('0' + new Date(
-              dueDate
-            ).getMinutes()).slice(-2)}`}
+            {`${("0" + new Date(dueDate).getHours()).slice(-2)}:${(
+              "0" + new Date(dueDate).getMinutes()
+            ).slice(-2)}`}
           </S.ListDate>
           <S.StatusWrapper>{status}</S.StatusWrapper>
+          <S.TaskButtonsBottom>
+            <Button
+              size="small"
+              onClick={() => setVisibleEditForm(!visibleEdirForm)}
+              title="Edit task"
+              bgColor="purple"
+            >
+              <IconEdit size={16} />
+            </Button>
+
+            <Button size="small" onClick={() => onDelete(id)} title="Delete">
+              <IconTrashX size="16" />
+            </Button>
+          </S.TaskButtonsBottom>
         </S.ListItemContent>
       </S.ListItem>
+      {visibleEdirForm && (
+        <AddEditForm
+          isEdit
+          isShow={visibleEdirForm}
+          setIsShow={setVisibleEditForm}
+          task={task}
+          status={status}
+          dateValue={dateValue}
+        />
+      )}
     </S.ListWrapper>
   );
 };

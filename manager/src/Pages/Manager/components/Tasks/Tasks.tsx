@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { RootState } from "../../../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import TaskItem from "./components/Task/Task";
@@ -13,6 +13,7 @@ import { Loader } from "@mantine/core";
 import { Task } from "./components/Task/Task.types";
 import SideBarTask from "./components/Task/SideBarTask";
 import TasksHeader from "./TasksHeader";
+import TaskContext from "../../../../store/TaskContext";
 
 interface TasksProps {
   dateValue: Date;
@@ -29,6 +30,7 @@ const Tasks = ({ dateValue }: TasksProps) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [showSideTaskItem, setShowSideTaskItem] = useState<Task | null>(null);
   const [isAscSortButton, setIsAscButton] = useState<boolean>(true);
+  const {selectedTask,setSelectedTask} = useContext(TaskContext);
 
   const handleDeleteTask = (id: string) => {
     dispatch(deleteTasks({ id, date: dateValue }));
@@ -50,6 +52,10 @@ const Tasks = ({ dateValue }: TasksProps) => {
 
   useEffect(() => {
     setFilteredTasks(tasks);
+    if(selectedTask){
+      const updateSelectedTask =  tasks.find((task : Task) => task.id == selectedTask.id );
+      updateSelectedTask ? setSelectedTask(updateSelectedTask) : setSelectedTask(null);
+    }
   }, [tasks]);
 
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

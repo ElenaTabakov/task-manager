@@ -15,7 +15,8 @@ export const lightTheme = {
   yellow: '#FFC75B',
   link: '#FF9273',
   purple:'#B1A9DF',
-  mint:'#aaf0d1'
+  mint:'#aaf0d1',
+  lightGray: '#f3f3f3'
 }
 export const darkTheme = {
   body: '#363537',
@@ -28,7 +29,8 @@ export const darkTheme = {
   pink: '#95B1B0',
   yellow: '#C78567',
   purple:'#B1A9DF',
-  mint:'#aaf0d1'
+  mint:'#248b5f',
+  lightGray: '#1c3647'
 }
 
 export interface WrapperProps  {

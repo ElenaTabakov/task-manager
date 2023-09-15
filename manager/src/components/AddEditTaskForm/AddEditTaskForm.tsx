@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RootState } from "../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
@@ -11,12 +11,8 @@ import { Formik, FormikHelpers } from "formik";
 import { createTasks, updateTasks } from "../../store/slices/tasksSlice";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { Radio } from "@mantine/core";
-import { TimeInput, DateTimePicker } from "@mantine/dates";
-import { IconClock } from "@tabler/icons";
-// import { fullDateISO } from "../../store/utils";
 import { Task } from "../../Pages/Manager/components/Tasks/components/Task/Task.types";
 import { FormikTaskValues } from "./AddEditTaskForm.types";
-
 
 interface FormProps {
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -38,7 +34,7 @@ const AddEditForm = ({
   const tasks = useSelector((state: RootState) => state.taskSlice.tasks);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const [valueStatus, setValueStatus] = useState(status);
-  
+
   const handleAddItem = (
     values: FormikTaskValues,
     helpers: FormikHelpers<FormikTaskValues>
@@ -62,7 +58,6 @@ const AddEditForm = ({
 
   const editTaskHandler = (values: FormikTaskValues) => {
     if (tasks && task) {
-
       dispatch(
         updateTasks({
           id: values.id,
@@ -123,7 +118,7 @@ const AddEditForm = ({
       validationSchema={validationSchema}
       onSubmit={isEdit ? editTaskHandler : handleAddItem}
     >
-      {({ values, handleSubmit,handleChange,handleBlur }) => (
+      {({ values, handleSubmit, handleChange, handleBlur }) => (
         <ModalWindow
           title={isEdit ? "Edit Task" : "Add New Task"}
           visible={isShow}
@@ -134,50 +129,62 @@ const AddEditForm = ({
           disabled={!values.title || !values.description}
         >
           <S.Form>
-            <Input
-              label="Task Title"
-              type="text"
-              name="title"
-              placeholder="Task Title"
-            />
-            <Input
-              label="Short Description"
-              type="text"
-              name="shortDescription"
-              placeholder="Short Description"
-            />
-            <S.TextArea
-              label="Task Description"
-              name="description"
-              id="description"
-              placeholder="Task Description"
-              minRows={5}
-              value={values.description}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <Input
-              label="Duration"
-              type="number"
-              name="duration"
-              placeholder="Duration"
-            />
-            <InputDate />
-            {isEdit && (
-              <Radio.Group
-                name="status"
-                label="Task Status"
-                id="status"
-                value={valueStatus}
-                onChange={setValueStatus}
-                description="Select task status"
-                withAsterisk
-              >
-                <Radio value="DONE" name="status" label="DONE" />
-                <Radio value="UPCOMING" name="status" label="UPCOMING" />
-                <Radio value="CANCELED" name="status" label="CANCELED" />
-              </Radio.Group>
-            )}
+            <S.HalfWrapper>
+              <Input
+                label="Task Title"
+                type="text"
+                name="title"
+                placeholder="Task Title"
+              />
+            </S.HalfWrapper>
+            <S.HalfWrapper>
+              <Input
+                label="Short Description"
+                type="text"
+                name="shortDescription"
+                placeholder="Short Description"
+              />
+            </S.HalfWrapper>
+            <S.FullWrapper>
+              <S.TextArea
+                label="Task Description"
+                name="description"
+                id="description"
+                placeholder="Task Description"
+                minRows={5}
+                value={values.description}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </S.FullWrapper>
+            <S.HalfWrapper>
+              <Input
+                label="Duration"
+                type="number"
+                name="duration"
+                placeholder="Duration"
+              />
+            </S.HalfWrapper>
+            <S.HalfWrapper>
+              <InputDate />
+            </S.HalfWrapper>
+            <S.FullWrapper>
+              {isEdit && (
+                <Radio.Group
+                  name="status"
+                  label="Task Status"
+                  id="status"
+                  value={valueStatus}
+                  onChange={setValueStatus}
+                  description="Select task status"
+                  withAsterisk
+                >
+                  <Radio value="DONE" name="status" label="DONE" />
+                  <Radio value="UPCOMING" name="status" label="UPCOMING" />
+                  <Radio value="CANCELED" name="status" label="CANCELED" />
+                </Radio.Group>
+              )}
+            </S.FullWrapper>
           </S.Form>
         </ModalWindow>
       )}
@@ -186,4 +193,3 @@ const AddEditForm = ({
 };
 
 export default AddEditForm;
-

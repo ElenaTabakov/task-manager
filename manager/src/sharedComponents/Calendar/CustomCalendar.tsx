@@ -7,8 +7,8 @@ import { fetchTasksDates } from "../../store/slices/tasksSlice";
 import { ThunkActionDispatch, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
 import { useMediaQuery } from "@mantine/hooks";
-import {ActiveDay} from "./CustomCalendar.styles";
-import TaskContext from '../../store/TaskContext'
+import { ActiveDay } from "./CustomCalendar.styles";
+import TaskContext from "../../store/TaskContext";
 
 interface CustomCalendarProps {
   setDateValue: React.Dispatch<React.SetStateAction<Date>>;
@@ -18,7 +18,7 @@ interface CustomCalendarProps {
 const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const taskDates = useSelector((state: RootState) => state.taskSlice.dates);
-  const {setSelectedTask} = useContext(TaskContext);
+  const { setSelectedTask } = useContext(TaskContext);
 
   const convertDatesBefore = taskDates?.map((date) =>
     new Date(date).toLocaleDateString("he-IL", { timeZone: "Asia/Jerusalem" })
@@ -37,10 +37,10 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
     dispatch(fetchTasksDates());
   }, []);
 
-  const dateChangeHandle = (date : Date) => {
-    setDateValue(date)
-    setSelectedTask(null)
-  }
+  const dateChangeHandle = (date: Date) => {
+    setDateValue(date);
+    setSelectedTask(null);
+  };
 
   const largeScreen = useMediaQuery("(min-width: 900px)");
 
@@ -55,6 +55,19 @@ const CustomCalendar = ({ setDateValue, dateValue }: CustomCalendarProps) => {
         // allowLevelChange={false}
         // size="xl"
         size={largeScreen ? "xl" : "md"}
+        styles={{
+          calendar: {
+            gridArea: 'calendar',
+            '@media screen and (max-width:767px)' : {
+              margin:'0 auto'
+            }
+        },
+          day: { fontSize: "1rem", width: "3rem", height: "3rem",
+          '@media screen and (max-width:767px)':{
+             width: "2rem", height: "2rem"
+          }
+          }
+        }}
         renderDay={(date) => {
           const day = date.getDate();
           const dayT = new Date(date).toLocaleDateString("he-IL", {

@@ -9,7 +9,7 @@ import CustomCalendar from "../../sharedComponents/Calendar/CustomCalendar";
 import { HeaderProps } from "../../sharedComponents/Header/Header";
 import { Grid, ScrollArea } from "@mantine/core";
 import { Wrapper } from "../../styles/theme";
-import * as St from './Manager.styles';
+import * as St from "./Manager.styles";
 
 export default function TasksList({ setTheme }: HeaderProps) {
   const userEmail = useSelector(
@@ -35,30 +35,25 @@ export default function TasksList({ setTheme }: HeaderProps) {
 
   return (
     <S.PageContainer>
-        <Wrapper marginTop={15} >
-          <St.ManagerHeader>
-              <span className="main-title">Hello {user.name} </span>
-              {`${dateValue.getDate()} ${dateValue.toLocaleString(
-                "default",
-                { month: "long" }
-              )} ${dateValue.getFullYear()}, ${days[dateValue.getDay()]}`}
-          </St.ManagerHeader>
-          <Grid gutterMd="xl">
-            <S.ColBorder md={12} lg={4} className={"borderRight"}>
-              <CustomCalendar
-                setDateValue={setDateValue}
-                dateValue={dateValue}
-              />
-            </S.ColBorder>
-            <Grid.Col md={12} lg={8} className={"rightSide"} >
-              <S.TasksWrapper
-                type="always"
-              >
-                <Tasks dateValue={dateValue} />
-              </S.TasksWrapper>
-            </Grid.Col>
-          </Grid>
-        </Wrapper>
+      <Wrapper marginTop={15}>
+        <St.ManagerHeader>
+          <span className="main-title">Hello {user.name} </span>
+          {`${dateValue.getDate()} ${dateValue.toLocaleString("default", {
+            month: "long",
+          })} ${dateValue.getFullYear()}, ${days[dateValue.getDay()]}`}
+        </St.ManagerHeader>
+        <St.InnerContainer>
+          <CustomCalendar setDateValue={setDateValue} dateValue={dateValue} />
+
+          <div className={"rightSide"}>
+            <St.TasksWrapperContainer
+            // type="always"
+            >
+              <Tasks dateValue={dateValue} />
+            </St.TasksWrapperContainer>
+          </div>
+        </St.InnerContainer>
+      </Wrapper>
     </S.PageContainer>
   );
 }

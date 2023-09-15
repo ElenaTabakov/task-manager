@@ -8,17 +8,11 @@ const InputDate = () => {
 
   return (
 
-  //   <DateTimePicker
-  //   dropdownType="modal"
-  //   label="Pick date and time"
-  //   placeholder="Pick date and time"
-  //   maw={400}
-  //   mx="auto"
-  // />
+
     <DateTimePicker
       placeholder="Pick date"
       dropdownType="modal"
-      // label="Event date"
+      label="Event date"
       // withAsterisk
       defaultValue={values.dueDate}
       onChange={(date: Date) => setFieldValue("dueDate", date)}
