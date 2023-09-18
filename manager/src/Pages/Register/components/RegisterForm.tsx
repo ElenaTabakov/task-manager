@@ -65,7 +65,8 @@ const RegisterForm = ({ registerBtnText }: RegisterFormProps) => {
         isValid,
         dirty,
       }) => (
-        <S.Form onSubmit={handleSubmit}>
+        <S.Form onSubmit={handleSubmit} className="register_form">
+          <S.FullWrapper>
           <Input
             label="Name"
             type="text"
@@ -102,8 +103,10 @@ const RegisterForm = ({ registerBtnText }: RegisterFormProps) => {
             size="medium"
             disabled={!values.email || !values.password}
           >
-            {registerBtnText}
+             {registerBtnText}
           </Button>
+          </S.FullWrapper>
+          
           {/* {errorLogin && "Email or Password is incorrect"} */}
         </S.Form>
       )}

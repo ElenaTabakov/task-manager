@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-// import { _renderMatches } from "react-router/lib/hooks";
 import { axiosApi } from "../axios";
-import { v4 as uuid } from "uuid";
 
 export interface User {
   id: string;
@@ -24,6 +21,7 @@ interface userState {
   statusRegister: "loading" | "succeeded" | "failed" | "idle";
   statusLogin: "loading" | "succeeded" | "failed" | "idle";
   isAuth: boolean;
+  errorMessage? : string;
 }
 
 const initialState: userState = {
@@ -57,9 +55,8 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axiosApi.post("users/login", { email, password });
       return response.data;
-      console.log(response.data);
     } catch (error: any | undefined) {
-      console.log(error.message);
+      console.log( 'boo');
       return rejectWithValue(error.response.data);
     }
   }
@@ -132,8 +129,10 @@ export const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.statusLogin = "failed";
+        // state.errorMessage = a
         state.isAuth = false;
-        console.log(action);
+        console.log(action, 'slice');
+        console.log(state, 'slice state');
       });
   },
 });

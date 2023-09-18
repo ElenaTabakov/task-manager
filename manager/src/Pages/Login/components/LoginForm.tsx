@@ -10,6 +10,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { loginUser } from "../../../store/slices/usersSlice";
+import * as St from "../../../sharedComponents/FormElements/Form.styles";
 
 interface LoginFormProps {
   loginBtnText: string;
@@ -26,15 +27,13 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
   useEffect(() => {
     if (isAuth === true) {
       navigate("/tasks");
-      // console.log('useEffect =>' + isAuth);
       setErrorLogin(false);
-      // console.log('Email or Password is incorrect USEEFFECT')
     }
   }, [isAuth, navigate, setErrorLogin]);
 
   const validationSchema = yup.object().shape({
     email: yup.string().email("Invalid email").required("Required"),
-    password: yup.string().required("Reuired"),
+    password: yup.string().required("Required"),
   });
   interface LoginFormValues {
     email: string;
@@ -62,29 +61,35 @@ const LoginForm = ({ loginBtnText }: LoginFormProps) => {
         isValid,
         dirty,
       }) => (
-        <S.Form onSubmit={handleSubmit}>
-          <Input
-            label="Email"
-            type="text"
-            placeholder="Email"
-            name="email"
-            // onChange={handleChange}
-            // error={errors.email}
-            // value={values.email}
-          ></Input>
-          <Input
-            label="Password"
-            type="password"
-            placeholder="Password"
-            name="password"
-          ></Input>
-          <Button
-            type="submit"
-            size="medium"
-            disabled={!values.email || !values.password}
-          >
-            {loginBtnText}
-          </Button>
+        <S.Form onSubmit={handleSubmit} className="login_form">
+          <St.FullWrapper>
+            <Input
+              label="Email"
+              type="text"
+              placeholder="Email"
+              name="email"
+              // onChange={handleChange}
+              // error={errors.email}
+              // value={values.email}
+            ></Input>
+          </St.FullWrapper>
+          <St.FullWrapper>
+            <Input
+              label="Password"
+              type="password"
+              placeholder="Password"
+              name="password"
+            ></Input>
+          </St.FullWrapper>
+          <St.FullWrapper>
+            <Button
+              type="submit"
+              size="medium"
+              disabled={!values.email || !values.password}
+            >
+              {loginBtnText}
+            </Button>
+          </St.FullWrapper>
           {errorLogin && "Email or Password is incorrect"}
         </S.Form>
       )}

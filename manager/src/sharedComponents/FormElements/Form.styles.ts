@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Textarea } from "@mantine/core";
+import { Formik } from "formik";
 
 export const Form = styled.form`
   padding: 25px;
@@ -9,6 +10,11 @@ export const Form = styled.form`
   &.search_form {
     margin-left: 0;
   }
+  &.login_form,
+  &.register_form{
+    max-width:500px;
+  }
+
 `;
 export const HalfWrapper = styled.div`
   width: 50%;
@@ -54,3 +60,4 @@ export const TextArea = styled(Textarea)`
     font-size: 1rem;
   }
 `;
+ 
