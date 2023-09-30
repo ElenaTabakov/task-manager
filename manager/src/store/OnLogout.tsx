@@ -14,8 +14,9 @@ const OnLogout = () => {
             console.log(error.response.data.message);
             dispatch(logoutUser());
         }
-        console.log(error.response.data.message);
-        return error;
+        // console.log(error.response.data.message);
+        return Promise.reject(error);
+        // return error;
     }
   );
   return null;

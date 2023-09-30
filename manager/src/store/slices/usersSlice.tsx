@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { axiosApi } from "../axios";
 
 export interface User {
@@ -9,6 +9,9 @@ export interface User {
 interface LoginUserPost {
   email: string;
   password: string;
+}
+interface Error {
+  message: string;
 }
 
 interface RegisterUserPost extends LoginUserPost {
@@ -21,7 +24,7 @@ interface userState {
   statusRegister: "loading" | "succeeded" | "failed" | "idle";
   statusLogin: "loading" | "succeeded" | "failed" | "idle";
   isAuth: boolean;
-  errorMessage? : string;
+  errorMessage : Error | null | undefined;
 }
 
 const initialState: userState = {
@@ -30,6 +33,8 @@ const initialState: userState = {
   statusRegister: "idle",
   statusLogin: "idle",
   isAuth: false,
+  errorMessage:  null
+
 };
 
 export const registerUser = createAsyncThunk(
@@ -43,7 +48,6 @@ export const registerUser = createAsyncThunk(
       });
       console.log(responce.data);
     } catch (error: any | undefined) {
-      console.log(error.message);
       return rejectWithValue(error.response.data);
     }
   }
@@ -51,12 +55,11 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "users/login",
-  async ({ email, password }: LoginUserPost, { rejectWithValue }) => {
+  async ({ email, password }: LoginUserPost, { rejectWithValue } ) => {
     try {
       const response = await axiosApi.post("users/login", { email, password });
       return response.data;
     } catch (error: any | undefined) {
-      console.log( 'boo');
       return rejectWithValue(error.response.data);
     }
   }
@@ -129,14 +132,13 @@ export const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.statusLogin = "failed";
-        // state.errorMessage = a
+        console.log(action.payload);
+        state.errorMessage = action.payload  as Error;
         state.isAuth = false;
         console.log(action, 'slice');
         console.log(state, 'slice state');
       });
   },
 });
-
-// export const { setUser } = userSlice.actions;
 export const { logoutUser } = userSlice.actions;
 export default userSlice.reducer;

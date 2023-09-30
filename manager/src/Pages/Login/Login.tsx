@@ -5,23 +5,21 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/use-auth";
 import { useNavigate } from "react-router-dom";
 import { Wrapper } from "../../styles/theme";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
 const Login = () => {
-  const { isAuth } = useAuth();
   const navigate = useNavigate();
-  // const user = useSelector((state: RootState) => state.userSlice.users);
-  //   useEffect(() => {
-  //     if (isAuth){
-  //       navigate('/tasks');
-  //   }
-  // }, []);
+  const error = useSelector((state: RootState) => state.userSlice.errorMessage);
+  
+  console.log(error)
 
-  useEffect(() => {
-    console.log(isAuth);
-    if (isAuth === true) {
-      navigate("/tasks");
-    }
-  }, [isAuth, navigate]);
+  // useEffect(() => {
+  //   console.log(isAuth);
+  //   if (isAuth === true) {
+  //     navigate("/tasks");
+  //   }
+  // }, [isAuth, navigate]);
 
   return (
     <S.PageContainer>
@@ -29,6 +27,7 @@ const Login = () => {
         <h2>Login</h2>
         <LoginForm loginBtnText="Log in" />
         <Link to="/register"> Register</Link>
+        { error && error.message}
       </Wrapper>
     </S.PageContainer>
   );
