@@ -115,12 +115,6 @@ export const ListDate = styled.span`
   font-size: 0.8rem;
 `;
 export const Task_header = styled.div`
-  /* width: 100%;
-  display: flex;
-  justify-content: space-between;
-  & button {
-    margin: 0 0 0 10px;
-  } */
 `;
 
 export const DescriptionWrapper = styled.div<{ height: number }>`
@@ -132,7 +126,6 @@ export const DescriptionWrapper = styled.div<{ height: number }>`
 `;
 
 export const StatusWrapper = styled.span`
-   {
     background: ${({ theme }) => theme.purple};
     position: absolute;
     font-size: 0.8rem;
@@ -154,7 +147,6 @@ export const StatusWrapper = styled.span`
       left: 0rem;
       bottom: -0.37rem;
     }
-  }
 `;
 
 export const TaskButtonsBottom = styled.div `

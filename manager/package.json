@@ -59,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.23.3",
     "@types/uuid": "^9.0.1",
     "typescript": "^4.8.4"
   },

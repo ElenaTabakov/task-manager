@@ -36,7 +36,7 @@ const ModalWindow = ({
           </S.ModalTitle>
           {children}
           <S.ModalFooter>
-            <Button onClick={onSubmit} disabled={disabled}>{confirmBtnText}</Button> 
+            <Button onClick={onSubmit} disabled={disabled} className="add_btn">{confirmBtnText}</Button> 
             <Button  onClick={() => setIsShow(false)}>{cancelBtnText}</Button>
         </S.ModalFooter>
         </S.ModalContent>

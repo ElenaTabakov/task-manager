@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { lightTheme } from "../../styles/theme";
 
 export const ModalWrapper = styled.div`
   position: fixed;
@@ -29,7 +30,7 @@ export const ModalInner = styled.div`
   justify-content: center;
 `;
 export const ModalContent = styled.div`
-  background: #fff;
+  background: ${({ theme }) => (lightTheme ? theme.body : theme.background)};
   border-radius: 12px;
   min-height: 200px;
   width: 700px;
@@ -48,15 +49,22 @@ export const ModalTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  /* & button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-  } */
+  color: ${({ theme }) => theme.purple};
+  background: ${({ theme }) => theme.lightGray};
+  padding: 0 1em;
 `;
 
 export const ModalFooter = styled.div`
-    padding: 15px;
-    border-top: 1px solid #c1c1c1;
-`
+  padding: 15px;
+  border-top: 1px solid #c1c1c1;
+  background: ${({ theme }) => theme.lightGray};
+  padding: 0 1em;
+  & .add_btn {
+    background: ${({ theme }) => theme.mint};
+    color: ${({theme}) => theme.text};
+
+    &:disabled{
+      opacity: 0.5;
+    }
+  }
+`;

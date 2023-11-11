@@ -1,8 +1,6 @@
-import { useEffect } from "react";
 import LoginForm from "./components/LoginForm";
 import * as S from "../../sharedStyles/global.styles";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/use-auth";
 import { useNavigate } from "react-router-dom";
 import { Wrapper } from "../../styles/theme";
 import { RootState } from "../../store/store";
@@ -11,15 +9,8 @@ import { useSelector } from "react-redux";
 const Login = () => {
   const navigate = useNavigate();
   const error = useSelector((state: RootState) => state.userSlice.errorMessage);
-  
-  console.log(error)
 
-  // useEffect(() => {
-  //   console.log(isAuth);
-  //   if (isAuth === true) {
-  //     navigate("/tasks");
-  //   }
-  // }, [isAuth, navigate]);
+  // console.log(error)
 
   return (
     <S.PageContainer>
